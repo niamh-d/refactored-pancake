@@ -5,6 +5,8 @@ import { useAuth } from "../contexts/FakeAuthContext";
 import Footer from "../components/Footer";
 import PageNav from "../components/PageNav";
 
+import styles from "./Login.module.css";
+
 export default function Login() {
   const navigate = useNavigate();
   const { login, isAuthenticated, credentialsAreInvalid } = useAuth();
@@ -34,41 +36,46 @@ export default function Login() {
     <>
       <main>
         <PageNav />
-        <form onSubmit={handleSubmit} className="form-control">
-          <div>
-            <label htmlFor="email" className="label">
-              Email address
-            </label>
-            <input
-              type="email"
-              id="email"
-              ref={emailInputRef}
-              className="input input-bordered"
-            />
-          </div>
+        <section className={styles["login-page"]}>
+          <div className={styles["login-page__content"]}>
+            <h1 className="text-4xl tracking-wider">Login to your account</h1>
+            <form onSubmit={handleSubmit} className="form-control text-xl">
+              <div>
+                <label htmlFor="email" className="label">
+                  Email address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  ref={emailInputRef}
+                  className="input input-bordered"
+                />
+              </div>
 
-          <div>
-            <label htmlFor="password" className="label">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              ref={passwordInputRef}
-              className="input input-bordered"
-            />
+              <div>
+                <label htmlFor="password" className="label">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  ref={passwordInputRef}
+                  className="input input-bordered"
+                />
+              </div>
+              {credentialsAreInvalid && (
+                <div>
+                  <p>Incorrect email and/or password.</p>
+                </div>
+              )}
+              <div>
+                <button type="primary" className="btn btn-primary mt-5">
+                  Login
+                </button>
+              </div>
+            </form>
           </div>
-          {credentialsAreInvalid && (
-            <div>
-              <p>Incorrect email and/or password.</p>
-            </div>
-          )}
-          <div>
-            <button type="primary" className="btn btn-primary mt-5">
-              Login
-            </button>
-          </div>
-        </form>
+        </section>
       </main>
       <Footer />
     </>
