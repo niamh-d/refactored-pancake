@@ -9,7 +9,7 @@ function PageNav() {
         </p>
       </div>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1 text-xl">
+        <ul className="menu menu-horizontal px-1 text-xl z-50">
           <li>
             <details>
               <summary>Product & Pricing</summary>
