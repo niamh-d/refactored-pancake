@@ -711,6 +711,8 @@ body {
 h1 {
   font-size: 1.875rem;
   line-height: 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 main {
@@ -1616,10 +1618,6 @@ main {
   display: grid;
 }
 
-.w-1\/2 {
-  width: 50%;
-}
-
 .w-3\/4 {
   width: 75%;
 }
@@ -1636,16 +1634,12 @@ main {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.gap-4 {
-  gap: 1rem;
-}
-
-.gap-5 {
-  gap: 1.25rem;
-}
-
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
 }
 
 .rounded-t-none {
@@ -1671,6 +1665,10 @@ main {
   padding: 1.25rem;
 }
 
+.p-10 {
+  padding: 2.5rem;
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -1685,9 +1683,9 @@ main {
   line-height: 2rem;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-5xl {
@@ -1710,11 +1708,6 @@ main {
   line-height: 1.75rem;
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-}
-
 .font-bold {
   font-weight: 700;
 }
@@ -1729,10 +1722,6 @@ main {
 
 .uppercase {
   text-transform: uppercase;
-}
-
-.leading-5 {
-  line-height: 1.25rem;
 }
 
 .leading-loose {

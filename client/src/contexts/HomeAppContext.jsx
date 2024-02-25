@@ -17,8 +17,27 @@ function reducer(state, action) {
 function HomeAppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  async function addNewUser(user) {
+    try {
+      const res = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const data = await res.json();
+
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
-    <HomeAppContext.Provider value={{}}>{children}</HomeAppContext.Provider>
+    <HomeAppContext.Provider value={{ addNewUser }}>
+      {children}
+    </HomeAppContext.Provider>
   );
 }
 
