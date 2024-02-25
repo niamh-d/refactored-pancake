@@ -22,7 +22,7 @@ html {
   }
 
   main {
-    @apply min-h-full;
+    min-height: 80vh;
   }
 }
 

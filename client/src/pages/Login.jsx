@@ -7,7 +7,7 @@ import PageNav from "../components/PageNav";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login, isAuthenticated, invalidCredentials } = useAuth();
+  const { login, isAuthenticated, credentialsAreInvalid } = useAuth();
 
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -58,7 +58,7 @@ export default function Login() {
               className="input input-bordered"
             />
           </div>
-          {invalidCredentials && (
+          {credentialsAreInvalid && (
             <div>
               <p>Incorrect email and/or password.</p>
             </div>
@@ -70,6 +70,7 @@ export default function Login() {
           </div>
         </form>
       </main>
+      <Footer />
     </>
   );
 }

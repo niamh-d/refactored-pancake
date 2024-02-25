@@ -4,12 +4,12 @@ function PageNav() {
   return (
     <nav className="navbar bg-base-100">
       <div className="flex-1">
-        <p className="text-4xl tracking-widest">
+        <p className="text-5xl tracking-wider">
           <span className="uppercase">kø</span>do
         </p>
       </div>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 text-xl">
           <li>
             <details>
               <summary>Product & Pricing</summary>
