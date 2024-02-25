@@ -7,7 +7,7 @@ module.exports = {
   darkMode: "false",
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["winter"],
+    themes: ["winter", "nord", "forest", "garden", "lofi"],
   },
 };
 
