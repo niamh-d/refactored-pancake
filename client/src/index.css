@@ -27,4 +27,7 @@ html {
 }
 
 @layer components {
+  .app-container {
+    @apply p-5 mt-5;
+  }
 }

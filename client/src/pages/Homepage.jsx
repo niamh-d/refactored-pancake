@@ -20,7 +20,6 @@ export default function Homepage() {
           <div className="flex gap-4 mt-10">
             <button type="button" className="btn btn-primary">
               <Link to="/signup">
-                {" "}
                 <span className=" text-lg font-semibold">Sign up</span>
               </Link>
             </button>

@@ -1,0 +1,11 @@
+.image-box {
+  padding: 1rem;
+  display: flex;
+  justify-content: end;
+}
+
+.image-box img {
+  border-radius: 10px;
+  width: 85%;
+  opacity: 0.8;
+}

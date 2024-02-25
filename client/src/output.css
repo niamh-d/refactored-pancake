@@ -1579,6 +1579,11 @@ main {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.app-container {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -1607,6 +1612,18 @@ main {
   display: flex;
 }
 
+.grid {
+  display: grid;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-3\/4 {
+  width: 75%;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1615,8 +1632,20 @@ main {
   flex: none;
 }
 
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .rounded-t-none {
@@ -1647,9 +1676,18 @@ main {
   padding-right: 0.25rem;
 }
 
+.text-justify {
+  text-align: justify;
+}
+
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-5xl {
@@ -1672,6 +1710,11 @@ main {
   line-height: 1.75rem;
 }
 
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -1686,6 +1729,14 @@ main {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.leading-5 {
+  line-height: 1.25rem;
+}
+
+.leading-loose {
+  line-height: 2;
 }
 
 .tracking-wide {
