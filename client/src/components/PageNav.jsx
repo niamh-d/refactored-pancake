@@ -4,9 +4,11 @@ function PageNav() {
   return (
     <nav className="navbar bg-base-100">
       <div className="flex-1">
-        <p className="text-5xl tracking-wider">
-          <span className="uppercase">kø</span>do
-        </p>
+        <NavLink to="/">
+          <p className="text-5xl tracking-wider">
+            <span className="uppercase">kø</span>do
+          </p>
+        </NavLink>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 text-xl z-50">

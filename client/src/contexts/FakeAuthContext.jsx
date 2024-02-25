@@ -16,6 +16,13 @@ function reducer(state, action) {
         isAuthenticated: true,
         credentialsAreInvalid: false,
       };
+    case "signup":
+      console.log("hello");
+      return {
+        ...state,
+        isAuthenticated: true,
+        credentialsAreInvalid: false,
+      };
     case "invalid":
       return { ...state, credentialsAreInvalid: true };
     case "logout":
@@ -39,16 +46,20 @@ function AuthProvider({ children }) {
     if (email !== FAKE_USER.email || FAKE_USER.password !== password)
       dispatch({ type: "invalid" });
     if (email === FAKE_USER.email && FAKE_USER.password === password)
-      dispatch({ type: "login", val: FAKE_USER });
+      dispatch({ type: "login" });
   }
 
   function logout() {
     dispatch({ type: "logout" });
   }
 
+  function signup() {
+    dispatch({ type: "signup" });
+  }
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login, logout, credentialsAreInvalid }}
+      value={{ isAuthenticated, login, logout, credentialsAreInvalid, signup }}
     >
       {children}
     </AuthContext.Provider>

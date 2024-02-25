@@ -27,8 +27,6 @@ function HomeAppProvider({ children }) {
         body: JSON.stringify(user),
       });
       const data = await res.json();
-
-      console.log(data);
     } catch (err) {
       console.error(err);
     }

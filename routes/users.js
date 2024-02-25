@@ -9,7 +9,6 @@ router.get("/", function (req, res, next) {
 
 router.post("/", async function (req, res, next) {
   try {
-    console.log(req.body);
     const user = req.body;
     user.phoneNumber = "00000";
     const { firstName, lastName, dob, email, password, phoneNumber } = user;
