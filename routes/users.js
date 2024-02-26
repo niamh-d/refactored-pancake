@@ -26,9 +26,19 @@ router.post("/", async function (req, res, next) {
   try {
     const user = req.body;
     user.phoneNumber = "123456789";
-    const { firstName, lastName, dob, email, password, phoneNumber } = user;
-    await db(`INSERT INTO users(firstName, lastName, email, password, phoneNumber, dob)
-    VALUES('${firstName}','${lastName}','${email}','${password}','${phoneNumber}', '${dob}');`);
+    const {
+      firstName,
+      lastName,
+      dob,
+      email,
+      password,
+      phoneNumber,
+      gender,
+      sex,
+      pronouns,
+    } = user;
+    await db(`INSERT INTO users(firstName, lastName, email, password, phoneNumber, dob, sex, gender, pronouns)
+    VALUES('${firstName}','${lastName}','${email}','${password}','${phoneNumber}', '${dob}','${sex}', '${gender}', '${pronouns}');`);
 
     const results = await db("SELECT * FROM users ORDER BY id DESC LIMIT 1;");
     res.send(results.data[0]);

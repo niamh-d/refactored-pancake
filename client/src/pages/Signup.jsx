@@ -18,6 +18,9 @@ const Signup = () => {
   const lastNameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
+  const sexSelectRef = useRef(null);
+  const genderSelectRef = useRef(null);
+  const pronounsSelectRef = useRef(null);
 
   const starterDate = new Date("1990-01-01");
 
@@ -32,6 +35,9 @@ const Signup = () => {
       dob: date.toISOString().substring(0, 10),
       email: emailInputRef.current.value,
       password: passwordInputRef.current.value,
+      sex: sexSelectRef.current.value,
+      gender: genderSelectRef.current.value,
+      pronouns: pronounsSelectRef.current.value,
     };
 
     addNewUser(credentials);
@@ -40,92 +46,150 @@ const Signup = () => {
   }
 
   return (
-    <div>
-      <>
-        <main>
-          <PageNav />
-          <section className="app-container">
-            <div className="grid grid-cols-2 gap-2">
-              <div className="image-box">
-                <img src="../../imgs/signup.jpg" />
-              </div>
-              <div className="p-5">
-                <h2 className="text-4xl font-semibold tracking-wide">
-                  Sign up
-                </h2>
-                <form
-                  onSubmit={handleSubmit}
-                  className="form-control mt-10 p-10"
-                >
-                  <div>
-                    <label htmlFor="first-name" className="label">
-                      First name
-                    </label>
-                    <input
-                      type="text"
-                      id="first-name"
-                      ref={firstNameInputRef}
-                      className="input input-bordered"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="last-name" className="label">
-                      Last name
-                    </label>
-                    <input
-                      type="text"
-                      id="last-name"
-                      ref={lastNameInputRef}
-                      className="input input-bordered"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="label">
-                      Email address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      ref={emailInputRef}
-                      className="input input-bordered"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="password" className="label">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      id="password"
-                      ref={passwordInputRef}
-                      className="input input-bordered"
-                    />
-                    <label htmlFor="date" className="label">
-                      Date of birth
-                    </label>
-                    <DatePicker
-                      id="date"
-                      onChange={(date) => setDate(date)}
-                      selected={date}
-                      dateFormat="dd/MM/yyyy"
-                      className="input input-bordered"
-                    />
-                  </div>
-
-                  <div>
-                    <button type="submit" className="btn btn-primary mt-5">
-                      Sign up
-                    </button>
-                  </div>
-                </form>
-              </div>
+    <>
+      <main>
+        <PageNav />
+        <section className="app-container">
+          <div className="grid grid-cols-2 gap-10">
+            <div className="image-box">
+              <img src="../../imgs/signup.jpg" />
             </div>
-          </section>
-        </main>
-        <Footer />
-      </>
-    </div>
+            <div className="p-5">
+              <h2 className="text-4xl font-semibold tracking-wide">Sign up</h2>
+              <p className="mt-5 text-lg">
+                Supply the following information to create your account.
+              </p>
+              <form onSubmit={handleSubmit} className="form-control mt-5 p-10">
+                <div className="grid grid-cols-3">
+                  <div className="flex flex-col gap-3">
+                    <div>
+                      <label htmlFor="first-name" className="label">
+                        First name
+                      </label>
+                      <input
+                        type="text"
+                        id="first-name"
+                        ref={firstNameInputRef}
+                        className="input input-bordered"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="label">
+                        Email address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        ref={emailInputRef}
+                        className="input input-bordered"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="date" className="label">
+                        Date of birth
+                      </label>
+                      <DatePicker
+                        id="date"
+                        onChange={(date) => setDate(date)}
+                        selected={date}
+                        dateFormat="dd/MM/yyyy"
+                        className="input input-bordered"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="gender" className="label">
+                        Gender
+                      </label>
+
+                      <select
+                        className="select select-bordered max-w-xs text-lg"
+                        type="text"
+                        id="gender"
+                        ref={genderSelectRef}
+                      >
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                        <option value="2">Non-binary</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    <div>
+                      <label htmlFor="last-name" className="label">
+                        Last name
+                      </label>
+                      <input
+                        type="text"
+                        id="last-name"
+                        ref={lastNameInputRef}
+                        className="input input-bordered"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="password" className="label">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        id="password"
+                        ref={passwordInputRef}
+                        className="input input-bordered"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="sex" className="label">
+                        Sex
+                      </label>
+
+                      <select
+                        className="select select-bordered max-w-xs text-lg"
+                        type="text"
+                        id="sex"
+                        ref={sexSelectRef}
+                      >
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="pronouns" className="label">
+                        Pronouns
+                      </label>
+
+                      <select
+                        className="select select-bordered max-w-xs text-lg"
+                        type="text"
+                        id="pronouns"
+                        ref={pronounsSelectRef}
+                      >
+                        <option value="0">He/him</option>
+                        <option value="1">She/her</option>
+                        <option value="2">They/Them</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10">
+                  <button type="submit" className="btn btn-primary text-lg">
+                    Sign up
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-ghost ml-5"
+                    onClick={() => navigate("/")}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 };
 

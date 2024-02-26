@@ -13,6 +13,8 @@ function User() {
     navigate("/");
   }
 
+  if (!currentUser) return;
+
   return (
     <div>
       <span>Welcome, {currentUser.firstName}</span>

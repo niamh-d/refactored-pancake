@@ -12,6 +12,10 @@ html {
   box-sizing: border-box;
 }
 
+label {
+  @apply font-semibold;
+}
+
 @layer base {
   h1 {
     @apply text-3xl font-bold tracking-wider;
