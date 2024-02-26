@@ -11,7 +11,8 @@ CREATE TABLE `users`(
     `email` VARCHAR(40) NOT NULL,
     `password` VARCHAR(40) NOT NULL,
     `phoneNumber` VARCHAR(40) NOT NULL,
-    `dob` DATE NOT NULL,
+    -- `dob` CHAR(10) NOT NULL,
+        `dob` DATE NOT NULL,
     `sex` CHAR(2) NOT NULL DEFAULT '0',
     `gender` CHAR(3) NOT NULL DEFAULT '0',
     `pronouns` CHAR(3) NOT NULL DEFAULT '0',
@@ -20,9 +21,9 @@ CREATE TABLE `users`(
 
 INSERT INTO users(firstName, lastName, email, password, phoneNumber, dob, sex, gender, pronouns, photoSource)
 VALUES
-    ('Sofie', 'Stephens', 'sofia@email.com', 'qwerty', '123456789',  19900120, '1', '1', '1', 'stephens-sofia'),
-    ('Claus', 'Weismann', 'claus@email.com', 'qwerty', '123456789', 19920212, '0', '0', '0', 'weismann-claus'),
-    ('Gale', 'Vasquez', 'gale@email.com', 'qwerty', '123456789', 19890123, '1', '2', '2', 'vasquez-gale');
+    ('Sofie', 'Stephens', 'sofia@email.com', 'qwerty', '123456789',  '1990-01-20', '1', '1', '1', 'stephens-sofia'),
+    ('Claus', 'Weismann', 'claus@email.com', 'qwerty', '123456789', '1992-02-12', '0', '0', '0', 'weismann-claus'),
+    ('Gale', 'Vasquez', 'gale@email.com', 'qwerty', '123456789', '1989-01-23', '1', '2', '2', 'vasquez-gale');
 
 
 

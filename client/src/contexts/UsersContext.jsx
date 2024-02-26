@@ -3,19 +3,21 @@ import { createContext, useContext, useReducer } from "react";
 
 const UsersContext = createContext();
 
-const initialState = {};
+const initialState = {
+  currentUser: null,
+};
 
 function reducer(state, action) {
   switch (action.type) {
-    case "":
-      return { ...state };
+    case "SET_CURRENT_USER":
+      return { ...state, currentUser: action.payload };
     default:
       throw new Error("Unknown action type");
   }
 }
 
 function UsersProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{ currentUser }, dispatch] = useReducer(reducer, initialState);
 
   async function addNewUser(user) {
     try {
@@ -27,13 +29,14 @@ function UsersProvider({ children }) {
         body: JSON.stringify(user),
       });
       const data = await res.json();
+      dispatch({ type: "SET_CURRENT_USER", payload: data });
     } catch (err) {
       console.error(err);
     }
   }
 
   return (
-    <UsersContext.Provider value={{ addNewUser }}>
+    <UsersContext.Provider value={{ addNewUser, currentUser }}>
       {children}
     </UsersContext.Provider>
   );
