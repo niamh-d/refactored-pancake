@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer } from "react";
 
-const HomeAppContext = createContext();
+const UsersContext = createContext();
 
 const initialState = {};
 
@@ -14,7 +14,7 @@ function reducer(state, action) {
   }
 }
 
-function HomeAppProvider({ children }) {
+function UsersProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   async function addNewUser(user) {
@@ -33,17 +33,17 @@ function HomeAppProvider({ children }) {
   }
 
   return (
-    <HomeAppContext.Provider value={{ addNewUser }}>
+    <UsersContext.Provider value={{ addNewUser }}>
       {children}
-    </HomeAppContext.Provider>
+    </UsersContext.Provider>
   );
 }
 
-function useHomeApp() {
-  const context = useContext(HomeAppContext);
+function useUsers() {
+  const context = useContext(UsersContext);
   if (context === undefined)
-    throw new Error("HomeAppContext was used outside the HomeAppProvider;");
+    throw new Error("UsersContext was used outside the UsersProvider;");
   return context;
 }
 
-export { HomeAppProvider, useHomeApp };
+export { UsersProvider, useUsers };

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useHomeApp } from "../contexts/HomeAppContext";
+import { useUsers } from "../contexts/UsersContext";
 import { useAuth } from "../contexts/FakeAuthContext";
 
 import Footer from "../components/Footer";
@@ -11,7 +11,7 @@ import PageNav from "../components/PageNav";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { addNewUser } = useHomeApp();
+  const { addNewUser } = useUsers();
   const { signup } = useAuth();
 
   const firstNameInputRef = useRef(null);

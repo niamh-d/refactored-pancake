@@ -17,7 +17,6 @@ function reducer(state, action) {
         credentialsAreInvalid: false,
       };
     case "signup":
-      console.log("hello");
       return {
         ...state,
         isAuthenticated: true,

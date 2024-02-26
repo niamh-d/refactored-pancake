@@ -9,14 +9,14 @@ import AppLayout from "./pages/AppLayout";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PageNotFound from "./pages/PageNotFound";
-import { HomeAppProvider } from "./contexts/HomeAppContext";
+import { UsersProvider } from "./contexts/UsersContext";
 import { AuthProvider } from "./contexts/FakeAuthContext";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
     <AuthProvider>
-      <HomeAppProvider>
+      <UsersProvider>
         <BrowserRouter>
           <Routes>
             <Route index element={<Homepage />} />
@@ -35,7 +35,7 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
-      </HomeAppProvider>
+      </UsersProvider>
     </AuthProvider>
   );
 }
