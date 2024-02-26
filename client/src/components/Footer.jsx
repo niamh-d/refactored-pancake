@@ -9,7 +9,7 @@ function Footer() {
         <h1 className="text-2xl mb-1">
           <span className="uppercase">kø</span>do&trade;
         </h1>
-        <p className="mb-5">Your home life management solution</p>
+        <p className="mb-5">Homelife management made easy</p>
         <p>&copy; Niiv Dev OÜ {year}</p>
       </aside>
     </footer>

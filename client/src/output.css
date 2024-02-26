@@ -704,10 +704,6 @@ html {
   --btn-focus-scale: 1;
 }
 
-body {
-  padding: 1.25rem;
-}
-
 h1 {
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -716,7 +712,7 @@ h1 {
 }
 
 main {
-  min-height: 80vh;
+  min-height: 87vh;
 }
 
 *, ::before, ::after {
@@ -1657,16 +1653,16 @@ main {
   background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)));
 }
 
+.p-10 {
+  padding: 2.5rem;
+}
+
 .p-2 {
   padding: 0.5rem;
 }
 
 .p-5 {
   padding: 1.25rem;
-}
-
-.p-10 {
-  padding: 2.5rem;
 }
 
 .px-1 {

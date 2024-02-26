@@ -14,7 +14,7 @@ export default function Homepage() {
             <span className="uppercase">kø</span>do
           </h1>
           <p className="text-2xl font-medium tracking-wide">
-            The home management solution for busy parents. Get{" "}
+            The homelife management solution for busy parents. Get{" "}
             <span className="font-bold">KØdo</span>-ing!
           </p>
           <div className="flex gap-4 mt-10">

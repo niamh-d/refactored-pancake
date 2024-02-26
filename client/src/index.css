@@ -13,16 +13,12 @@ html {
 }
 
 @layer base {
-  body {
-    @apply p-5;
-  }
-
   h1 {
     @apply text-3xl font-bold tracking-wider;
   }
 
   main {
-    min-height: 80vh;
+    min-height: 87vh;
   }
 }
 
