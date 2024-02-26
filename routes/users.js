@@ -2,24 +2,28 @@ var express = require("express");
 var router = express.Router();
 const db = require("../model/helper");
 
-// GET ALL USERS
 router.get("/", async function (req, res, next) {
   try {
-    const results = await db("SELECT * FROM users;");
-    res.send(results.data);
+    if (!req.query) {
+      // GET ALL USERS
+      results = await db("SELECT * FROM users;");
+      res.send(results.data);
+    }
+
+    const { email, password } = req.query;
+
+    let results;
+
+    // CHECK FOR EXISTING USER
+    if (!password) {
+      results = await db(`SELECT * FROM users WHERE email = '${email}';`);
+      if (results.data[0]) res.status(200).send(true);
+      else res.send(false);
+    }
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
-
-// GET USER BY CRITERIA
-// router.get("/", function (req, res, next) {
-//   try {
-// const {email, password} = req.params;
-//   } catch(err) {
-//     res.status(500).send(err.message);
-//   }
-// });
 
 // ADDS A NEW USER FROM SIGN-UP AND RETURNS THIS USER (RETURNS USER WITH HIGHEST ID (i.e. most recently added user))
 router.post("/", async function (req, res, next) {

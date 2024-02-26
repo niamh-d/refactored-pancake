@@ -31,17 +31,20 @@ function reducer(state, action) {
   }
 }
 
-const FAKE_USER = {
-  email: "jane@email.com",
-  password: "jj000",
-};
-
 function AuthProvider({ children }) {
   const [{ isAuthenticated, credentialsAreInvalid }, dispatch] = useReducer(
     reducer,
     initialState
   );
-  function login(email, password) {
+  async function login(email, password) {
+    try {
+      const res = await fetch(`/api/users?email=${email}&password=${password}`);
+      const data = await res.json();
+      dispatch({ type: "SET_CURRENT_USER", payload: data });
+    } catch (err) {
+      console.error(err);
+    }
+
     if (email !== FAKE_USER.email || FAKE_USER.password !== password)
       dispatch({ type: "invalid" });
     if (email === FAKE_USER.email && FAKE_USER.password === password)

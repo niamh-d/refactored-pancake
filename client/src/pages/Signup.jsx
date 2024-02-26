@@ -4,14 +4,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useUsers } from "../contexts/UsersContext";
-import { useAuth } from "../contexts/FakeAuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 import Footer from "../components/Footer";
 import PageNav from "../components/PageNav";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { addNewUser } = useUsers();
+  const { addNewUser, checkForExistingUser } = useUsers();
   const { signup } = useAuth();
 
   const firstNameInputRef = useRef(null);
@@ -26,8 +26,11 @@ const Signup = () => {
 
   const [date, setDate] = useState(starterDate);
 
-  function handleSubmit(e) {
+  const [isAlreadyExistingUser, setIsAlreadyExistingUser] = useState(false);
+
+  async function handleSubmit(e) {
     e.preventDefault();
+    setIsAlreadyExistingUser(false);
 
     const credentials = {
       firstName: firstNameInputRef.current.value,
@@ -39,6 +42,11 @@ const Signup = () => {
       gender: genderSelectRef.current.value,
       pronouns: pronounsSelectRef.current.value,
     };
+
+    if (await checkForExistingUser(credentials.email)) {
+      setIsAlreadyExistingUser(true);
+      return;
+    }
 
     addNewUser(credentials);
     signup();
@@ -84,6 +92,12 @@ const Signup = () => {
                         ref={emailInputRef}
                         className="input input-bordered"
                       />
+                      {isAlreadyExistingUser && (
+                        <p>
+                          There is an existing user already signed-up with this
+                          email.
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label htmlFor="date" className="label">
@@ -172,7 +186,11 @@ const Signup = () => {
                 </div>
 
                 <div className="mt-10">
-                  <button type="submit" className="btn btn-primary text-lg">
+                  <button
+                    type="submit"
+                    className="btn btn-primary
+                    text-lg"
+                  >
                     Sign up
                   </button>
                   <button
