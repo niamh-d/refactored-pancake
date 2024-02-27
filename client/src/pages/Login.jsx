@@ -22,8 +22,8 @@ export default function Login() {
 
   function handleSubmit(e) {
     const credentials = {
-      email: emailInputRef.current.value,
-      password: passwordInputRef.current.value,
+      email: emailInputRef.current.value.trim(),
+      password: passwordInputRef.current.value.trim(),
     };
     const { email, password } = credentials;
 

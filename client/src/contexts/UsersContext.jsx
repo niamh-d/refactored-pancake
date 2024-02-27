@@ -23,7 +23,7 @@ function UsersProvider({ children }) {
     try {
       const res = await fetch(`/api/users?email=${email}`);
       const data = await res.json();
-      return data;
+      return data ? true : false;
     } catch (err) {
       console.error(err);
     }

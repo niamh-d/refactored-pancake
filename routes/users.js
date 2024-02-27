@@ -4,6 +4,8 @@ const db = require("../model/helper");
 
 router.get("/", async function (req, res, next) {
   try {
+    let results;
+
     if (!req.query) {
       // GET ALL USERS
       results = await db("SELECT * FROM users;");
@@ -12,13 +14,10 @@ router.get("/", async function (req, res, next) {
 
     const { email, password } = req.query;
 
-    let results;
-
-    // CHECK FOR EXISTING USER
+    // CHECK FOR EXISTING USER (UPON SET-UP)
     if (!password) {
       results = await db(`SELECT * FROM users WHERE email = '${email}';`);
-      if (results.data[0]) res.status(200).send(true);
-      else res.send(false);
+      res.status(200).send(results.data[0]);
     }
   } catch (err) {
     res.status(500).send(err.message);
@@ -29,7 +28,6 @@ router.get("/", async function (req, res, next) {
 router.post("/", async function (req, res, next) {
   try {
     const user = req.body;
-    user.phoneNumber = "123456789";
     const {
       firstName,
       lastName,

@@ -49,11 +49,11 @@ const Signup = () => {
     setIsAlreadyExistingUser(false);
 
     const credentials = {
-      firstName: firstNameInputRef.current.value,
-      lastName: lastNameInputRef.current.value,
+      firstName: firstNameInputRef.current.value.trim(),
+      lastName: lastNameInputRef.current.value.trim(),
       dob: date.toISOString().substring(0, 10),
-      email: emailInputRef.current.value,
-      password: passwordOneInputRef.current.value,
+      email: emailInputRef.current.value.trim(),
+      password: passwordOneInputRef.current.value.trim(),
       sex: sexSelectRef.current.value,
       gender: genderSelectRef.current.value,
       pronouns: pronounsSelectRef.current.value,
