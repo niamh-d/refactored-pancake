@@ -13,9 +13,9 @@ CREATE TABLE `users`(
     `phoneNumber` VARCHAR(40) NOT NULL,
     -- `dob` CHAR(10) NOT NULL,
         `dob` DATE NOT NULL,
-    `sex` CHAR(2) NOT NULL DEFAULT '0',
-    `gender` CHAR(3) NOT NULL DEFAULT '0',
-    `pronouns` CHAR(3) NOT NULL DEFAULT '0',
+    `sex` CHAR(1) NOT NULL DEFAULT '0',
+    `gender` CHAR(1) NOT NULL DEFAULT '0',
+    `pronouns` CHAR(1) NOT NULL DEFAULT '0',
     `photoSource` VARCHAR(40) NULL
 )ENGINE=INNODB AUTO_INCREMENT = 10000;
 

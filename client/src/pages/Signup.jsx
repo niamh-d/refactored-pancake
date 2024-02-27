@@ -17,16 +17,32 @@ const Signup = () => {
   const firstNameInputRef = useRef(null);
   const lastNameInputRef = useRef(null);
   const emailInputRef = useRef(null);
-  const passwordInputRef = useRef(null);
+  const passwordOneInputRef = useRef(null);
   const sexSelectRef = useRef(null);
   const genderSelectRef = useRef(null);
   const pronounsSelectRef = useRef(null);
+  const passwordTwoInputRef = useRef(null);
+  const phoneNumberInputRef = useRef(null);
 
   const starterDate = new Date("1990-01-01");
 
   const [date, setDate] = useState(starterDate);
 
   const [isAlreadyExistingUser, setIsAlreadyExistingUser] = useState(false);
+  const [passwordsAreMatching, setPasswordsAreMatching] = useState(true);
+
+  function confirmPasswordMatchingHandler() {
+    if (
+      passwordOneInputRef.current.value.length > 0 &&
+      passwordTwoInputRef.current.value.length > 0
+    ) {
+      if (
+        passwordOneInputRef.current.value === passwordTwoInputRef.current.value
+      ) {
+        setPasswordsAreMatching(true);
+      } else setPasswordsAreMatching(false);
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -37,7 +53,7 @@ const Signup = () => {
       lastName: lastNameInputRef.current.value,
       dob: date.toISOString().substring(0, 10),
       email: emailInputRef.current.value,
-      password: passwordInputRef.current.value,
+      password: passwordOneInputRef.current.value,
       sex: sexSelectRef.current.value,
       gender: genderSelectRef.current.value,
       pronouns: pronounsSelectRef.current.value,
@@ -45,6 +61,13 @@ const Signup = () => {
 
     if (await checkForExistingUser(credentials.email)) {
       setIsAlreadyExistingUser(true);
+      return;
+    }
+
+    if (
+      passwordOneInputRef.current.value !== passwordTwoInputRef.current.value
+    ) {
+      setPasswordsAreMatching(false);
       return;
     }
 
@@ -100,14 +123,13 @@ const Signup = () => {
                       )}
                     </div>
                     <div>
-                      <label htmlFor="date" className="label">
-                        Date of birth
+                      <label htmlFor="password" className="label">
+                        Password
                       </label>
-                      <DatePicker
-                        id="date"
-                        onChange={(date) => setDate(date)}
-                        selected={date}
-                        dateFormat="dd/MM/yyyy"
+                      <input
+                        type="password"
+                        id="password"
+                        ref={passwordOneInputRef}
                         className="input input-bordered"
                       />
                     </div>
@@ -127,45 +149,6 @@ const Signup = () => {
                         <option value="2">Non-binary</option>
                       </select>
                     </div>
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <div>
-                      <label htmlFor="last-name" className="label">
-                        Last name
-                      </label>
-                      <input
-                        type="text"
-                        id="last-name"
-                        ref={lastNameInputRef}
-                        className="input input-bordered"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="password" className="label">
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        id="password"
-                        ref={passwordInputRef}
-                        className="input input-bordered"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="sex" className="label">
-                        Sex
-                      </label>
-
-                      <select
-                        className="select select-bordered max-w-xs text-lg"
-                        type="text"
-                        id="sex"
-                        ref={sexSelectRef}
-                      >
-                        <option value="0">Male</option>
-                        <option value="1">Female</option>
-                      </select>
-                    </div>
                     <div>
                       <label htmlFor="pronouns" className="label">
                         Pronouns
@@ -183,13 +166,83 @@ const Signup = () => {
                       </select>
                     </div>
                   </div>
+                  <div className="flex flex-col gap-3">
+                    <div>
+                      <label htmlFor="last-name" className="label">
+                        Last name
+                      </label>
+                      <input
+                        type="text"
+                        id="last-name"
+                        ref={lastNameInputRef}
+                        className="input input-bordered"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="date" className="label">
+                        Date of birth
+                      </label>
+                      <DatePicker
+                        id="date"
+                        onChange={(date) => setDate(date)}
+                        selected={date}
+                        dateFormat="dd/MM/yyyy"
+                        className="input input-bordered"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="password-confirm" className="label">
+                        Confirm password
+                      </label>
+                      <input
+                        type="password"
+                        id="password-confirm"
+                        ref={passwordTwoInputRef}
+                        className="input input-bordered"
+                        onChange={confirmPasswordMatchingHandler}
+                      />
+                      {!passwordsAreMatching && <p>Passwords must match</p>}
+                    </div>
+
+                    <div>
+                      <label htmlFor="sex" className="label">
+                        Sex
+                      </label>
+
+                      <select
+                        className="select select-bordered max-w-xs text-lg"
+                        type="text"
+                        id="sex"
+                        ref={sexSelectRef}
+                      >
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="phone-number" className="label">
+                        Phone Number
+                      </label>
+
+                      <input
+                        type="text"
+                        id="phone-number"
+                        ref={phoneNumberInputRef}
+                        className="input input-bordered"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mt-10">
                   <button
                     type="submit"
-                    className="btn btn-primary
-                    text-lg"
+                    className={`btn btn-${
+                      !passwordsAreMatching ? "disabled" : "primary"
+                    }
+                    text-lg`}
                   >
                     Sign up
                   </button>
