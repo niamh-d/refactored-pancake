@@ -21,7 +21,7 @@ CREATE TABLE `users`(
 
 INSERT INTO users(firstName, lastName, email, password, phoneNumber, dob, sex, gender, pronouns, photoSource)
 VALUES
-    ('Sofie', 'Stephens', 'sofia@email.com', 'qwerty', '123456789',  '1990-01-20', '1', '1', '1', 'stephens-sofia'),
+    ('Sofie', 'Stephens', 'sofie@email.com', 'qwerty', '123456789',  '1990-01-20', '1', '1', '1', 'stephens-sofia'),
     ('Claus', 'Weismann', 'claus@email.com', 'qwerty', '123456789', '1992-02-12', '0', '0', '0', 'weismann-claus'),
     ('Gale', 'Vasquez', 'gale@email.com', 'qwerty', '123456789', '1989-01-23', '1', '2', '2', 'vasquez-gale');
 

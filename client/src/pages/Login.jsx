@@ -47,7 +47,9 @@ export default function Login() {
                   type="email"
                   id="email"
                   ref={emailInputRef}
-                  className="input input-bordered"
+                  className={`input input-bordered ${
+                    credentialsAreInvalid ? "input-error" : null
+                  }`}
                 />
               </div>
 
@@ -59,12 +61,14 @@ export default function Login() {
                   type="password"
                   id="password"
                   ref={passwordInputRef}
-                  className="input input-bordered"
+                  className={`input input-bordered ${
+                    credentialsAreInvalid ? "input-error" : null
+                  }`}
                 />
               </div>
               {credentialsAreInvalid && (
                 <div>
-                  <p>Incorrect email and/or password.</p>
+                  <p className="mt-5">Incorrect email and/or password.</p>
                 </div>
               )}
               <div>

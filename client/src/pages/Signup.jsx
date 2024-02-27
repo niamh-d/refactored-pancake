@@ -40,7 +40,9 @@ const Signup = () => {
         passwordOneInputRef.current.value === passwordTwoInputRef.current.value
       ) {
         setPasswordsAreMatching(true);
-      } else setPasswordsAreMatching(false);
+      } else {
+        setPasswordsAreMatching(false);
+      }
     }
   }
 
@@ -116,7 +118,7 @@ const Signup = () => {
                         className="input input-bordered"
                       />
                       {isAlreadyExistingUser && (
-                        <p>
+                        <p className="mt-5">
                           There is an existing user already signed-up with this
                           email.
                         </p>
@@ -130,7 +132,9 @@ const Signup = () => {
                         type="password"
                         id="password"
                         ref={passwordOneInputRef}
-                        className="input input-bordered"
+                        className={`input input-bordered ${
+                          passwordsAreMatching ? null : "input-error"
+                        }`}
                       />
                     </div>
                     <div>
@@ -199,10 +203,14 @@ const Signup = () => {
                         type="password"
                         id="password-confirm"
                         ref={passwordTwoInputRef}
-                        className="input input-bordered"
+                        className={`input input-bordered ${
+                          passwordsAreMatching ? null : "input-error"
+                        }`}
                         onChange={confirmPasswordMatchingHandler}
                       />
-                      {!passwordsAreMatching && <p>Passwords must match</p>}
+                      {!passwordsAreMatching && (
+                        <p className="mt-5">Passwords must match</p>
+                      )}
                     </div>
 
                     <div>
