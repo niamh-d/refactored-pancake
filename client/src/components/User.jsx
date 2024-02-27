@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../contexts/AuthContext";
@@ -5,8 +7,12 @@ import { useUsers } from "../contexts/UsersContext";
 
 function User() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
-  const { currentUser } = useUsers();
+  const { logout, loggedInUser } = useAuth();
+  const { currentUser, setCurrentUser } = useUsers();
+
+  useEffect(() => {
+    setCurrentUser(loggedInUser);
+  }, [loggedInUser]);
 
   function handleClick() {
     logout();

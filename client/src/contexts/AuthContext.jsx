@@ -6,25 +6,28 @@ const AuthContext = createContext();
 const initialState = {
   isAuthenticated: false,
   credentialsAreInvalid: false,
+  loggedInUser: null,
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case "login":
+    case "LOGIN":
       return {
         ...state,
         isAuthenticated: true,
         credentialsAreInvalid: false,
       };
-    case "signup":
+    case "SET_LOGGEDIN_USER":
+      return { ...state, loggedInUser: action.payload };
+    case "SIGNUP":
       return {
         ...state,
         isAuthenticated: true,
         credentialsAreInvalid: false,
       };
-    case "invalid":
+    case "INVALID_CREDENTIALS":
       return { ...state, credentialsAreInvalid: true };
-    case "logout":
+    case "LOGOUT":
       return { ...state, isAuthenticated: false };
     default:
       throw new Error("Unknown action.");
@@ -32,36 +35,41 @@ function reducer(state, action) {
 }
 
 function AuthProvider({ children }) {
-  const [{ isAuthenticated, credentialsAreInvalid }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ isAuthenticated, credentialsAreInvalid, loggedInUser }, dispatch] =
+    useReducer(reducer, initialState);
+
   async function login(email, password) {
     try {
       const res = await fetch(`/api/users?email=${email}&password=${password}`);
       const data = await res.json();
-      dispatch({ type: "SET_CURRENT_USER", payload: data });
+      const user = data[0];
+      if (user) {
+        dispatch({ type: "SET_LOGGEDIN_USER", payload: user });
+        dispatch({ type: "LOGIN" });
+      } else dispatch({ type: "INVALID_CREDENTIALS" });
     } catch (err) {
       console.error(err);
     }
-
-    if (email !== FAKE_USER.email || FAKE_USER.password !== password)
-      dispatch({ type: "invalid" });
-    if (email === FAKE_USER.email && FAKE_USER.password === password)
-      dispatch({ type: "login" });
   }
 
   function logout() {
-    dispatch({ type: "logout" });
+    dispatch({ type: "LOGOUT" });
   }
 
   function signup() {
-    dispatch({ type: "signup" });
+    dispatch({ type: "SIGNUP" });
   }
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login, logout, credentialsAreInvalid, signup }}
+      value={{
+        isAuthenticated,
+        credentialsAreInvalid,
+        login,
+        logout,
+        signup,
+        loggedInUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

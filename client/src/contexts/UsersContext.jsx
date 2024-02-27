@@ -23,7 +23,7 @@ function UsersProvider({ children }) {
     try {
       const res = await fetch(`/api/users?email=${email}`);
       const data = await res.json();
-      return data ? true : false;
+      return data[0] ? true : false;
     } catch (err) {
       console.error(err);
     }
@@ -46,12 +46,17 @@ function UsersProvider({ children }) {
     }
   }
 
+  function setCurrentUser(user) {
+    dispatch({ type: "SET_CURRENT_USER", payload: user });
+  }
+
   return (
     <UsersContext.Provider
       value={{
         addNewUser,
         checkForExistingUser,
         currentUser,
+        setCurrentUser,
       }}
     >
       {children}

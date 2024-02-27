@@ -17,7 +17,13 @@ router.get("/", async function (req, res, next) {
     // CHECK FOR EXISTING USER (UPON SET-UP)
     if (!password) {
       results = await db(`SELECT * FROM users WHERE email = '${email}';`);
-      res.status(200).send(results.data[0]);
+      res.status(200).send(results.data);
+    } else {
+      //LOGIN
+      results = await db(
+        `SELECT * FROM users WHERE email = '${email}' AND password = '${password}';`
+      );
+      res.status(200).send(results.data);
     }
   } catch (err) {
     res.status(500).send(err.message);
