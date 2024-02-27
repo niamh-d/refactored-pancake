@@ -1,11 +1,13 @@
-import AppNav from "../components/AppNav";
+import AppHeader from "../components/AppHeader";
+import InnerAppNav from "../components/InnerAppNav";
 import Footer from "../components/Footer";
 
 function AppLayout() {
   return (
     <>
       <main>
-        <AppNav />
+        <AppHeader />
+        <InnerAppNav />
         <div>AppLayout</div>
       </main>
       <Footer />
