@@ -1,11 +1,11 @@
-import User from "../components/User";
+import AppNav from "../components/AppNav";
 import Footer from "../components/Footer";
 
 function AppLayout() {
   return (
     <>
       <main>
-        <User />
+        <AppNav />
         <div>AppLayout</div>
       </main>
       <Footer />

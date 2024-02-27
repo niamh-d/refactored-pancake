@@ -1,15 +1,11 @@
 import { NavLink } from "react-router-dom";
 
+import Logo from "./Logo";
+
 function PageNav() {
   return (
-    <nav className="navbar bg-base-100">
-      <div className="flex-1">
-        <NavLink to="/">
-          <p className="text-5xl tracking-wider">
-            <span className="uppercase">kø</span>do
-          </p>
-        </NavLink>
-      </div>
+    <nav className="navbar bg-base-100 p-5">
+      <Logo />
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 text-xl z-50">
           <li>
