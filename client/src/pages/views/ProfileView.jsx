@@ -3,8 +3,16 @@ import { useUsers } from "../../contexts/UsersContext";
 const ProfileView = () => {
   const { currentUser } = useUsers();
 
-  const { firstName, lastName, gender, email, phoneNumber, dob, photoSource } =
-    currentUser;
+  const {
+    firstName,
+    lastName,
+    gender,
+    email,
+    phoneNumber,
+    dob,
+    photoSource,
+    id,
+  } = currentUser;
 
   const BASE_SOURCE = "../../imgs/users/";
 
@@ -35,16 +43,18 @@ const ProfileView = () => {
 
   return (
     <section className="app-container">
-      <div className="p-5 mt-10 w-1/2">
+      <div className="p-5 mt-10 w-1/2 ml-10">
         <h1>User Profile</h1>
+        <button className="btn btn-primary mt-5 mb-5">Edit details</button>
         <div className="grid-cols-3 grid gap-5 p-10">
           <img
             alt="user image"
             src={`${BASE_SOURCE}${photoSource}.jpeg`}
-            className="rounded-lg"
+            className="rounded-lg opacity-85"
           />
-          <ul className="flex flex-col gap-5 mt-10 text-lg font-semibold justify-self-end">
+          <ul className="flex flex-col gap-5 mt-10 text-lg font-semibold justify-self-center">
             <li>Name:</li>
+            <li>User ID:</li>
             <li>Date of birth:</li>
             <li>Gender:</li>
             <li>Email:</li>
@@ -52,8 +62,8 @@ const ProfileView = () => {
           </ul>
           <ul className="flex flex-col gap-5 mt-10 text-lg">
             <li className="font-bold tracking-widest">{`${firstName} ${lastName}`}</li>
+            <li>{id}</li>
             <li>
-              {" "}
               {dateCleaner(dob)} ({getAge(dob)}y)
             </li>
             <li>{generateGenderString(gender)}</li>
