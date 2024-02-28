@@ -54,6 +54,7 @@ function AuthProvider({ children }) {
 
   function logout() {
     dispatch({ type: "LOGOUT" });
+    dispatch({ type: "SET_LOGGEDIN_USER", payload: null });
   }
 
   function signup() {

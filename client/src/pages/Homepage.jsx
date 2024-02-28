@@ -4,7 +4,11 @@ import styles from "./Homepage.module.css";
 
 import PageNav from "../components/PageNav";
 
+import { useAuth } from "../contexts/AuthContext";
+
 export default function Homepage() {
+  const { loggedInUser } = useAuth();
+
   return (
     <main>
       <PageNav />
@@ -18,16 +22,27 @@ export default function Homepage() {
             <span className="font-bold">KØdo</span>-ing!
           </p>
           <div className="flex gap-4 mt-10">
-            <button type="button" className="btn btn-primary">
-              <Link to="/signup">
-                <span className=" text-lg font-semibold">Sign up</span>
-              </Link>
-            </button>
-            <button type="button" className="btn btn-ghost">
-              <Link to="/login">
-                <span className="text-lg font-semibold">Log in</span>
-              </Link>
-            </button>
+            {!loggedInUser && (
+              <button type="button" className="btn btn-primary">
+                <Link to="/signup">
+                  <span className=" text-lg font-semibold">Sign up</span>
+                </Link>
+              </button>
+            )}
+            {!loggedInUser && (
+              <button type="button" className="btn btn-ghost">
+                <Link to="/login">
+                  <span className="text-lg font-semibold">Log in</span>
+                </Link>
+              </button>
+            )}
+            {loggedInUser && (
+              <button type="button" className="btn btn-primary">
+                <Link to="app/schedules">
+                  <span className="text-lg font-semibold">Return to app</span>
+                </Link>
+              </button>
+            )}
           </div>
         </div>
       </section>

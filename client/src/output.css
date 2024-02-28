@@ -1731,6 +1731,10 @@ main {
   margin-top: 1.25rem;
 }
 
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
 .flex {
   display: flex;
 }
@@ -1739,36 +1743,16 @@ main {
   display: grid;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .w-14 {
   width: 3.5rem;
 }
 
 .w-3\/4 {
   width: 75%;
-}
-
-.w-64 {
-  width: 16rem;
-}
-
-.w-96 {
-  width: 24rem;
-}
-
-.w-auto {
-  width: auto;
-}
-
-.w-1\/4 {
-  width: 25%;
-}
-
-.w-1\/3 {
-  width: 33.333333%;
-}
-
-.w-1\/2 {
-  width: 50%;
 }
 
 .max-w-xs {
@@ -1789,14 +1773,6 @@ main {
 
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.grid-cols-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.grid-cols-5 {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -1839,12 +1815,12 @@ main {
   gap: 1.25rem;
 }
 
-.justify-self-start {
-  justify-self: start;
-}
-
 .justify-self-end {
   justify-self: end;
+}
+
+.justify-self-center {
+  justify-self: center;
 }
 
 .rounded-lg {
@@ -1937,10 +1913,6 @@ main {
   font-weight: 600;
 }
 
-.font-light {
-  font-weight: 300;
-}
-
 .uppercase {
   text-transform: uppercase;
 }
@@ -1964,6 +1936,10 @@ main {
 .text-base-content {
   --tw-text-opacity: 1;
   color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+}
+
+.opacity-85 {
+  opacity: 0.85;
 }
 
 * {
