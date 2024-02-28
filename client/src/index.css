@@ -30,4 +30,10 @@ label {
   .app-container {
     @apply p-5 mt-5;
   }
+
+  .innner-app__nav .active {
+    @apply bg-info p-2 text-white;
+    border-bottom: 1rem solid inherit;
+    border-radius: 12px;
+  }
 }

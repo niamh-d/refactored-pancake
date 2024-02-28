@@ -11,8 +11,8 @@ CREATE TABLE `users`(
     `email` VARCHAR(40) NOT NULL,
     `password` VARCHAR(40) NOT NULL,
     `phoneNumber` VARCHAR(40) NOT NULL,
-    -- `dob` CHAR(10) NOT NULL,
-        `dob` DATE NOT NULL,
+    `dob` CHAR(10) NOT NULL,
+        -- `dob` DATE NOT NULL,
     `sex` CHAR(1) NOT NULL DEFAULT '0',
     `gender` CHAR(1) NOT NULL DEFAULT '0',
     `pronouns` CHAR(1) NOT NULL DEFAULT '0',
@@ -27,11 +27,14 @@ VALUES
 
 
 
--- CREATE TABLE `families`(
---     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     `nickname` VARCHAR(40) NOT NULL,
---     `adminUser` BIGINT NOT NULL
--- )ENGINE=INNODB AUTO_INCREMENT = 1000;
+CREATE TABLE `families`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `nickname` VARCHAR(40) NOT NULL,
+    `adminUser` BIGINT NOT NULL
+)ENGINE=INNODB AUTO_INCREMENT = 1000;
+
+ALTER TABLE
+    `families` ADD CONSTRAINT `families_adminuser_foreign` FOREIGN KEY(`adminUser`) REFERENCES `users`(`id`);
 
 -- CREATE TABLE `children`(
 --     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

@@ -1,3 +1,5 @@
+import { Outlet } from "react-router-dom";
+
 import AppHeader from "../components/AppHeader";
 import InnerAppNav from "../components/InnerAppNav";
 import Footer from "../components/Footer";
@@ -8,7 +10,7 @@ function AppLayout() {
       <main>
         <AppHeader />
         <InnerAppNav />
-        <div>AppLayout</div>
+        <Outlet />
       </main>
       <Footer />
     </>
