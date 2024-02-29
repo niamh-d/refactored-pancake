@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../contexts/AuthContext";
@@ -9,12 +8,8 @@ function User() {
   const BASE_SOURCE = "../../imgs/users/";
 
   const navigate = useNavigate();
-  const { logout, loggedInUser } = useAuth();
-  const { currentUser, setCurrentUser } = useUsers();
-
-  useEffect(() => {
-    setCurrentUser(loggedInUser);
-  }, [loggedInUser]);
+  const { logout } = useAuth();
+  const { currentUser } = useUsers();
 
   function handleClick() {
     logout();
@@ -40,6 +35,7 @@ function User() {
           />
         </div>
       </div>
+
       <button className="btn btn-secondary ml-5" onClick={handleClick}>
         Logout
       </button>

@@ -1,5 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
+
+import { useAuth } from "./AuthContext";
 
 const UsersContext = createContext();
 
@@ -17,13 +19,41 @@ function reducer(state, action) {
 }
 
 function UsersProvider({ children }) {
+  const { loggedInUser } = useAuth();
+
   const [{ currentUser }, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    dispatch({ type: "SET_CURRENT_USER", payload: loggedInUser });
+  }, [loggedInUser]);
 
   async function checkForExistingUser(email) {
     try {
       const res = await fetch(`/api/users?email=${email}`);
       const data = await res.json();
       return data[0] ? true : false;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function updateUserInformation(details) {
+    try {
+      const updatedDetails = {
+        ...currentUser,
+        ...details,
+      };
+
+      const options = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedDetails),
+      };
+      const res = await fetch(`/api/users/${currentUser.id}`, options);
+      const data = await res.json();
+      dispatch({ type: "SET_CURRENT_USER", payload: data[0] });
     } catch (err) {
       console.error(err);
     }
@@ -46,17 +76,13 @@ function UsersProvider({ children }) {
     }
   }
 
-  function setCurrentUser(user) {
-    dispatch({ type: "SET_CURRENT_USER", payload: user });
-  }
-
   return (
     <UsersContext.Provider
       value={{
         addNewUser,
+        updateUserInformation,
         checkForExistingUser,
         currentUser,
-        setCurrentUser,
       }}
     >
       {children}

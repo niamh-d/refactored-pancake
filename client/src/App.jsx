@@ -2,20 +2,25 @@ import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
-import Product from "./pages/Product";
-import Pricing from "./pages/Pricing";
-import Homepage from "./pages/Homepage";
-import AppLayout from "./pages/AppLayout";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import PageNotFound from "./pages/PageNotFound";
 import { UsersProvider } from "./contexts/UsersContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
+//PAGES
+import Homepage from "./pages/Homepage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Product from "./pages/Product";
+import Pricing from "./pages/Pricing";
+import PageNotFound from "./pages/PageNotFound";
+import AppLayout from "./pages/AppLayout";
+
+// APP VIEWS
 import AdminView from "./pages/views/AdminView";
 import HealthView from "./pages/views/HealthView";
 import ProfileView from "./pages/views/ProfileView";
+import ProfileDetails from "./pages/views/ProfileDetails";
+import ProfileEdit from "./pages/views/ProfileEdit";
 import SchedulesView from "./pages/views/SchedulesView";
 import SchoolView from "./pages/views/SchoolView";
 import HobbiesView from "./pages/views/HobbiesView";
@@ -41,7 +46,10 @@ function App() {
           >
             <Route index element={<SchedulesView />} />
             <Route path="schedules" element={<SchedulesView />} />
-            <Route path="profile" element={<ProfileView />} />
+            <Route path="profile" element={<ProfileView />}>
+              <Route index element={<ProfileDetails />} />
+              <Route path="edit" element={<ProfileEdit />} />
+            </Route>
             <Route path="admin" element={<AdminView />} />
             <Route path="school" element={<SchoolView />} />
             <Route path="health" element={<HealthView />} />

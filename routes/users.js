@@ -2,6 +2,31 @@ var express = require("express");
 var router = express.Router();
 const db = require("../model/helper");
 
+router.put("/:id", async function (req, res, next) {
+  try {
+    const id = req.params.id;
+    const details = req.body;
+    const {
+      firstName,
+      lastName,
+      dob,
+      email,
+      password,
+      phoneNumber,
+      gender,
+      sex,
+      pronouns,
+    } = details;
+    await db(
+      `UPDATE users SET firstName = '${firstName}', lastName = '${lastName}', dob = '${dob}', sex = '${sex}', gender = '${gender}', pronouns = '${pronouns}'  WHERE id = '${id}'`
+    );
+    const results = await db(`SELECT * FROM users WHERE id = '${id}'`);
+    res.send(results.data);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 router.get("/", async function (req, res, next) {
   try {
     let results;
