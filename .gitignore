@@ -5,6 +5,5 @@
 /dist
 .env
 /client/node_modules
-.husky
 
 .DS_Store
