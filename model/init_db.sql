@@ -2,6 +2,9 @@ SET foreign_key_checks = 0;
 DROP TABLE if exists users;
 DROP TABLE if exists families;
 DROP TABLE if exists children;
+DROP TABLE if exists schools;
+DROP TABLE if exists teachers;
+DROP TABLE if exists familyDoctors;
 SET foreign_key_checks = 1;
 
 CREATE TABLE `users`(
@@ -27,15 +30,11 @@ VALUES
     ('Gale', 'Vasquez', 'gale@email.com', 'qwerty', '123456789', '1989-01-23', '1', '2', '2', 'vasquez-gale');
 
 
-
 CREATE TABLE `families`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nickname` VARCHAR(40) NOT NULL,
     `adminUser` BIGINT NOT NULL
 )ENGINE=INNODB AUTO_INCREMENT = 1000;
-
--- ALTER TABLE
---     `families` ADD CONSTRAINT `families_adminuser_foreign` FOREIGN KEY(`adminUser`) REFERENCES `users`(`id`);
 
 -- CREATE TABLE `children`(
 --     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

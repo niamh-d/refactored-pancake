@@ -21,6 +21,10 @@ label {
     @apply text-3xl font-bold tracking-wider;
   }
 
+  h2 {
+    @apply text-2xl font-semibold tracking-wide;
+  }
+
   main {
     min-height: 87vh;
   }

@@ -50,7 +50,7 @@ const Signup = () => {
     e.preventDefault();
     setIsAlreadyExistingUser(false);
 
-    const credentials = {
+    const newUserDetails = {
       firstName: firstNameInputRef.current.value.trim(),
       lastName: lastNameInputRef.current.value.trim(),
       dob: date.toISOString().substring(0, 10),
@@ -61,7 +61,7 @@ const Signup = () => {
       pronouns: pronounsSelectRef.current.value,
     };
 
-    if (await checkForExistingUser(credentials.email)) {
+    if (await checkForExistingUser(newUserDetails.email)) {
       setIsAlreadyExistingUser(true);
       return;
     }
@@ -73,7 +73,7 @@ const Signup = () => {
       return;
     }
 
-    addNewUser(credentials);
+    addNewUser(newUserDetails);
     signup();
     navigate("/app", { replace: true });
   }

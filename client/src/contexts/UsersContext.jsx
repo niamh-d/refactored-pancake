@@ -76,10 +76,28 @@ function UsersProvider({ children }) {
     }
   }
 
+  async function addFamily(family) {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...family, adminUser: currentUser.id }),
+      };
+      const res = await fetch("/api/families", options);
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <UsersContext.Provider
       value={{
         addNewUser,
+        addFamily,
         updateUserInformation,
         checkForExistingUser,
         currentUser,
