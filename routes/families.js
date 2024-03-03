@@ -19,4 +19,18 @@ router.post("/", async function (req, res, next) {
   }
 });
 
+router.get("/", async function (req, res, next) {
+  try {
+    const adminUser = req.query.adminUser;
+
+    const results = await db(
+      `SELECT * FROM families WHERE adminUser = ${adminUser};`
+    );
+
+    res.send(results.data);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;

@@ -7,12 +7,15 @@ const UsersContext = createContext();
 
 const initialState = {
   currentUser: null,
+  currentFamily: null,
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "SET_CURRENT_USER":
       return { ...state, currentUser: action.payload };
+    case "SET_CURRENT_FAMILY":
+      return { ...state, currentFamily: action.payload };
     default:
       throw new Error("Unknown action type");
   }
@@ -21,11 +24,29 @@ function reducer(state, action) {
 function UsersProvider({ children }) {
   const { loggedInUser } = useAuth();
 
-  const [{ currentUser }, dispatch] = useReducer(reducer, initialState);
+  const [{ currentUser, currentFamily }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(() => {
     dispatch({ type: "SET_CURRENT_USER", payload: loggedInUser });
   }, [loggedInUser]);
+
+  useEffect(() => {
+    async function getFamily() {
+      try {
+        const res = await fetch(`/api/families?adminUser=${currentUser.id}`);
+        const data = await res.json();
+        dispatch({ type: "SET_CURRENT_FAMILY", payload: data[0] });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    if (!currentUser) dispatch({ type: "SET_CURRENT_FAMILY", payload: null });
+    else if (currentUser.adminFamily) getFamily();
+  }, [currentUser]);
 
   async function checkForExistingUser(email) {
     try {
@@ -43,6 +64,10 @@ function UsersProvider({ children }) {
         ...currentUser,
         ...details,
       };
+
+      if (currentFamily) updatedDetails.adminFamily = currentFamily.id;
+
+      console.log(updatedDetails);
 
       const options = {
         method: "PUT",
@@ -87,7 +112,7 @@ function UsersProvider({ children }) {
       };
       const res = await fetch("/api/families", options);
       const data = await res.json();
-      console.log(data);
+      dispatch({ type: "SET_CURRENT_FAMILY", payload: data });
     } catch (err) {
       console.error(err);
     }
@@ -101,6 +126,7 @@ function UsersProvider({ children }) {
         updateUserInformation,
         checkForExistingUser,
         currentUser,
+        currentFamily,
       }}
     >
       {children}
