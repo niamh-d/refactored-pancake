@@ -61,7 +61,7 @@ router.get("/login", async function (req, res, next) {
     const results = await db(
       `SELECT * FROM users WHERE email = '${email}' AND password = '${password}';`
     );
-    res.status(200).send(results.data[0]);
+    res.status(200).send(results.data);
   } catch (err) {
     res.status(500).send(err.message);
   }

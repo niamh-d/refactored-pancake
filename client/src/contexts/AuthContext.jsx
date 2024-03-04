@@ -45,7 +45,7 @@ function AuthProvider({ children }) {
         `/api/users/login?email=${email}&password=${password}`
       );
       const data = await res.json();
-      const user = data;
+      const user = data[0];
       if (user) {
         dispatch({ type: "SET_LOGGEDIN_USER", payload: user });
         dispatch({ type: "LOGIN" });
