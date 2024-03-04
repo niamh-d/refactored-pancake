@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer, useEffect } from "react";
 
@@ -34,6 +36,25 @@ function UsersProvider({ children }) {
   }, [loggedInUser]);
 
   useEffect(() => {
+    async function insertIntoUserFamilyID() {
+      const options = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...currentUser, adminFamily: currentFamily.id }),
+      };
+      const res = await fetch(`/api/users/${currentUser.id}`, options);
+      const data = await res.json();
+      dispatch({ type: "SET_CURRENT_USER", payload: data[0] });
+    }
+
+    if (!currentUser || !currentFamily || currentUser.adminFamily) return;
+
+    insertIntoUserFamilyID();
+  }, [currentFamily, currentUser]);
+
+  useEffect(() => {
     async function getFamily() {
       try {
         const res = await fetch(`/api/families?adminUser=${currentUser.id}`);
@@ -44,9 +65,17 @@ function UsersProvider({ children }) {
       }
     }
 
-    if (!currentUser) dispatch({ type: "SET_CURRENT_FAMILY", payload: null });
-    else if (currentUser.adminFamily) getFamily();
-  }, [currentUser]);
+    if (!currentUser && !currentFamily) return;
+
+    if (!currentUser && currentFamily) {
+      dispatch({ type: "SET_CURRENT_FAMILY", payload: null });
+      return;
+    }
+
+    if (currentUser && currentFamily) return;
+
+    getFamily();
+  }, [currentUser, currentFamily]);
 
   async function checkForExistingUser(email) {
     try {
@@ -64,10 +93,6 @@ function UsersProvider({ children }) {
         ...currentUser,
         ...details,
       };
-
-      if (currentFamily) updatedDetails.adminFamily = currentFamily.id;
-
-      console.log("here", updatedDetails);
 
       const options = {
         method: "PUT",

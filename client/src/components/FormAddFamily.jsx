@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useUsers } from "../contexts/UsersContext";
 
 const FormAddFamily = () => {
-  const { addFamily, updateUserInformation } = useUsers();
+  const { addFamily } = useUsers();
 
   const familyNicknameInputRef = useRef();
 
@@ -14,8 +14,7 @@ const FormAddFamily = () => {
       nickname: familyNicknameInputRef.current.value,
     };
 
-    await addFamily(newFamilyDetails);
-    updateUserInformation({});
+    addFamily(newFamilyDetails);
   }
   return (
     <div className="p-10">
