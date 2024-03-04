@@ -38,15 +38,8 @@ CREATE TABLE `families`(
 CREATE TABLE `children`(
     `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `firstName` VARCHAR(40) NOT NULL,
-    `lastName` VARCHAR(40) NOT NULL,
-    `sex` CHAR(2) NOT NULL DEFAULT '0',
-    `gender` CHAR(3) NOT NULL DEFAULT '0',
-    `pronouns` CHAR(3) NOT NULL DEFAULT '0',
     `primaryFamily` BIGINT NOT NULL,
-    `primaryGuardian` BIGINT,
-    `familyDoctor` BIGINT,
-    `teacher` BIGINT,
-    `dob` DATE NOT NULL
+    `primaryGuardian` BIGINT NOT NULL
 )ENGINE=INNODB AUTO_INCREMENT = 200000;
 
 
@@ -54,5 +47,7 @@ ALTER TABLE
     `families` ADD CONSTRAINT `families_adminuser_foreign` FOREIGN KEY(`adminUser`) REFERENCES `users`(`id`);
 ALTER TABLE
     `users` ADD CONSTRAINT `users_adminfamily_foreign` FOREIGN KEY(`adminFamily`) REFERENCES `families`(`id`);
-    ALTER TABLE
+ALTER TABLE
     `children` ADD CONSTRAINT `children_primaryguardian_foreign` FOREIGN KEY(`primaryGuardian`) REFERENCES `users`(`id`);
+ALTER TABLE
+    `children` ADD CONSTRAINT `children_primaryfamily_foreign` FOREIGN KEY(`primaryFamily`) REFERENCES `families`(`id`);

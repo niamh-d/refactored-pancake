@@ -152,6 +152,7 @@ function UsersProvider({ children }) {
       value={{
         addNewUser,
         addFamily,
+        addChild,
         updateUserInformation,
         checkForExistingUser,
         currentUser,

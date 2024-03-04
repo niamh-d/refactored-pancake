@@ -7,6 +7,7 @@ const cors = require("cors");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var familiesRouter = require("./routes/families");
+var childrenRouter = require("./routes/children");
 
 var app = express();
 
@@ -19,5 +20,6 @@ app.use(cors());
 app.use("/api/", indexRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/families", familiesRouter);
+app.use("/api/children", childrenRouter);
 
 module.exports = app;
