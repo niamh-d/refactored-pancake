@@ -19,6 +19,8 @@ function reducer(state, action) {
       return { ...state, currentUser: action.payload };
     case "SET_CURRENT_FAMILY":
       return { ...state, currentFamily: action.payload };
+    case "SET_CURRENT_CHILDREN":
+      return { ...state, currentChildren: action.payload };
     default:
       throw new Error("Unknown action type");
   }
@@ -161,7 +163,7 @@ function UsersProvider({ children }) {
       };
       const res = await fetch("/api/children", options);
       const data = await res.json();
-      console.log(data);
+      dispatch({ type: "SET_CURRENT_CHILDREN", payload: data });
     } catch (err) {
       console.error(err);
     }

@@ -18,11 +18,15 @@ label {
 
 @layer base {
   h1 {
-    @apply text-3xl font-bold tracking-wider;
+    @apply text-3xl font-bold tracking-widest;
   }
 
   h2 {
-    @apply text-2xl font-semibold tracking-wide;
+    @apply text-2xl font-semibold tracking-wider;
+  }
+
+  h3 {
+    @apply text-xl tracking-wide;
   }
 
   main {

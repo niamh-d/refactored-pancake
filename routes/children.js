@@ -10,10 +10,10 @@ router.post("/", async function (req, res, next) {
     VALUES('${firstName}','${primaryGuardian}','${primaryFamily}');`);
 
     const results = await db(
-      "SELECT * FROM children ORDER BY id DESC LIMIT 1;"
+      `SELECT * FROM children WHERE primaryGuardian = '${primaryGuardian}';`
     );
 
-    res.send(results.data[0]);
+    res.send(results.data);
   } catch (err) {
     res.status(500).send(err.message);
   }
