@@ -67,7 +67,7 @@ function UsersProvider({ children }) {
 
       if (currentFamily) updatedDetails.adminFamily = currentFamily.id;
 
-      console.log(updatedDetails);
+      console.log("here", updatedDetails);
 
       const options = {
         method: "PUT",
