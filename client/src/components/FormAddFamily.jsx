@@ -18,7 +18,7 @@ const FormAddFamily = () => {
   }
   return (
     <div className="p-10">
-      <h2 className="mt-5">Add a family</h2>
+      <h2 className="mt-5">Add family</h2>
       <form className="form-control" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 mt-5">
           <div>

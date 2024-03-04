@@ -18,7 +18,11 @@ const AdminView = () => {
         )}
         {adminFamily && (
           <p className="mt-10 text-lg">
-            You&apos;re the admin of family {currentFamily.nickname}.
+            You&apos;re the admin of family{" "}
+            <span className="uppercase tracking-wider font-semibold">
+              {currentFamily.nickname}
+            </span>
+            .
           </p>
         )}
       </div>
