@@ -1700,8 +1700,8 @@ main {
 }
 
 .app-container {
+  margin-left: 5rem;
   margin-top: 1.25rem;
-  padding: 1.25rem;
 }
 
 .innner-app__nav .active {
@@ -1744,6 +1744,10 @@ main {
 
 .mt-5 {
   margin-top: 1.25rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
 }
 
 .flex {

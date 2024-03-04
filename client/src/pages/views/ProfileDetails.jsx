@@ -47,6 +47,7 @@ const ProfileDetails = () => {
 
   return (
     <div className="p-5 mt-10 w-1/2 ml-10">
+      <h1>Your Profile</h1>
       <button
         className="btn btn-primary mt-5 mb-5"
         onClick={() => navigate("edit")}

@@ -32,7 +32,7 @@ label {
 
 @layer components {
   .app-container {
-    @apply p-5 mt-5;
+    @apply ml-20 mt-5;
   }
 
   .innner-app__nav .active {

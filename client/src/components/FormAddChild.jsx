@@ -2,10 +2,10 @@ import { useRef } from "react";
 
 import { useUsers } from "../contexts/UsersContext";
 
-const FormAddChild = () => {
+const FormAddChild = ({ handler }) => {
   const { addChild } = useUsers();
 
-  const firstNameInputRef = useRef();
+  const firstNameInputRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -15,6 +15,10 @@ const FormAddChild = () => {
     };
 
     addChild(newChildDetails);
+
+    handler(false);
+
+    firstNameInputRef.current.value = null;
   }
   return (
     <div className="p-10">

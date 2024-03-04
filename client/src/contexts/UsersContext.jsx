@@ -10,6 +10,7 @@ const UsersContext = createContext();
 const initialState = {
   currentUser: null,
   currentFamily: null,
+  currentChildren: [],
 };
 
 function reducer(state, action) {
@@ -26,10 +27,8 @@ function reducer(state, action) {
 function UsersProvider({ children }) {
   const { loggedInUser } = useAuth();
 
-  const [{ currentUser, currentFamily }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ currentUser, currentFamily, currentChildren }, dispatch] =
+    useReducer(reducer, initialState);
 
   useEffect(() => {
     dispatch({ type: "SET_CURRENT_USER", payload: loggedInUser });
@@ -178,6 +177,7 @@ function UsersProvider({ children }) {
         checkForExistingUser,
         currentUser,
         currentFamily,
+        currentChildren,
       }}
     >
       {children}
