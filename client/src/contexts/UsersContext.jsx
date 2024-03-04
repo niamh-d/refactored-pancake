@@ -147,6 +147,27 @@ function UsersProvider({ children }) {
     }
   }
 
+  async function addChild(child) {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...child,
+          primaryFamily: currentUser.adminFamily,
+          primaryGuardian: currentUser.id,
+        }),
+      };
+      const res = await fetch("/api/children", options);
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <UsersContext.Provider
       value={{

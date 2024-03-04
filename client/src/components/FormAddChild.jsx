@@ -11,7 +11,7 @@ const FormAddChild = () => {
     e.preventDefault();
 
     const newChildDetails = {
-      firstName: firstNameInputRef,
+      firstName: firstNameInputRef.current.value,
     };
 
     addChild(newChildDetails);
