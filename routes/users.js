@@ -32,29 +32,36 @@ router.put("/:id", async function (req, res, next) {
   }
 });
 
+// GET ALL USERS
 router.get("/", async function (req, res, next) {
   try {
-    let results;
+    const results = await db("SELECT * FROM users;");
+    res.send(results.data);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 
-    if (!req.query) {
-      // GET ALL USERS
-      results = await db("SELECT * FROM users;");
-      res.send(results.data);
-    }
+// CHECK FOR EXISTING USER (UPON SET-UP)
+router.get("/signup", async function (req, res, next) {
+  const { email } = req.query;
+  try {
+    const results = await db(`SELECT * FROM users WHERE email = '${email}';`);
+    console.log(results.data);
+    res.status(200).send(results.data[0]);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 
+// CHECK FOR USER WITH PROVIDED EMAIL AND PASSWORD AT LOGIN
+router.get("/login", async function (req, res, next) {
+  try {
     const { email, password } = req.query;
-
-    // CHECK FOR EXISTING USER (UPON SET-UP)
-    if (!password) {
-      results = await db(`SELECT * FROM users WHERE email = '${email}';`);
-      res.status(200).send(results.data);
-    } else {
-      //LOGIN
-      results = await db(
-        `SELECT * FROM users WHERE email = '${email}' AND password = '${password}';`
-      );
-      res.status(200).send(results.data);
-    }
+    const results = await db(
+      `SELECT * FROM users WHERE email = '${email}' AND password = '${password}';`
+    );
+    res.status(200).send(results.data[0]);
   } catch (err) {
     res.status(500).send(err.message);
   }

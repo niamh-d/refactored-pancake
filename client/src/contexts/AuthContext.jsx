@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer } from "react";
 
@@ -40,9 +41,11 @@ function AuthProvider({ children }) {
 
   async function login(email, password) {
     try {
-      const res = await fetch(`/api/users?email=${email}&password=${password}`);
+      const res = await fetch(
+        `/api/users/login?email=${email}&password=${password}`
+      );
       const data = await res.json();
-      const user = data[0];
+      const user = data;
       if (user) {
         dispatch({ type: "SET_LOGGEDIN_USER", payload: user });
         dispatch({ type: "LOGIN" });

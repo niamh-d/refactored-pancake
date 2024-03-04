@@ -59,6 +59,10 @@ function UsersProvider({ children }) {
       try {
         const res = await fetch(`/api/families?adminUser=${currentUser.id}`);
         const data = await res.json();
+
+        const family = data[0];
+        if (!family) return;
+
         dispatch({ type: "SET_CURRENT_FAMILY", payload: data[0] });
       } catch (err) {
         console.error(err);
@@ -79,9 +83,9 @@ function UsersProvider({ children }) {
 
   async function checkForExistingUser(email) {
     try {
-      const res = await fetch(`/api/users?email=${email}`);
+      const res = await fetch(`/api/users/signup?email=${email}`);
       const data = await res.json();
-      return data[0] ? true : false;
+      return data ? true : false;
     } catch (err) {
       console.error(err);
     }
