@@ -64,7 +64,7 @@ function UsersProvider({ children }) {
         const family = data[0];
         if (!family) return;
 
-        dispatch({ type: "SET_CURRENT_FAMILY", payload: data[0] });
+        dispatch({ type: "SET_CURRENT_FAMILY", payload: family });
       } catch (err) {
         console.error(err);
       }
@@ -81,6 +81,35 @@ function UsersProvider({ children }) {
 
     getFamily();
   }, [currentUser, currentFamily]);
+
+  useEffect(() => {
+    async function getChildren() {
+      try {
+        const res = await fetch(
+          `/api/children?primaryGuardian=${currentUser.id}`
+        );
+        const data = await res.json();
+
+        const children = data;
+        if (!children.length) return;
+
+        dispatch({ type: "SET_CURRENT_CHILDREN", payload: children });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    if (!currentUser && !currentChildren.length) return;
+
+    if (!currentUser && currentChildren.length) {
+      dispatch({ type: "SET_CURRENT_CHILDREN", payload: [] });
+      return;
+    }
+
+    if (currentUser && currentChildren.length) return;
+
+    getChildren();
+  }, [currentUser, currentChildren]);
 
   async function checkForExistingUser(email) {
     try {

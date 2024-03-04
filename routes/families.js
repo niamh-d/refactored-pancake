@@ -4,8 +4,8 @@ const db = require("../model/helper");
 
 router.post("/", async function (req, res, next) {
   try {
-    const user = req.body;
-    const { nickname, adminUser } = user;
+    const body = req.body;
+    const { nickname, adminUser } = body;
     await db(`INSERT INTO families(nickname, adminUser)
     VALUES('${nickname}','${adminUser}');`);
 

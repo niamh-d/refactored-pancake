@@ -20,48 +20,53 @@ const AdminView = () => {
       <div className="p-5 mt-10">
         <h1>Admin Panel</h1>
         <div className="grid grid-cols-2">
-          {!adminFamily && (
-            <>
-              <p className="mt-10 text-xl">
-                You&apos;re currently not an admin user.
-              </p>
-              {!addFamilyFormIsOpen && (
-                <button
-                  className="btn btn-primary mt-8 text-xl"
-                  onClick={() => setAddFamilyFormIsOpen(true)}
-                >
-                  <AddHomeIcon /> Add family
-                </button>
-              )}
-            </>
-          )}
-          {adminFamily && (
-            <div>
-              <p className="mt-10 text-lg">
-                You&apos;re the admin of family{" "}
-                <span className="uppercase tracking-wider font-semibold">
-                  {currentFamily.nickname}
-                </span>{" "}
-                (#{currentFamily.id}).
-              </p>
-              {!addChildFormIsOpen && (
-                <button
-                  className="btn btn-primary mt-8 text-xl"
-                  onClick={() => setAddChildFormIsOpen(true)}
-                >
-                  <PersonAddAlt1Icon />
-                  Add child
-                </button>
-              )}
-            </div>
-          )}
+          <div>
+            {!adminFamily && (
+              <div>
+                <p className="mt-10 text-xl">
+                  You&apos;re currently not an admin user.
+                </p>
+                {!addFamilyFormIsOpen && (
+                  <button
+                    className="btn btn-primary mt-8 text-xl"
+                    onClick={() => setAddFamilyFormIsOpen(true)}
+                  >
+                    <AddHomeIcon /> Add family
+                  </button>
+                )}
+              </div>
+            )}
+            {adminFamily && (
+              <div>
+                <p className="mt-10 text-lg">
+                  You&apos;re the admin of family{" "}
+                  <span className="uppercase tracking-wider font-semibold">
+                    {currentFamily.nickname}
+                  </span>{" "}
+                  (#{currentFamily.id}).
+                </p>
+                {!addChildFormIsOpen && (
+                  <button
+                    className="btn btn-primary mt-8 text-xl"
+                    onClick={() => setAddChildFormIsOpen(true)}
+                  >
+                    <PersonAddAlt1Icon />
+                    Add child
+                  </button>
+                )}
+              </div>
+            )}
 
-          {!adminFamily && addFamilyFormIsOpen && <FormAddFamily />}
-          {adminFamily && addChildFormIsOpen && (
-            <FormAddChild handler={setAddChildFormIsOpen} />
-          )}
+            {!adminFamily && addFamilyFormIsOpen && <FormAddFamily />}
+            {adminFamily && addChildFormIsOpen && (
+              <FormAddChild handler={setAddChildFormIsOpen} />
+            )}
+          </div>
 
-          {currentChildren && (
+          {currentChildren.length === 0 && (
+            <p className="text-lg">You haven&apos;t added any children yet.</p>
+          )}
+          {currentChildren.length > 0 && (
             <div>
               <h3>You&apos;re the primary guardian of:</h3>
               <ul className="flex flex-col gap-3 mt-5">
