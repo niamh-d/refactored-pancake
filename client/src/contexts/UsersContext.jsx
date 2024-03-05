@@ -86,7 +86,7 @@ function UsersProvider({ children }) {
     async function getChildren() {
       try {
         const res = await fetch(
-          `/api/children?primaryGuardian=${currentUser.id}`
+          `/api/children?familyAdminGuardian=${currentUser.id}`
         );
         const data = await res.json();
 
@@ -210,7 +210,7 @@ function UsersProvider({ children }) {
         body: JSON.stringify({
           ...child,
           primaryFamily: currentUser.adminFamily,
-          primaryGuardian: currentUser.id,
+          familyAdminGuardian: currentUser.id,
         }),
       };
       const res = await fetch("/api/children", options);

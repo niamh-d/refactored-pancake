@@ -5,9 +5,9 @@ const db = require("../model/helper");
 router.post("/", async function (req, res, next) {
   try {
     const body = req.body;
-    const { nickname, adminUser } = body;
-    await db(`INSERT INTO families(nickname, adminUser)
-    VALUES('${nickname}','${adminUser}');`);
+    const { familyName, adminUser } = body;
+    await db(`INSERT INTO families(familyName, adminUser)
+    VALUES('${familyName}','${adminUser}');`);
 
     const results = await db(
       "SELECT * FROM families ORDER BY id DESC LIMIT 1;"
@@ -49,7 +49,7 @@ router.post("/members", async function (req, res, next) {
       isThirdPartyGuardian TINYINT(1) NOT NULL DEFAULT '0',
       PRIMARY KEY (grp,userId)
   )ENGINE=MyISAM;
-  INSERT INTO ${tableName}(grp, id, isAdminUser) VALUES(${adminUserId}, 1);`);
+  INSERT INTO ${tableName}(grp, userId, isAdminUser) VALUES("adult", ${adminUserId}, 1);`);
   } catch (err) {
     res.status(500).send(err.message);
   }
