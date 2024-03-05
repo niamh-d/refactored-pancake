@@ -5,6 +5,7 @@ import SportsTennisIcon from "@mui/icons-material/SportsTennis";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Tooltip from "@mui/material/Tooltip";
 import PersonIcon from "@mui/icons-material/Person";
+import Diversity1Icon from "@mui/icons-material/Diversity1";
 
 import { NavLink } from "react-router-dom";
 
@@ -22,6 +23,13 @@ const AppIconsNavList = () => {
         <NavLink to="admin">
           <Tooltip title="Admin Panel">
             <HomeIcon fontSize="inherit" />
+          </Tooltip>
+        </NavLink>
+      </li>
+      <li className="flex align-middle">
+        <NavLink to="family">
+          <Tooltip title="Family">
+            <Diversity1Icon fontSize="inherit" />
           </Tooltip>
         </NavLink>
       </li>

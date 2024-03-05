@@ -15,7 +15,7 @@ import Pricing from "./pages/Pricing";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 
-// APP VIEWS
+// INNER APP VIEWS
 import AdminView from "./pages/views/AdminView";
 import HealthView from "./pages/views/HealthView";
 import ProfileView from "./pages/views/ProfileView";
@@ -24,6 +24,7 @@ import ProfileEdit from "./pages/views/ProfileEdit";
 import SchedulesView from "./pages/views/SchedulesView";
 import SchoolView from "./pages/views/SchoolView";
 import HobbiesView from "./pages/views/HobbiesView";
+import FamilyView from "./pages/views/FamilyView";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
               <Route path="edit" element={<ProfileEdit />} />
             </Route>
             <Route path="admin" element={<AdminView />} />
+            <Route path="family" element={<FamilyView />} />
             <Route path="school" element={<SchoolView />} />
             <Route path="health" element={<HealthView />} />
             <Route path="hobbies" element={<HobbiesView />} />
