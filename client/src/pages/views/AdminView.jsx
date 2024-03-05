@@ -123,9 +123,18 @@ const AdminView = () => {
               </ul>
             </div>
           )}
-          <div>
-            <h3>Guardians:</h3>
-          </div>
+          {currentFamily && (
+            <div>
+              <h3>Guardians:</h3>
+              <ul className="flex flex-col gap-5 mt-5">
+                {currentFamily.members.map((guardian) => (
+                  <li key={guardian.id}>
+                    <span>{guardian.firstName}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </section>
