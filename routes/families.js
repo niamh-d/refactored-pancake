@@ -38,9 +38,21 @@ router.get("/members", async function (req, res, next) {
     const id = req.query.familyId;
     const tableName = `family_${id}_members`;
 
-    const results = await db(`SELECT * FROM ${tableName};`);
+    const guardianIdResults = await db(
+      `SELECT userId FROM ${tableName} WHERE grp = "adult";`
+    );
 
-    res.send(results.data);
+    const guardianIds = guardianIdResults.data.map(
+      (guardian) => guardian.userId
+    );
+
+    const searchStr = guardianIds
+      .map((id, i, arr) => `id = ${id} ${i !== arr.length - 1 ? "OR" : ""}`)
+      .join(" ");
+
+    const members = await db(`SELECT * FROM users WHERE ${searchStr};`);
+
+    res.send(members.data);
   } catch (err) {
     res.status(500).send(err.message);
   }
