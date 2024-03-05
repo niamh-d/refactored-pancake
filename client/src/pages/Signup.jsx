@@ -100,6 +100,7 @@ const Signup = () => {
                         First name
                       </label>
                       <input
+                        required
                         type="text"
                         id="first-name"
                         ref={firstNameInputRef}
@@ -112,6 +113,7 @@ const Signup = () => {
                         Email address
                       </label>
                       <input
+                        required
                         type="email"
                         id="email"
                         ref={emailInputRef}

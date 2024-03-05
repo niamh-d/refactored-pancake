@@ -8,6 +8,7 @@ import { useUsers } from "../../contexts/UsersContext";
 import FormAddFamily from "../../components/FormAddFamily";
 import FormAddChild from "../../components/FormAddChild";
 import AdminPersonRow from "../../components/AdminPersonRow";
+import FormInviteGuardian from "../../components/FormInviteGuardian";
 
 function filterChildrenByAge(children) {
   return children
@@ -22,7 +23,8 @@ const AdminView = () => {
 
   const [addFamilyFormIsOpen, setAddFamilyFormIsOpen] = useState(false);
   const [addChildFormIsOpen, setAddChildFormIsOpen] = useState(false);
-  const [addGuardianIsOpen, setAddGuardianIsOpen] = useState(false);
+  const [inviteGuardianFormIsOpen, setInviteGuardianFormIsOpen] =
+    useState(false);
 
   return (
     <section className="app-container">
@@ -54,18 +56,18 @@ const AdminView = () => {
                   </span>{" "}
                   (#{currentFamily.id}).
                 </p>
-                {!addGuardianIsOpen && !addChildFormIsOpen && (
+                {!inviteGuardianFormIsOpen && !addChildFormIsOpen && (
                   <button
                     className="btn  btn-secondary mt-8 text-xl"
-                    onClick={() => setAddGuardianIsOpen(true)}
+                    onClick={() => setInviteGuardianFormIsOpen(true)}
                   >
                     <AddModeratorIcon />
-                    Add guardian
+                    Invite guardian
                   </button>
                 )}
               </div>
             )}
-            {!addChildFormIsOpen && !addGuardianIsOpen && (
+            {!addChildFormIsOpen && !inviteGuardianFormIsOpen && (
               <button
                 className="btn  btn-secondary mt-8 text-xl"
                 onClick={() => setAddChildFormIsOpen(true)}
@@ -78,6 +80,9 @@ const AdminView = () => {
             {!adminFamily && addFamilyFormIsOpen && <FormAddFamily />}
             {adminFamily && addChildFormIsOpen && (
               <FormAddChild handler={setAddChildFormIsOpen} />
+            )}
+            {adminFamily && inviteGuardianFormIsOpen && (
+              <FormInviteGuardian handler={inviteGuardianFormIsOpen} />
             )}
           </div>
 

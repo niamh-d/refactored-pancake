@@ -7,7 +7,7 @@ const FormAddFamily = () => {
 
   const familyNameInputRef = useRef();
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const newFamilyDetails = {
@@ -26,6 +26,7 @@ const FormAddFamily = () => {
               Family Name
             </label>
             <input
+              required
               type="text"
               id="family-name"
               ref={familyNameInputRef}

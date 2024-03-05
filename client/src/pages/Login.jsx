@@ -44,6 +44,7 @@ export default function Login() {
                   Email address
                 </label>
                 <input
+                  required
                   type="email"
                   id="email"
                   ref={emailInputRef}
@@ -58,6 +59,7 @@ export default function Login() {
                   Password
                 </label>
                 <input
+                  required
                   type="password"
                   id="password"
                   ref={passwordInputRef}

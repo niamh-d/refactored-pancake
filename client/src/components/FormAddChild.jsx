@@ -15,7 +15,7 @@ const FormAddChild = ({ handler }) => {
 
   const [date, setDate] = useState(starterDate);
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     if (firstNameInputRef.current.value.trim() === "") return;
@@ -38,10 +38,11 @@ const FormAddChild = ({ handler }) => {
       <form className="form-control" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 mt-5">
           <div>
-            <label htmlFor="family-nickname" className="label">
+            <label htmlFor="first-name" className="label">
               Child&apos;s first name
             </label>
             <input
+              required
               placeholder="type child's name here"
               type="text"
               id="first-name"
@@ -66,11 +67,11 @@ const FormAddChild = ({ handler }) => {
             </select>
           </div>
           <div>
-            <label htmlFor="date" className="label">
+            <label htmlFor="dob" className="label">
               Date of birth
             </label>
             <DatePicker
-              id="date"
+              id="dob"
               onChange={(date) => setDate(date)}
               selected={date}
               dateFormat="dd/MM/yyyy"
