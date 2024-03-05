@@ -18,6 +18,8 @@ const FormAddChild = ({ handler }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (firstNameInputRef.current.value.trim() === "") return;
+
     const newChildDetails = {
       firstName: firstNameInputRef.current.value,
       gender: genderSelectRef.current.value,
@@ -75,13 +77,22 @@ const FormAddChild = ({ handler }) => {
               className="input input-bordered"
             />
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary w-44 mt-3"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              className="btn btn-primary w-33 mt-3"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              className="btn btn-ghost w-33 mt-3"
+              onClick={() => handler(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </form>
     </div>
