@@ -11,7 +11,7 @@ const ProfileEdit = () => {
 
   const BASE_SOURCE = "../../imgs/users/";
 
-  const { firstName, lastName, gender, pronouns, sex, dob, photoSource, id } =
+  const { firstName, lastName, gender, pronouns, sex, dob, photoSource } =
     currentUser;
 
   const firstNameInputRef = useRef(firstName);
