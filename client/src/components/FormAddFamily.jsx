@@ -5,13 +5,13 @@ import { useUsers } from "../contexts/UsersContext";
 const FormAddFamily = () => {
   const { addFamily } = useUsers();
 
-  const familyNicknameInputRef = useRef();
+  const familyNameInputRef = useRef();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     const newFamilyDetails = {
-      nickname: familyNicknameInputRef.current.value,
+      familyName: familyNameInputRef.current.value,
     };
 
     addFamily(newFamilyDetails);
@@ -23,12 +23,12 @@ const FormAddFamily = () => {
         <div className="flex flex-col gap-3 mt-5">
           <div>
             <label htmlFor="family-nickname" className="label">
-              Family Nickname
+              Family Name
             </label>
             <input
               type="text"
               id="first-name"
-              ref={familyNicknameInputRef}
+              ref={familyNameInputRef}
               className="input input-bordered"
             />
           </div>
