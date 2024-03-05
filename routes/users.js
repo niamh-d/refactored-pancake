@@ -35,8 +35,14 @@ router.put("/:id", async function (req, res, next) {
 // GET ALL USERS
 router.get("/", async function (req, res, next) {
   try {
-    const results = await db("SELECT * FROM users;");
-    res.send(results.data);
+    const email = req.query.email;
+    if (email) {
+      const user = await db(`SELECT * FROM users WHERE email = '${email}';`);
+      res.send(user.data[0]);
+    } else {
+      const results = await db("SELECT * FROM users;");
+      res.send(results.data);
+    }
   } catch (err) {
     res.status(500).send(err.message);
   }

@@ -82,7 +82,7 @@ const AdminView = () => {
               <FormAddChild handler={setAddChildFormIsOpen} />
             )}
             {adminFamily && inviteGuardianFormIsOpen && (
-              <FormInviteGuardian handler={inviteGuardianFormIsOpen} />
+              <FormInviteGuardian handler={setInviteGuardianFormIsOpen} />
             )}
           </div>
 

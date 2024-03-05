@@ -11,6 +11,7 @@ const initialState = {
   currentUser: null,
   currentFamily: null,
   currentChildren: [],
+  invitation: null,
 };
 
 function reducer(state, action) {
@@ -26,6 +27,11 @@ function reducer(state, action) {
       };
     case "SET_CURRENT_CHILDREN":
       return { ...state, currentChildren: action.payload };
+    case "SET_INVITE":
+      return {
+        ...state,
+        invitation: { ...action.payload, invitor: state.currentUser },
+      };
     default:
       throw new Error("Unknown action type");
   }
@@ -242,12 +248,25 @@ function UsersProvider({ children }) {
     }
   }
 
+  async function inviteGuardian(guardian) {
+    try {
+      const { email, role } = guardian;
+      const res = await fetch(`/api/users?email=${email}`);
+      const data = await res.json();
+
+      dispatch({ type: "SET_INVITE", payload: { invitee: data, role } });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <UsersContext.Provider
       value={{
         addNewUser,
         addFamily,
         addChild,
+        inviteGuardian,
         updateUserInformation,
         checkForExistingUser,
         currentUser,
