@@ -61,11 +61,12 @@ router.get("/members", async function (req, res, next) {
 router.post("/members", async function (req, res, next) {
   try {
     const body = req.body;
-    const { familyId, adminUserId } = body;
+    const { familyId, adminUserId, guardianId, role } = body;
 
     const tableName = `family_${familyId}_members`;
 
-    await db(`CREATE TABLE ${tableName}(
+    if (!role) {
+      await db(`CREATE TABLE ${tableName}(
       grp ENUM('adult', 'child') NOT NULL,
       userId MEDIUMINT NOT NULL,
       isAdminUser TINYINT(1) NOT NULL DEFAULT '0',
@@ -75,7 +76,19 @@ router.post("/members", async function (req, res, next) {
       PRIMARY KEY (grp,userId)
   )ENGINE=MyISAM;
   INSERT INTO ${tableName}(grp, userId, isAdminUser) VALUES("adult", ${adminUserId}, 1);`);
-    res.status(200).send({ message: "table created!" });
+      res.status(200).send({ message: "table created!" });
+    } else {
+      let roleGroup;
+      if (role === "primary") roleGroup = "isPrimaryGuardian";
+      if (role === "extended") roleGroup = "isExtendedFamilyGuardian";
+      if (role === "third") roleGroup = "isThirdPartyGuardian";
+
+      await db(
+        `INSERT INTO ${tableName}(grp, userId, ${roleGroup}) VALUES("adult", ${guardianId}, 1);`
+      );
+
+      res.status(200).send({ id: familyId });
+    }
   } catch (err) {
     res.status(500).send(err.message);
   }

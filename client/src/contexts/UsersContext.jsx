@@ -30,7 +30,11 @@ function reducer(state, action) {
     case "SET_INVITE":
       return {
         ...state,
-        invitation: { ...action.payload, invitor: state.currentUser },
+        invitation: {
+          ...action.payload,
+          invitor: state.currentUser,
+          invitorFamily: state.currentFamily,
+        },
       };
     case "CLOSE_INVITE":
       return { ...state, invitation: null };
@@ -268,6 +272,31 @@ function UsersProvider({ children }) {
     dispatch({ type: "CLOSE_INVITE" });
   }
 
+  async function acceptInvite() {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          guardianId: invitation.invitee.id,
+          familyId: invitation.invitorFamily.id,
+          role: invitation.role,
+        }),
+      };
+
+      const res = await fetch("/api/families/members", options);
+      const data = await res.json();
+
+      dispatch({ type: "CLOSE_INVITE" });
+
+      fetchFamilyMembers(data.id);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <UsersContext.Provider
       value={{
@@ -276,6 +305,7 @@ function UsersProvider({ children }) {
         addChild,
         inviteGuardian,
         closeInvite,
+        acceptInvite,
         updateUserInformation,
         checkForExistingUser,
         currentUser,

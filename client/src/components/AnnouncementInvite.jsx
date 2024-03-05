@@ -2,9 +2,9 @@
 import { useUsers } from "../contexts/UsersContext";
 
 const AnnouncementInvite = ({ invitation }) => {
-  const { currentUser, currentFamily, closeInvite } = useUsers();
+  const { currentUser, closeInvite, acceptInvite } = useUsers();
 
-  const { invitor, invitee, role } = invitation;
+  const { invitor, invitee, role, invitorFamily } = invitation;
 
   const userId = currentUser.id;
 
@@ -23,9 +23,10 @@ const AnnouncementInvite = ({ invitation }) => {
     ? `You have received an invite from ${invitor.firstName} ${invitor.lastName}`
     : `You sent an invite to ${invitee.firstName} ${invitee.lastName}`;
 
-  const message = `${partialMessage} to join family ${currentFamily.familyName} as ${roleStr(role)}.`;
+  const message = `${partialMessage} to join family ${invitorFamily.familyName} as ${roleStr(role)}.`;
 
   const closeClickHandler = () => closeInvite();
+  const acceptClickHandler = () => acceptInvite();
 
   return (
     <div role="alert" className="alert">
@@ -44,7 +45,14 @@ const AnnouncementInvite = ({ invitation }) => {
       </svg>
       <div className="flex gap-10">
         <span>{message}</span>
-        {isInvitee && <button className="btn btn-accent btn-sm">Accept</button>}
+        {isInvitee && (
+          <button
+            className="btn btn-accent btn-sm"
+            onClick={acceptClickHandler}
+          >
+            Accept
+          </button>
+        )}
         <button className="btn bnt-ghost btn-sm" onClick={closeClickHandler}>
           {closeButtonMessage}
         </button>
