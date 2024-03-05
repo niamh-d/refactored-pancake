@@ -64,9 +64,9 @@ INSERT INTO children(firstName, gender, dob, primaryFamily, familyAdminGuardian)
 VALUES
     ('Julie', '1', '2016-11-06', 20022, 10011),
     ('Peter', '0', '2015-09-15', 20022, 10011),
-    ('Michael', '0', '2014-02-21', 20023, 10012),
-    ('Lucy', '1', '2015-06-11', 20023, 10012),
-    ('Robin', '2', '2013-09-01', 20023, 10012);
+    ('Michael', '0', '2014-09-21', 20023, 10012),
+    ('Lucy', '1', '2016-01-11', 20023, 10012),
+    ('Robin', '2', '2013-05-01', 20023, 10012);
 
 CREATE TABLE `family_20022_members`(
     `grp` ENUM('adult', 'child') NOT NULL,

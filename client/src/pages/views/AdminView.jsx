@@ -15,6 +15,32 @@ const AdminView = () => {
   const [addFamilyFormIsOpen, setAddFamilyFormIsOpen] = useState(false);
   const [addChildFormIsOpen, setAddChildFormIsOpen] = useState(false);
 
+  function filterChildrenByAge(children) {
+    return children
+      .slice()
+      .sort((a, b) => a.dob.replaceAll("-", "") - b.dob.replaceAll("-", ""));
+  }
+
+  function dateCleaner(date) {
+    const m = Number(date.slice(5, 7)) - 1;
+    const d = new Date(date.slice(0, 4), m, date.slice(8, 10));
+    return d.toDateString().slice(4);
+  }
+
+  const getAge = (birthDateString) => {
+    const today = new Date();
+    const birthDate = new Date(birthDateString);
+
+    const yearsDifference = today.getFullYear() - birthDate.getFullYear();
+
+    const isBeforeBirthday =
+      today.getMonth() < birthDate.getMonth() ||
+      (today.getMonth() === birthDate.getMonth() &&
+        today.getDate() < birthDate.getDate());
+
+    return isBeforeBirthday ? yearsDifference - 1 : yearsDifference;
+  };
+
   return (
     <section className="app-container">
       <div className="p-5 mt-10">
@@ -41,7 +67,7 @@ const AdminView = () => {
                 <p className="mt-10 text-lg">
                   You&apos;re the admin of family{" "}
                   <span className="uppercase tracking-wider font-semibold">
-                    {currentFamily.nickname}
+                    {currentFamily.familyName}
                   </span>{" "}
                   (#{currentFamily.id}).
                 </p>
@@ -69,13 +95,18 @@ const AdminView = () => {
           {currentChildren.length > 0 && (
             <div>
               <h3>You&apos;re the primary guardian of:</h3>
-              <ul className="flex flex-col gap-3 mt-5">
-                {currentChildren.map((child) => (
+              <ul className="flex flex-col gap-5 mt-5">
+                {filterChildrenByAge(currentChildren).map((child) => (
                   <li
                     key={child.id}
-                    className="badge badge-info pl-2 pr-2 pt-4 pb-4 text-xl"
+                    className="flex gap-5 align-middle text-xl"
                   >
-                    {child.firstName}
+                    <span
+                      className={`badge ${child.gender === "0" ? "badge-accent" : child.gender === "1" ? "badge-info" : "badge-warning"} pl-3 pr-3 pt-4 pb-4 text-xl`}
+                    >
+                      {child.firstName}
+                    </span>
+                    <span>{`${dateCleaner(child.dob)} (${getAge(child.dob)}y)`}</span>
                   </li>
                 ))}
               </ul>
