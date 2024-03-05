@@ -33,6 +33,19 @@ router.get("/", async function (req, res, next) {
   }
 });
 
+router.get("/members", async function (req, res, next) {
+  try {
+    const id = req.query.familyId;
+    const tableName = `family_${id}_members`;
+
+    const results = await db(`SELECT * FROM ${tableName};`);
+
+    res.send(results.data);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 router.post("/members", async function (req, res, next) {
   try {
     const body = req.body;
@@ -50,6 +63,7 @@ router.post("/members", async function (req, res, next) {
       PRIMARY KEY (grp,userId)
   )ENGINE=MyISAM;
   INSERT INTO ${tableName}(grp, userId, isAdminUser) VALUES("adult", ${adminUserId}, 1);`);
+    res.status(200).send({ message: "table created!" });
   } catch (err) {
     res.status(500).send(err.message);
   }

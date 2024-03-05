@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import AddHomeIcon from "@mui/icons-material/AddHome";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import AddModeratorIcon from "@mui/icons-material/AddModerator";
 
 import { useUsers } from "../../contexts/UsersContext";
 import FormAddFamily from "../../components/FormAddFamily";
@@ -14,6 +15,7 @@ const AdminView = () => {
 
   const [addFamilyFormIsOpen, setAddFamilyFormIsOpen] = useState(false);
   const [addChildFormIsOpen, setAddChildFormIsOpen] = useState(false);
+  const [addGuardianIsOpen, setAddGuardianIsOpen] = useState(false);
 
   function filterChildrenByAge(children) {
     return children
@@ -45,7 +47,7 @@ const AdminView = () => {
     <section className="app-container">
       <div className="p-5 mt-10">
         <h1>Admin Panel</h1>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-3">
           <div>
             {!adminFamily && (
               <div>
@@ -54,7 +56,7 @@ const AdminView = () => {
                 </p>
                 {!addFamilyFormIsOpen && (
                   <button
-                    className="btn btn-primary mt-8 text-xl"
+                    className="btn btn-secondary mt-8 text-xl"
                     onClick={() => setAddFamilyFormIsOpen(true)}
                   >
                     <AddHomeIcon /> Add family
@@ -71,16 +73,25 @@ const AdminView = () => {
                   </span>{" "}
                   (#{currentFamily.id}).
                 </p>
-                {!addChildFormIsOpen && (
+                {!addGuardianIsOpen && !addChildFormIsOpen && (
                   <button
-                    className="btn btn-primary mt-8 text-xl"
-                    onClick={() => setAddChildFormIsOpen(true)}
+                    className="btn  btn-secondary mt-8 text-xl"
+                    onClick={() => setAddGuardianIsOpen(true)}
                   >
-                    <PersonAddAlt1Icon />
-                    Add child
+                    <AddModeratorIcon />
+                    Add guardian
                   </button>
                 )}
               </div>
+            )}
+            {!addChildFormIsOpen && !addGuardianIsOpen && (
+              <button
+                className="btn  btn-secondary mt-8 text-xl"
+                onClick={() => setAddChildFormIsOpen(true)}
+              >
+                <PersonAddAlt1Icon />
+                Add child
+              </button>
             )}
 
             {!adminFamily && addFamilyFormIsOpen && <FormAddFamily />}
@@ -94,7 +105,7 @@ const AdminView = () => {
           )}
           {currentChildren.length > 0 && (
             <div>
-              <h3>You&apos;re the primary guardian of:</h3>
+              <h3>Children:</h3>
               <ul className="flex flex-col gap-5 mt-5">
                 {filterChildrenByAge(currentChildren).map((child) => (
                   <li
@@ -112,6 +123,9 @@ const AdminView = () => {
               </ul>
             </div>
           )}
+          <div>
+            <h3>Guardians:</h3>
+          </div>
         </div>
       </div>
     </section>

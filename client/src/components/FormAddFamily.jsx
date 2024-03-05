@@ -22,12 +22,12 @@ const FormAddFamily = () => {
       <form className="form-control" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 mt-5">
           <div>
-            <label htmlFor="family-nickname" className="label">
+            <label htmlFor="family-name" className="label">
               Family Name
             </label>
             <input
               type="text"
-              id="first-name"
+              id="family-name"
               ref={familyNameInputRef}
               className="input input-bordered"
             />

@@ -19,6 +19,11 @@ function reducer(state, action) {
       return { ...state, currentUser: action.payload };
     case "SET_CURRENT_FAMILY":
       return { ...state, currentFamily: action.payload };
+    case "SET_CURRENT_FAMILY_MEMBERS":
+      return {
+        ...state,
+        currentFamily: { ...state.currentFamily, members: action.payload },
+      };
     case "SET_CURRENT_CHILDREN":
       return { ...state, currentChildren: action.payload };
     default:
@@ -160,7 +165,20 @@ function UsersProvider({ children }) {
     }
   }
 
-  async function createRolesTable(id) {
+  async function fetchFamilyMembers(id) {
+    try {
+      const res = await fetch(`/api/families/members?familyId=${id}`);
+      const data = await res.json();
+      dispatch({
+        type: "SET_CURRENT_FAMILY_MEMBERS",
+        payload: data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function createFamilyMembersTable(id) {
     try {
       const options = {
         method: "POST",
@@ -172,9 +190,7 @@ function UsersProvider({ children }) {
           adminUserId: currentUser.id,
         }),
       };
-      const res = await fetch("/api/families/members", options);
-      const data = await res.json();
-      console.log(data[0]);
+      await fetch("/api/families/members", options);
     } catch (err) {
       console.error(err);
     }
@@ -194,7 +210,8 @@ function UsersProvider({ children }) {
       const id = data.id;
 
       dispatch({ type: "SET_CURRENT_FAMILY", payload: data });
-      createRolesTable(id);
+      await createFamilyMembersTable(id);
+      fetchFamilyMembers(id);
     } catch (err) {
       console.error(err);
     }
