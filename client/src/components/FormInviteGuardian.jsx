@@ -1,12 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useRef, useState } from "react";
 
 import { useUsers } from "../contexts/UsersContext";
 
-const FormInviteGuardian = () => {
+const FormInviteGuardian = ({ handler }) => {
   const { inviteGuardian } = useUsers();
 
   const guardianEmailInputRef = useRef();
   const guardianEmailInputTwoRef = useRef();
+  const roleSelectRef = useRef();
 
   const [emailsAreMatching, setEmailsAreMatching] = useState(true);
 
@@ -21,13 +23,35 @@ const FormInviteGuardian = () => {
       return;
     }
 
-    inviteGuardian(email);
+    inviteGuardian({ email, role: roleSelectRef.current.value });
+
+    handler(false);
   }
   return (
     <div className="p-10">
       <h2 className="mt-5">Invite guardian</h2>
       <form className="form-control" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 mt-5">
+          <p>
+            If a user with the provided email exists they will receive your
+            invitation to join as a guardian.
+          </p>
+          <div>
+            <label htmlFor="role" className="label">
+              Role
+            </label>
+
+            <select
+              className="select select-bordered max-w-xs text-lg"
+              type="text"
+              id="role"
+              ref={roleSelectRef}
+            >
+              <option value="primary">Primary Guardian</option>
+              <option value="extended">Extended Family</option>
+              <option value="third">Friend/Neighbor</option>
+            </select>
+          </div>
           <div>
             <label htmlFor="email" className="label">
               Guardian email
