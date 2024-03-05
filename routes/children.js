@@ -5,12 +5,12 @@ const db = require("../model/helper");
 router.post("/", async function (req, res, next) {
   try {
     const body = req.body;
-    const { firstName, primaryGuardian, primaryFamily } = body;
-    await db(`INSERT INTO children(firstName, primaryGuardian, primaryFamily)
-    VALUES('${firstName}','${primaryGuardian}','${primaryFamily}');`);
+    const { firstName, gender, primaryFamily, familyAdminGuardian } = body;
+    await db(`INSERT INTO children(firstName, gender, primaryFamily, familyAdminGuardian)
+    VALUES('${firstName}', '${gender}', '${primaryFamily}', '${familyAdminGuardian}');`);
 
     const results = await db(
-      `SELECT * FROM children WHERE primaryGuardian = '${primaryGuardian}';`
+      `SELECT * FROM children WHERE familyAdminGuardian = '${familyAdminGuardian}';`
     );
 
     res.send(results.data);
@@ -21,10 +21,10 @@ router.post("/", async function (req, res, next) {
 
 router.get("/", async function (req, res, next) {
   try {
-    const id = req.query.primaryGuardian;
+    const id = req.query.familyAdminGuardian;
 
     const results = await db(
-      `SELECT * FROM children WHERE primaryGuardian = '${id}';`
+      `SELECT * FROM children WHERE familyAdminGuardian = '${id}';`
     );
 
     res.send(results.data);

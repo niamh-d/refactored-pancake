@@ -41,14 +41,15 @@ router.post("/members", async function (req, res, next) {
     const tableName = `family_${familyId}_members`;
 
     await db(`CREATE TABLE ${tableName}(
-      id BIGINT NOT NULL PRIMARY KEY,
-      isAdminUser TINYINT(1) NOT NULL DEFAULT 0,
-      isPrimaryGuardian TINYINT(1) NOT NULL DEFAULT 0,
-      isExtendedGuardian TINYINT(1) NOT NULL DEFAULT 0,
-      isFriendGuardian TINYINT(1) NOT NULL DEFAULT 0,
-      isChild TINYINT(1) NOT NULL DEFAULT 0
-  );
-  INSERT INTO ${tableName}(id, isAdminUser) VALUES(${adminUserId}, 1);`);
+      grp ENUM('adult', 'child') NOT NULL,
+      userId MEDIUMINT NOT NULL,
+      isAdminUser TINYINT(1) NOT NULL DEFAULT '0',
+      isPrimaryGuardian TINYINT(1) NOT NULL DEFAULT '0',
+      isExtendedFamilyGuardian TINYINT(1) NOT NULL DEFAULT '0',
+      isThirdPartyGuardian TINYINT(1) NOT NULL DEFAULT '0',
+      PRIMARY KEY (grp,userId)
+  )ENGINE=MyISAM;
+  INSERT INTO ${tableName}(grp, id, isAdminUser) VALUES(${adminUserId}, 1);`);
   } catch (err) {
     res.status(500).send(err.message);
   }
