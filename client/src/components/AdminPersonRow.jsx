@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import CakeIcon from "@mui/icons-material/Cake";
 
+const BASE_SOURCE = "../../imgs/users/";
+
 const getAge = (birthDateString) => {
   const today = new Date();
   const birthDate = new Date(birthDateString);
@@ -22,10 +24,17 @@ function dateCleaner(date) {
 }
 
 const AdminPersonRow = ({ person }) => {
-  const { gender, firstName, lastName, dob } = person;
+  const { gender, firstName, lastName, dob, photoSource } = person;
 
   return (
-    <li className="flex gap-5 align-middle text-xl">
+    <li className="flex gap-5 text-xl items-center">
+      {photoSource && (
+        <img
+          alt="user image"
+          src={`${BASE_SOURCE}${photoSource}.jpeg`}
+          className="rounded-lg opacity-85 w-20"
+        />
+      )}
       <span
         className={`badge ${gender === "0" ? "badge-accent" : gender === "1" ? "badge-info" : "badge-warning"} pl-3 pr-3 pt-4 pb-4 text-xl`}
       >
