@@ -70,6 +70,10 @@ function UsersProvider({ children }) {
         if (!family) return;
 
         dispatch({ type: "SET_CURRENT_FAMILY", payload: family });
+
+        const familyId = family.id;
+
+        fetchFamilyMembers(familyId);
       } catch (err) {
         console.error(err);
       }
