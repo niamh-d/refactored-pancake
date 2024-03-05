@@ -5,6 +5,12 @@ import Tooltip from "@mui/material/Tooltip";
 
 const BASE_SOURCE = "../../imgs/users/";
 
+const pronounsStr = (pronouns) => {
+  if (pronouns === "0") return "he/him";
+  if (pronouns === "1") return "she/her";
+  if (pronouns === "2") return "they/them";
+};
+
 const getAge = (birthDateString) => {
   const today = new Date();
   const birthDate = new Date(birthDateString);
@@ -26,7 +32,7 @@ function dateCleaner(date) {
 }
 
 const AdminPersonRow = ({ person }) => {
-  const { gender, firstName, lastName, dob, photoSource } = person;
+  const { gender, firstName, lastName, dob, photoSource, pronouns } = person;
 
   return (
     <li className="flex gap-5 text-xl items-center">
@@ -38,9 +44,9 @@ const AdminPersonRow = ({ person }) => {
         />
       )}
       <span
-        className={`badge ${gender === "0" ? "badge-accent" : gender === "1" ? "badge-info" : "badge-warning"} pl-3 pr-3 pt-4 pb-4 text-xl`}
+        className={`badge ${gender === "0" ? "badge-accent" : gender === "1" ? "badge-info" : "badge-warning"} pl-2 pr-2 pt-5 pb-5 text-xl rounded-lg`}
       >
-        {`${firstName} ${lastName || ""}`}
+        {`${firstName} ${lastName || ""}`} ({pronounsStr(pronouns)})
       </span>
       {person.isAdminUser === 1 && (
         <Tooltip title="Family Admin">
