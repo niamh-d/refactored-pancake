@@ -5,6 +5,7 @@ DROP TABLE if exists children;
 DROP TABLE if exists schools;
 DROP TABLE if exists teachers;
 DROP TABLE if exists familyDoctors;
+DROP TABLE if exists family_1000_members;
 SET foreign_key_checks = 1;
 
 CREATE TABLE `users`(

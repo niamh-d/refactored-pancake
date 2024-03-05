@@ -33,4 +33,25 @@ router.get("/", async function (req, res, next) {
   }
 });
 
+router.post("/members", async function (req, res, next) {
+  try {
+    const body = req.body;
+    const { familyId, adminUserId } = body;
+
+    const tableName = `family_${familyId}_members`;
+
+    await db(`CREATE TABLE ${tableName}(
+      id BIGINT NOT NULL PRIMARY KEY,
+      isAdminUser TINYINT(1) NOT NULL DEFAULT 0,
+      isPrimaryGuardian TINYINT(1) NOT NULL DEFAULT 0,
+      isExtendedGuardian TINYINT(1) NOT NULL DEFAULT 0,
+      isFriendGuardian TINYINT(1) NOT NULL DEFAULT 0,
+      isChild TINYINT(1) NOT NULL DEFAULT 0
+  );
+  INSERT INTO ${tableName}(id, isAdminUser) VALUES(${adminUserId}, 1);`);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;

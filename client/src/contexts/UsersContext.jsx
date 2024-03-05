@@ -160,6 +160,26 @@ function UsersProvider({ children }) {
     }
   }
 
+  async function createRolesTable(id) {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          familyId: id,
+          adminUserId: currentUser.id,
+        }),
+      };
+      const res = await fetch("/api/families/members", options);
+      const data = await res.json();
+      console.log(data[0]);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async function addFamily(family) {
     try {
       const options = {
@@ -171,7 +191,10 @@ function UsersProvider({ children }) {
       };
       const res = await fetch("/api/families", options);
       const data = await res.json();
+      const id = data.id;
+
       dispatch({ type: "SET_CURRENT_FAMILY", payload: data });
+      createRolesTable(id);
     } catch (err) {
       console.error(err);
     }

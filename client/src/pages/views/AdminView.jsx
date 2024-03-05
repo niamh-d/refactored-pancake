@@ -63,7 +63,7 @@ const AdminView = () => {
             )}
           </div>
 
-          {currentChildren.length === 0 && (
+          {adminFamily && currentChildren.length === 0 && (
             <p className="text-lg">You haven&apos;t added any children yet.</p>
           )}
           {currentChildren.length > 0 && (

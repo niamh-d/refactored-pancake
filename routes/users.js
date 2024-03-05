@@ -47,7 +47,6 @@ router.get("/signup", async function (req, res, next) {
   const { email } = req.query;
   try {
     const results = await db(`SELECT * FROM users WHERE email = '${email}';`);
-    console.log(results.data);
     res.status(200).send(results.data[0]);
   } catch (err) {
     res.status(500).send(err.message);
