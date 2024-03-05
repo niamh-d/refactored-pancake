@@ -94,7 +94,7 @@ const AdminView = () => {
               </ul>
             </div>
           )}
-          {currentFamily && (
+          {currentFamily.members && (
             <div>
               <h3>Other Guardians:</h3>
               <ul className="flex flex-col gap-5 mt-5">
