@@ -38,21 +38,11 @@ router.get("/members", async function (req, res, next) {
     const id = req.query.familyId;
     const tableName = `family_${id}_members`;
 
-    const guardianIdResults = await db(
-      `SELECT userId FROM ${tableName} WHERE grp = "adult";`
+    results = await db(
+      `SELECT id, firstName, lastName, email, dob, gender, pronouns, photoSource, adminFamily, isAdminUser, isPrimaryGuardian, isExtendedFamilyGuardian, isThirdPartyGuardian  FROM users INNER JOIN ${tableName} ON users.id = ${tableName}.userId;`
     );
 
-    const guardianIds = guardianIdResults.data.map(
-      (guardian) => guardian.userId
-    );
-
-    const searchStr = guardianIds
-      .map((id, i, arr) => `id = ${id} ${i !== arr.length - 1 ? "OR" : ""}`)
-      .join(" ");
-
-    const members = await db(`SELECT * FROM users WHERE ${searchStr};`);
-
-    res.send(members.data);
+    res.send(results.data);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -95,3 +85,30 @@ router.post("/members", async function (req, res, next) {
 });
 
 module.exports = router;
+
+//OLD ENDPOINT NOT USING JOIN
+
+// router.get("/members", async function (req, res, next) {
+//   try {
+//     const id = req.query.familyId;
+//     const tableName = `family_${id}_members`;
+
+//     const guardianIdResults = await db(
+//       `SELECT userId FROM ${tableName} WHERE grp = "adult";`
+//     );
+
+//     const guardianIds = guardianIdResults.data.map(
+//       (guardian) => guardian.userId
+//     );
+
+//     const searchStr = guardianIds
+//       .map((id, i, arr) => `id = ${id} ${i !== arr.length - 1 ? "OR" : ""}`)
+//       .join(" ");
+
+//     const members = await db(`SELECT * FROM users WHERE ${searchStr};`);
+
+//     res.send(members.data);
+//   } catch (err) {
+//     res.status(500).send(err.message);
+//   }
+// });
