@@ -26,7 +26,7 @@ label {
   }
 
   h3 {
-    @apply text-xl tracking-wide;
+    @apply text-xl font-semibold tracking-wide;
   }
 
   main {

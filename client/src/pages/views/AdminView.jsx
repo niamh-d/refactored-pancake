@@ -7,6 +7,13 @@ import AddModeratorIcon from "@mui/icons-material/AddModerator";
 import { useUsers } from "../../contexts/UsersContext";
 import FormAddFamily from "../../components/FormAddFamily";
 import FormAddChild from "../../components/FormAddChild";
+import AdminPersonRow from "../../components/AdminPersonRow";
+
+function filterChildrenByAge(children) {
+  return children
+    .slice()
+    .sort((a, b) => a.dob.replaceAll("-", "") - b.dob.replaceAll("-", ""));
+}
 
 const AdminView = () => {
   const { currentFamily, currentUser, currentChildren } = useUsers();
@@ -16,32 +23,6 @@ const AdminView = () => {
   const [addFamilyFormIsOpen, setAddFamilyFormIsOpen] = useState(false);
   const [addChildFormIsOpen, setAddChildFormIsOpen] = useState(false);
   const [addGuardianIsOpen, setAddGuardianIsOpen] = useState(false);
-
-  function filterChildrenByAge(children) {
-    return children
-      .slice()
-      .sort((a, b) => a.dob.replaceAll("-", "") - b.dob.replaceAll("-", ""));
-  }
-
-  function dateCleaner(date) {
-    const m = Number(date.slice(5, 7)) - 1;
-    const d = new Date(date.slice(0, 4), m, date.slice(8, 10));
-    return d.toDateString().slice(4);
-  }
-
-  const getAge = (birthDateString) => {
-    const today = new Date();
-    const birthDate = new Date(birthDateString);
-
-    const yearsDifference = today.getFullYear() - birthDate.getFullYear();
-
-    const isBeforeBirthday =
-      today.getMonth() < birthDate.getMonth() ||
-      (today.getMonth() === birthDate.getMonth() &&
-        today.getDate() < birthDate.getDate());
-
-    return isBeforeBirthday ? yearsDifference - 1 : yearsDifference;
-  };
 
   return (
     <section className="app-container">
@@ -108,17 +89,7 @@ const AdminView = () => {
               <h3>Children:</h3>
               <ul className="flex flex-col gap-5 mt-5">
                 {filterChildrenByAge(currentChildren).map((child) => (
-                  <li
-                    key={child.id}
-                    className="flex gap-5 align-middle text-xl"
-                  >
-                    <span
-                      className={`badge ${child.gender === "0" ? "badge-accent" : child.gender === "1" ? "badge-info" : "badge-warning"} pl-3 pr-3 pt-4 pb-4 text-xl`}
-                    >
-                      {child.firstName}
-                    </span>
-                    <span>{`${dateCleaner(child.dob)} (${getAge(child.dob)}y)`}</span>
-                  </li>
+                  <AdminPersonRow key={child.id} person={child} />
                 ))}
               </ul>
             </div>
@@ -127,11 +98,15 @@ const AdminView = () => {
             <div>
               <h3>Guardians:</h3>
               <ul className="flex flex-col gap-5 mt-5">
-                {currentFamily.members.map((guardian) => (
-                  <li key={guardian.id}>
-                    <span>{guardian.firstName}</span>
-                  </li>
-                ))}
+                {currentFamily.members.map((guardian) =>
+                  currentFamily.adminUser === guardian.id ? (
+                    <p key={guardian.id} className="text-lg">
+                      (you)
+                    </p>
+                  ) : (
+                    <AdminPersonRow key={guardian.id} person={guardian} />
+                  )
+                )}
               </ul>
             </div>
           )}
