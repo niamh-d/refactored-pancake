@@ -9,6 +9,18 @@ router.post("/", async function (req, res, next) {
     await db(`INSERT INTO children(firstName, gender, dob, primaryFamily, familyAdminGuardian)
     VALUES('${firstName}', '${gender}', '${dob}', '${primaryFamily}', '${familyAdminGuardian}');`);
 
+    const childRes = await db(
+      `SELECT id from children ORDER BY id DESC LIMIT 1;`
+    );
+
+    const childId = childRes.data[0].id;
+
+    const familyMembersTable = `family_${primaryFamily}_members`;
+
+    await db(
+      `INSERT INTO ${familyMembersTable}(grp, userId) VALUES('child', ${childId});`
+    );
+
     const results = await db(
       `SELECT * FROM children WHERE familyAdminGuardian = '${familyAdminGuardian}';`
     );
