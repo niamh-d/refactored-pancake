@@ -32,6 +32,8 @@ function reducer(state, action) {
         ...state,
         invitation: { ...action.payload, invitor: state.currentUser },
       };
+    case "CLOSE_INVITE":
+      return { ...state, invitation: null };
     default:
       throw new Error("Unknown action type");
   }
@@ -262,6 +264,10 @@ function UsersProvider({ children }) {
     }
   }
 
+  function closeInvite() {
+    dispatch({ type: "CLOSE_INVITE" });
+  }
+
   return (
     <UsersContext.Provider
       value={{
@@ -269,12 +275,13 @@ function UsersProvider({ children }) {
         addFamily,
         addChild,
         inviteGuardian,
-        invitation,
+        closeInvite,
         updateUserInformation,
         checkForExistingUser,
         currentUser,
         currentFamily,
         currentChildren,
+        invitation,
       }}
     >
       {children}

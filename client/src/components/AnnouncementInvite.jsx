@@ -2,7 +2,7 @@
 import { useUsers } from "../contexts/UsersContext";
 
 const AnnouncementInvite = ({ invitation }) => {
-  const { currentUser, currentFamily } = useUsers();
+  const { currentUser, currentFamily, closeInvite } = useUsers();
 
   const { invitor, invitee, role } = invitation;
 
@@ -11,9 +11,11 @@ const AnnouncementInvite = ({ invitation }) => {
   const isInvitor = invitor.id === userId;
   const isInvitee = invitee.id === userId;
 
+  const closeButtonMessage = isInvitor ? "Cancel invite" : "Decline invite";
+
   const roleStr = (role) => {
     if (role === "primary") return "Primary Guardian";
-    if (role === "extended") return "Extended Family Guardian";
+    if (role === "extended") return "Extended Family";
     if (role === "third") return "Friend/Neighbor";
   };
 
@@ -22,6 +24,8 @@ const AnnouncementInvite = ({ invitation }) => {
     : `You sent an invite to ${invitee.firstName} ${invitee.lastName}`;
 
   const message = `${partialMessage} to join family ${currentFamily.familyName} as ${roleStr(role)}.`;
+
+  const closeClickHandler = () => closeInvite();
 
   return (
     <div role="alert" className="alert">
@@ -38,7 +42,13 @@ const AnnouncementInvite = ({ invitation }) => {
           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         ></path>
       </svg>
-      <span>{message}</span>
+      <div className="flex gap-10">
+        <span>{message}</span>
+        {isInvitee && <button className="btn btn-accent btn-sm">Accept</button>}
+        <button className="btn bnt-ghost btn-sm" onClick={closeClickHandler}>
+          {closeButtonMessage}
+        </button>
+      </div>
     </div>
   );
 };
