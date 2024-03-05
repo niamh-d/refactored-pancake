@@ -37,7 +37,8 @@ VALUES
     ('Tiiu', 'Tamm', 'tiiu@email.com', 'qwerty', '123456789', '1987-10-25', '1', '1', '1', 'tamm-tiiu', null),
     ('Sara', 'Fitzpatrick', 'sara@email.com', 'qwerty', '123456789', '2000-04-23', '1', '1', '1', 'fitz-sara', null),
     ('Julia', 'Stone', 'julia@email.com', 'qwerty', '123456789', '1998-06-09', '1', '1', '1', 'stone-julia', null),
-    ('Ava', 'Pohl', 'ava@email.com', 'qwerty', '123456789', '1992-04-23', '1', '1', '1', 'pohl-ava', null);
+    ('Ava', 'Pohl', 'ava@email.com', 'qwerty', '123456789', '1992-04-23', '1', '1', '1', 'pohl-ava', null),
+    ('Jack', 'Michaels', 'jack@email.com', 'qwerty', '123456789', '1939-04-23', '0', '0', '0', 'michaels-jack', null);
 
 
 CREATE TABLE `families`(
@@ -78,12 +79,14 @@ CREATE TABLE `family_20022_members`(
     PRIMARY KEY (grp,userId)
 )ENGINE=MyISAM;
 
-INSERT INTO family_20022_members(grp, userId, isAdminUser, isPrimaryGuardian)
+INSERT INTO family_20022_members(grp, userId, isAdminUser, isPrimaryGuardian, isExtendedFamilyGuardian, isThirdPartyGuardian)
 VALUES
-    ('adult', 10011, '1', '1'),
-    ('adult', 10014, '0', '1'),
-    ('child', 30033, '0', '0'),
-    ('child', 30034, '0', '0');
+    ('adult', 10011, '1', '1', '0', '0'),
+    ('adult', 10014, '0', '1', '0', '0'),
+    ('child', 30033, '0', '0', '0', '0'),
+    ('child', 30034, '0', '0', '0', '0'),
+    ('adult', 10020, '0', '0', '1', '0'),
+    ('adult', 10013, '0', '0', '0', '1');
 
 CREATE TABLE `family_20023_members`(
     `grp` ENUM('adult', 'child') NOT NULL,
