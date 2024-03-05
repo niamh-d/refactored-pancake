@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import CakeIcon from "@mui/icons-material/Cake";
+import StarIcon from "@mui/icons-material/Star";
+import Tooltip from "@mui/material/Tooltip";
 
 const BASE_SOURCE = "../../imgs/users/";
 
@@ -40,6 +42,11 @@ const AdminPersonRow = ({ person }) => {
       >
         {`${firstName} ${lastName || ""}`}
       </span>
+      {person.isAdminUser === 1 && (
+        <Tooltip title="Family Admin">
+          <StarIcon />
+        </Tooltip>
+      )}
       <div className="flex align-middle gap-3">
         <CakeIcon />
         <p>

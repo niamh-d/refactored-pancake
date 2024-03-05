@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import SchoolIcon from "@mui/icons-material/School";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import HomeIcon from "@mui/icons-material/Home";
@@ -26,6 +27,7 @@ const AppIconsNavList = () => {
           </Tooltip>
         </NavLink>
       </li>
+
       <li className="flex align-middle">
         <NavLink to="family">
           <Tooltip title="Family">
@@ -33,6 +35,7 @@ const AppIconsNavList = () => {
           </Tooltip>
         </NavLink>
       </li>
+
       <li className="flex align-middle">
         <NavLink to="schedules">
           <Tooltip title="Schedules">
