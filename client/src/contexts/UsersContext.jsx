@@ -40,8 +40,10 @@ function reducer(state, action) {
 function UsersProvider({ children }) {
   const { loggedInUser } = useAuth();
 
-  const [{ currentUser, currentFamily, currentChildren }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { currentUser, currentFamily, currentChildren, invitation },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   useEffect(() => {
     dispatch({ type: "SET_CURRENT_USER", payload: loggedInUser });
@@ -267,6 +269,7 @@ function UsersProvider({ children }) {
         addFamily,
         addChild,
         inviteGuardian,
+        invitation,
         updateUserInformation,
         checkForExistingUser,
         currentUser,
