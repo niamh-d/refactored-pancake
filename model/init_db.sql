@@ -31,7 +31,7 @@ VALUES
     ('Gale', 'Vasquez', 'gale@email.com', 'qwerty', '123456789', '1990-01-23', '1', '2', '2', 'vasquez-gale', null),
     ('Milan', 'Zukal', 'milan@email.com', 'qwerty', '123456789', '1988-04-29', '0', '0', '0', 'zukal-milan', null),
     ('Sebastian', 'Kruse', 'seb@email.com', 'qwerty', '123456789', '1988-07-23', '0', '2', '2', 'kruse-seb', null),
-    ('Tamm', 'Tiiu', 'tiiu@email.com', 'qwerty', '123456789', '1987-10-25', '1', '1', '1', 'tamm-tiiu', null),
+    ('Tiiu', 'Tamm', 'tiiu@email.com', 'qwerty', '123456789', '1987-10-25', '1', '1', '1', 'tamm-tiiu', null),
     ('Sara', 'Fitzpatrick', 'sara@email.com', 'qwerty', '123456789', '2000-04-23', '1', '1', '1', 'fitz-sara', null),
     ('Julia', 'Stone', 'julia@email.com', 'qwerty', '123456789', '1998-06-09', '1', '1', '1', 'stone-julia', null),
     ('Ava', 'Pohl', 'ava@email.com', 'qwerty', '123456789', '1992-04-23', '1', '1', '1', 'pohl-ava', null);
