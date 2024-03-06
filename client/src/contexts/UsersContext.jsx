@@ -80,8 +80,14 @@ function UsersProvider({ children }) {
 
     getInvitations();
     getFamily();
-    getChildren();
   }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentFamily) return;
+    if (currentChildren.length) return;
+
+    getChildren();
+  }, [currentFamily]);
 
   // SIGN UP EXISTING USER CHECK
 
@@ -224,8 +230,9 @@ function UsersProvider({ children }) {
 
   async function getChildren() {
     try {
+      console.log(currentFamily.adminUser);
       const res = await fetch(
-        `/api/children?familyAdminGuardian=${currentUser.id}`
+        `/api/children?familyAdminGuardian=${currentFamily.adminUser}`
       );
       const data = await res.json();
 
