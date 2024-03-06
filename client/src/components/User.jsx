@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
 
-import Diversity1Icon from "@mui/icons-material/Diversity1";
+import HomeIcon from "@mui/icons-material/Home";
+import Tooltip from "@mui/material/Tooltip";
 
 import { useAuth } from "../contexts/AuthContext";
 import { useUsers } from "../contexts/UsersContext";
@@ -32,7 +33,9 @@ function User() {
 
           {currentUser.family && (
             <div className="flex gap-2 font-semibold">
-              <Diversity1Icon />
+              <Tooltip title={`Family ${currentFamily.familyName}`}>
+                <HomeIcon />
+              </Tooltip>
               <span>{currentFamily.familyName}</span>
               <span className="font-light">
                 {" "}
