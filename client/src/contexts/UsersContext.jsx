@@ -71,9 +71,12 @@ function UsersProvider({ children }) {
   // ** insert family ID into user row for admin users upon creation of family  **
 
   useEffect(() => {
-    if (!currentUser || !currentFamily || currentUser.adminFamily) return;
+    if (!currentUser || !currentFamily || currentUser.family) return;
 
-    insertIntoUserFamilyID();
+    updateUserInformation({
+      adminFamily: currentFamily.id,
+      family: currentFamily.id,
+    });
   }, [currentFamily, currentUser]);
 
   // ** get current family  **
@@ -135,19 +138,6 @@ function UsersProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }
-
-  async function insertIntoUserFamilyID() {
-    const options = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...currentUser, adminFamily: currentFamily.id }),
-    };
-    const res = await fetch(`/api/users/${currentUser.id}`, options);
-    const data = await res.json();
-    dispatch({ type: "SET_CURRENT_USER", payload: data[0] });
   }
 
   async function updateUserInformation(details) {

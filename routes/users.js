@@ -17,9 +17,10 @@ router.put("/:id", async function (req, res, next) {
       sex,
       pronouns,
       adminFamily,
+      family,
     } = details;
     await db(
-      `UPDATE users SET firstName = '${firstName}', lastName = '${lastName}', dob = '${dob}', sex = '${sex}', gender = '${gender}', pronouns = '${pronouns}'  WHERE id = '${id}'`
+      `UPDATE users SET firstName = '${firstName}', lastName = '${lastName}', dob = '${dob}', sex = '${sex}', gender = '${gender}', pronouns = '${pronouns}', family = '${family}'  WHERE id = '${id}'`
     );
     if (adminFamily)
       await db(
