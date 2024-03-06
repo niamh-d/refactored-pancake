@@ -21,10 +21,10 @@ function reducer(state, action) {
       return { ...state, currentUser: action.payload };
     case "SET_CURRENT_FAMILY":
       return { ...state, currentFamily: action.payload };
-    case "SET_CURRENT_FAMILY_MEMBERS":
+    case "SET_CURRENT_GUARDIANS":
       return {
         ...state,
-        currentFamily: { ...state.currentFamily, members: action.payload },
+        currentFamily: { ...state.currentFamily, guardians: action.payload },
       };
     case "TOGGLE_NON_ADMIN":
       return { ...state, isNonAdmin: action.payload };
@@ -54,70 +54,34 @@ function UsersProvider({ children }) {
     dispatch,
   ] = useReducer(reducer, initialState);
 
+  // STATE RESET ON LOG OUT
+
+  function stateReset() {
+    dispatch({ type: "SET_CURRENT_CHILDREN", payload: [] });
+    dispatch({ type: "SET_CURRENT_FAMILY", payload: [] });
+    dispatch({ type: "SET_INVITATIONS", payload: [] });
+    dispatch({ type: "TOGGLE_NON_ADMIN", payload: false });
+  }
+
   // USE EFFECTS
 
   // ** SYNC LOGGED IN USER FROM AUTH CONTEXT WITH CURRENT USER IN THIS CONTEXT **
 
   useEffect(() => {
     dispatch({ type: "SET_CURRENT_USER", payload: loggedInUser });
+
+    if (!loggedInUser) stateReset();
   }, [loggedInUser]);
 
-  // ** get invitations  **
+  // ** when current user changes, get invitations and get family**
 
   useEffect(() => {
-    if (!currentUser && !currentInvitations.length) return;
-
-    if (!currentUser && currentInvitations.length) {
-      dispatch({ type: "SET_INVITATIONS", payload: [] });
-      return;
-    }
-
-    if (!currentUser && !currentInvitations.length) return;
+    if (!currentUser) return;
 
     getInvitations();
-  }, [currentUser]);
-
-  // ** insert family ID into user row for admin users upon creation of family  **
-
-  useEffect(() => {
-    if (!currentUser || !currentFamily || currentUser.family) return;
-
-    updateUserInformation({
-      adminFamily: currentFamily.id,
-      family: currentFamily.id,
-    });
-  }, [currentFamily, currentUser]);
-
-  // ** get current family  **
-
-  useEffect(() => {
-    if (!currentUser && !currentFamily) return;
-
-    if (!currentUser && currentFamily) {
-      dispatch({ type: "SET_CURRENT_FAMILY", payload: null });
-      dispatch({ type: "TOGGLE_NON_ADMIN", payload: false });
-      return;
-    }
-
-    if (currentUser && currentFamily) return;
-
     getFamily();
-  }, [currentUser, currentFamily]);
-
-  // ** get current children  **
-
-  useEffect(() => {
-    if (!currentUser && !currentChildren.length) return;
-
-    if (!currentUser && currentChildren.length) {
-      dispatch({ type: "SET_CURRENT_CHILDREN", payload: [] });
-      return;
-    }
-
-    if (currentUser && currentChildren.length) return;
-
     getChildren();
-  }, [currentUser, currentChildren]);
+  }, [currentUser]);
 
   // SIGN UP EXISTING USER CHECK
 
@@ -190,7 +154,7 @@ function UsersProvider({ children }) {
 
       const familyId = family.id;
 
-      fetchFamilyMembers(familyId);
+      fetchGuardians(familyId);
     } catch (err) {
       console.error(err);
     }
@@ -210,8 +174,14 @@ function UsersProvider({ children }) {
       const id = data.id;
 
       dispatch({ type: "SET_CURRENT_FAMILY", payload: data });
-      await createFamilyMembersTable(id);
-      fetchFamilyMembers(id);
+      createFamilyMembersTable(id);
+      fetchGuardians(id);
+
+      // ** insert family ID into user row for admin users upon creation of family  **
+      updateUserInformation({
+        adminFamily: currentFamily.id,
+        family: currentFamily.id,
+      });
     } catch (err) {
       console.error(err);
     }
@@ -219,12 +189,12 @@ function UsersProvider({ children }) {
 
   // FAMILY MEMBERS
 
-  async function fetchFamilyMembers(id) {
+  async function fetchGuardians(id) {
     try {
       const res = await fetch(`/api/families/members?familyId=${id}`);
       const data = await res.json();
       dispatch({
-        type: "SET_CURRENT_FAMILY_MEMBERS",
+        type: "SET_CURRENT_GUARDIANS",
         payload: data,
       });
     } catch (err) {
@@ -379,7 +349,7 @@ function UsersProvider({ children }) {
 
       closeInvite(invite.id);
 
-      fetchFamilyMembers(data.id);
+      fetchGuardians(data.id);
     } catch (err) {
       console.error(err);
     }

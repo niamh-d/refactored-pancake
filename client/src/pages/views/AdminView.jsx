@@ -103,11 +103,11 @@ const AdminView = () => {
               </ul>
             </div>
           )}
-          {adminFamily && currentFamily.members && (
+          {adminFamily && currentFamily.guardians && (
             <div>
               <h3>Other Guardians:</h3>
               <ul className="flex flex-col gap-5 mt-5">
-                {currentFamily.members.map((guardian) =>
+                {currentFamily.guardians.map((guardian) =>
                   currentFamily.adminUser === guardian.id ? null : (
                     <AdminPersonRow key={guardian.id} person={guardian} />
                   )

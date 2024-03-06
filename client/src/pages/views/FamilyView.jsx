@@ -26,12 +26,12 @@ const FamilyView = () => {
       </section>
     );
 
-  const { members } = currentFamily;
-  const primaries = members.filter((guardian) => guardian.isPrimaryGuardian);
-  const extendeds = members.filter(
+  const { guardians } = currentFamily;
+  const primaries = guardians.filter((guardian) => guardian.isPrimaryGuardian);
+  const extendeds = guardians.filter(
     (guardian) => guardian.isExtendedFamilyGuardian
   );
-  const thirds = members.filter((guardian) => guardian.isThirdPartyGuardian);
+  const thirds = guardians.filter((guardian) => guardian.isThirdPartyGuardian);
 
   return (
     <section className="app-container">
@@ -50,7 +50,7 @@ const FamilyView = () => {
           </div>
           <div>
             <h2>Primary Guardians</h2>
-            {members && primaries.length > 0 && (
+            {guardians && primaries.length > 0 && (
               <ul className="flex flex-col gap-5 mt-5">
                 {primaries.map((primary) => (
                   <AdminPersonRow key={primary.id} person={primary} />
@@ -60,7 +60,7 @@ const FamilyView = () => {
           </div>
           <div>
             <h2>Extended Family</h2>
-            {members && extendeds.length > 0 && (
+            {guardians && extendeds.length > 0 && (
               <ul className="flex flex-col gap-5 mt-5">
                 {extendeds.map((primary) => (
                   <AdminPersonRow key={primary.id} person={primary} />
@@ -70,7 +70,7 @@ const FamilyView = () => {
           </div>
           <div>
             <h2>Friends and Neighbors</h2>
-            {members && thirds.length > 0 && (
+            {guardians && thirds.length > 0 && (
               <ul className="flex flex-col gap-5 mt-5">
                 {thirds.map((primary) => (
                   <AdminPersonRow key={primary.id} person={primary} />
