@@ -359,6 +359,10 @@ function UsersProvider({ children }) {
       const res = await fetch("/api/families/members", options);
       const data = await res.json();
 
+      updateUserInformation({
+        family: invite.invitorFamily,
+      });
+
       closeInvite(invite.id);
 
       fetchFamilyMembers(data.id);
