@@ -304,6 +304,7 @@ function UsersProvider({ children }) {
       };
 
       await fetch("/api/invitations", options);
+      getInvitations();
     } catch (err) {
       console.error(err);
     }
