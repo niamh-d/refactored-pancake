@@ -33,4 +33,20 @@ router.post("/", async function (req, res, next) {
   }
 });
 
+router.delete("/", async function (req, res, next) {
+  try {
+    const { inviteId, userId } = req.body;
+
+    await db(`DELETE * FROM invitations WHERE id = ${inviteId};`);
+
+    const results = await db(
+      `SELECT * FROM invitations WHERE invitee = ${userId} OR invitor = ${userId};`
+    );
+
+    res.send(results.data);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;

@@ -276,7 +276,7 @@ function UsersProvider({ children }) {
 
       const res = await fetch("/api/invitations", options);
       const data = await res.json();
-      console.log(data);
+      dispatch({ type: "SET_INVITATIONS", payload: data });
     } catch (err) {
       console.error(err);
     }
@@ -301,8 +301,22 @@ function UsersProvider({ children }) {
     }
   }
 
-  function closeInvite() {
-    dispatch({ type: "CLOSE_INVITE" });
+  async function closeInvite(id) {
+    try {
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ inviteId: id, userId: currentUser.id }),
+      };
+
+      const res = await fetch("/api/invitations", options);
+      const data = await res.json();
+      dispatch({ type: "SET_INVITATIONS", payload: data });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async function acceptInvite() {
