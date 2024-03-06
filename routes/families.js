@@ -65,7 +65,7 @@ router.post("/members", async function (req, res, next) {
       isThirdPartyGuardian TINYINT(1) NOT NULL DEFAULT '0',
       PRIMARY KEY (grp,userId)
   )ENGINE=MyISAM;
-  INSERT INTO ${tableName}(grp, userId, isAdminUser) VALUES("adult", ${adminUserId}, 1);`);
+  INSERT INTO ${tableName}(grp, userId, isAdminUser, isPrimaryGuardian) VALUES("adult", ${adminUserId}, 1, 1);`);
       res.status(200).send({ message: "table created!" });
     } else {
       let roleGroup;
