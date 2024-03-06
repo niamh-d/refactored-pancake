@@ -5,6 +5,7 @@ DROP TABLE if exists children;
 DROP TABLE if exists schools;
 DROP TABLE if exists teachers;
 DROP TABLE if exists familyDoctors;
+DROP TABLE if exists invitations;
 DROP TABLE if exists family_20022_members;
 DROP TABLE if exists family_20023_members;
 DROP TABLE if exists family_20024_members;
@@ -106,12 +107,26 @@ VALUES
     ('child', 30036, '0', '0'),
     ('child', 30037, '0', '0');
 
+CREATE TABLE `invitations`(
+    `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `invitor` MEDIUMINT NOT NULL,
+    `invitorFamily` MEDIUMINT NOT NULL,
+    `invitee` MEDIUMINT NOT NULL,
+    `inviteeRole` VARCHAR(40) NOT NULL
+)ENGINE=INNODB;
+
 
 ALTER TABLE
     `families` ADD CONSTRAINT `families_adminuser_foreign` FOREIGN KEY(`adminUser`) REFERENCES `users`(`id`);
 ALTER TABLE
     `users` ADD CONSTRAINT `users_adminfamily_foreign` FOREIGN KEY(`adminFamily`) REFERENCES `families`(`id`);
 ALTER TABLE
-    `children` ADD CONSTRAINT `children_familyAdminGuardian_foreign` FOREIGN KEY(`familyAdminGuardian`) REFERENCES `users`(`id`);
+    `children` ADD CONSTRAINT `children_familyadminguardian_foreign` FOREIGN KEY(`familyAdminGuardian`) REFERENCES `users`(`id`);
 ALTER TABLE
     `children` ADD CONSTRAINT `children_primaryfamily_foreign` FOREIGN KEY(`primaryFamily`) REFERENCES `families`(`id`);
+ALTER TABLE
+    `invitations` ADD CONSTRAINT `invitations_invitor_foreign` FOREIGN KEY(`invitor`) REFERENCES `users`(`id`);
+ALTER TABLE
+    `invitations` ADD CONSTRAINT `invitations_invitee_foreign` FOREIGN KEY(`invitee`) REFERENCES `users`(`id`);
+ALTER TABLE
+    `invitations` ADD CONSTRAINT `invitations_invitorfamily_foreign` FOREIGN KEY(`invitorFamily`) REFERENCES `families`(`id`);
