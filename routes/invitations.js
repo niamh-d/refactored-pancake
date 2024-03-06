@@ -18,16 +18,20 @@ router.get("/", async function (req, res, next) {
 
 router.post("/", async function (req, res, next) {
   try {
-    const { invitorFamily, invitee, invitor, inviteeRole } = req.body;
+    const {
+      invitorFamily,
+      invitorFamilyName,
+      invitee,
+      inviteeName,
+      invitor,
+      invitorName,
+      inviteeRole,
+    } = req.body;
 
-    await db(`INSERT INTO invitations(invitorFamily, invitor, invitee, inviteeRole)
-      VALUES('${invitorFamily}','${invitor}', '${invitee}', '${inviteeRole}');`);
+    await db(`INSERT INTO invitations(invitor, invitorName, invitorFamily, invitorFamilyName, invitee, inviteeName, inviteeRole)
+    VALUES('${invitor}', '${invitorName}', '${invitorFamily}', '${invitorFamilyName}','${invitee}', '${inviteeName}', '${inviteeRole}');`);
 
-    const results = await db(
-      `SELECT * FROM invitations WHERE invitee = ${user} OR invitor = ${user};`
-    );
-
-    res.send(results.data);
+    res.send({ message: "Invitation inputted sucecssfully!" });
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -37,7 +41,7 @@ router.delete("/", async function (req, res, next) {
   try {
     const { inviteId, userId } = req.body;
 
-    await db(`DELETE * FROM invitations WHERE id = ${inviteId};`);
+    await db(`DELETE FROM invitations WHERE id = ${inviteId};`);
 
     const results = await db(
       `SELECT * FROM invitations WHERE invitee = ${userId} OR invitor = ${userId};`

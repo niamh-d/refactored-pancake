@@ -109,14 +109,17 @@ VALUES
 CREATE TABLE `invitations`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `invitor` MEDIUMINT NOT NULL,
+    `invitorName` VARCHAR(40) NOT NULL,
     `invitorFamily` MEDIUMINT NOT NULL,
+    `invitorFamilyName` VARCHAR(40) NOT NULL,
     `invitee` MEDIUMINT NOT NULL,
+    `inviteeName` VARCHAR(40) NOT NULL,
     `inviteeRole` ENUM('primary', 'extended', 'third') NOT NULL
 )ENGINE=INNODB;
 
-INSERT INTO invitations(invitor, invitorFamily, invitee, inviteeRole)
+INSERT INTO invitations(invitor, invitorName, invitorFamily, invitorFamilyName, invitee, inviteeName, inviteeRole)
 VALUES
-    (10011, 20022, 10013, "third");
+    (10011, "Sofie Stephens", 20022, "Stephens", 10013, "Gale Vasquez", "third");
 
 
 ALTER TABLE

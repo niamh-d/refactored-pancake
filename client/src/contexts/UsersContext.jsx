@@ -30,7 +30,7 @@ function reducer(state, action) {
     case "SET_INVITATIONS":
       return {
         ...state,
-        invitations: action.payload,
+        currentInvitations: action.payload,
       };
     default:
       throw new Error("Unknown action type");
@@ -45,62 +45,40 @@ function UsersProvider({ children }) {
     dispatch,
   ] = useReducer(reducer, initialState);
 
+  // USE EFFECTS
+
+  // ** SYNC LOGGED IN USER FROM AUTH CONTEXT WITH CURRENT USER IN THIS CONTEXT **
+
   useEffect(() => {
     dispatch({ type: "SET_CURRENT_USER", payload: loggedInUser });
   }, [loggedInUser]);
 
+  // ** get invitations  **
+
   useEffect(() => {
-    async function getInvitations() {
-      const res = await fetch(
-        `/api/invitations?loggedInUser=${currentUser.id}`
-      );
-      const data = await res.json();
-      dispatch({ type: "SET_INVITATIONS", payload: data });
+    if (!currentUser && !currentInvitations.length) return;
+
+    if (!currentUser && currentInvitations.length) {
+      dispatch({ type: "SET_INVITATIONS", payload: [] });
+      return;
     }
 
-    if (!currentUser) return;
+    if (!currentUser && !currentInvitations.length) return;
 
     getInvitations();
   }, [currentUser]);
 
-  useEffect(() => {
-    async function insertIntoUserFamilyID() {
-      const options = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...currentUser, adminFamily: currentFamily.id }),
-      };
-      const res = await fetch(`/api/users/${currentUser.id}`, options);
-      const data = await res.json();
-      dispatch({ type: "SET_CURRENT_USER", payload: data[0] });
-    }
+  // ** insert family ID into user row for admin users upon creation of family  **
 
+  useEffect(() => {
     if (!currentUser || !currentFamily || currentUser.adminFamily) return;
 
     insertIntoUserFamilyID();
   }, [currentFamily, currentUser]);
 
+  // ** get current family  **
+
   useEffect(() => {
-    async function getFamily() {
-      try {
-        const res = await fetch(`/api/families?adminUser=${currentUser.id}`);
-        const data = await res.json();
-
-        const family = data[0];
-        if (!family) return;
-
-        dispatch({ type: "SET_CURRENT_FAMILY", payload: family });
-
-        const familyId = family.id;
-
-        fetchFamilyMembers(familyId);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
     if (!currentUser && !currentFamily) return;
 
     if (!currentUser && currentFamily) {
@@ -113,23 +91,9 @@ function UsersProvider({ children }) {
     getFamily();
   }, [currentUser, currentFamily]);
 
+  // ** get current children  **
+
   useEffect(() => {
-    async function getChildren() {
-      try {
-        const res = await fetch(
-          `/api/children?familyAdminGuardian=${currentUser.id}`
-        );
-        const data = await res.json();
-
-        const children = data;
-        if (!children.length) return;
-
-        dispatch({ type: "SET_CURRENT_CHILDREN", payload: children });
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
     if (!currentUser && !currentChildren.length) return;
 
     if (!currentUser && currentChildren.length) {
@@ -142,6 +106,8 @@ function UsersProvider({ children }) {
     getChildren();
   }, [currentUser, currentChildren]);
 
+  // SIGN UP EXISTING USER CHECK
+
   async function checkForExistingUser(email) {
     try {
       const res = await fetch(`/api/users/signup?email=${email}`);
@@ -150,6 +116,38 @@ function UsersProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  // USER FETCHES
+
+  async function addNewUser(user) {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      };
+      const res = await fetch("/api/users", options);
+      const data = await res.json();
+      dispatch({ type: "SET_CURRENT_USER", payload: data });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function insertIntoUserFamilyID() {
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...currentUser, adminFamily: currentFamily.id }),
+    };
+    const res = await fetch(`/api/users/${currentUser.id}`, options);
+    const data = await res.json();
+    dispatch({ type: "SET_CURRENT_USER", payload: data[0] });
   }
 
   async function updateUserInformation(details) {
@@ -174,22 +172,48 @@ function UsersProvider({ children }) {
     }
   }
 
-  async function addNewUser(user) {
+  // FAMILY FETCHES
+
+  async function getFamily() {
+    try {
+      const res = await fetch(`/api/families?adminUser=${currentUser.id}`);
+      const data = await res.json();
+
+      const family = data[0];
+      if (!family) return;
+
+      dispatch({ type: "SET_CURRENT_FAMILY", payload: family });
+
+      const familyId = family.id;
+
+      fetchFamilyMembers(familyId);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function addFamily(family) {
     try {
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify({ ...family, adminUser: currentUser.id }),
       };
-      const res = await fetch("/api/users", options);
+      const res = await fetch("/api/families", options);
       const data = await res.json();
-      dispatch({ type: "SET_CURRENT_USER", payload: data });
+      const id = data.id;
+
+      dispatch({ type: "SET_CURRENT_FAMILY", payload: data });
+      await createFamilyMembersTable(id);
+      fetchFamilyMembers(id);
     } catch (err) {
       console.error(err);
     }
   }
+
+  // FAMILY MEMBERS
 
   async function fetchFamilyMembers(id) {
     try {
@@ -222,22 +246,19 @@ function UsersProvider({ children }) {
     }
   }
 
-  async function addFamily(family) {
-    try {
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...family, adminUser: currentUser.id }),
-      };
-      const res = await fetch("/api/families", options);
-      const data = await res.json();
-      const id = data.id;
+  // CHILD FETCHES
 
-      dispatch({ type: "SET_CURRENT_FAMILY", payload: data });
-      await createFamilyMembersTable(id);
-      fetchFamilyMembers(id);
+  async function getChildren() {
+    try {
+      const res = await fetch(
+        `/api/children?familyAdminGuardian=${currentUser.id}`
+      );
+      const data = await res.json();
+
+      const children = data;
+      if (!children.length) return;
+
+      dispatch({ type: "SET_CURRENT_CHILDREN", payload: children });
     } catch (err) {
       console.error(err);
     }
@@ -264,6 +285,14 @@ function UsersProvider({ children }) {
     }
   }
 
+  // INVITATIONS FETCHES
+
+  async function getInvitations() {
+    const res = await fetch(`/api/invitations?loggedInUser=${currentUser.id}`);
+    const data = await res.json();
+    dispatch({ type: "SET_INVITATIONS", payload: data });
+  }
+
   async function addInvitation(details) {
     try {
       const options = {
@@ -274,9 +303,7 @@ function UsersProvider({ children }) {
         body: JSON.stringify(details),
       };
 
-      const res = await fetch("/api/invitations", options);
-      const data = await res.json();
-      dispatch({ type: "SET_INVITATIONS", payload: data });
+      await fetch("/api/invitations", options);
     } catch (err) {
       console.error(err);
     }
@@ -290,9 +317,12 @@ function UsersProvider({ children }) {
 
       const invitationDetails = {
         invitor: currentUser.id,
-        invitorFamily: currentUser.adminFamily,
+        invitorName: `${currentUser.firstName} ${currentUser.lastName}`,
+        invitorFamily: currentFamily.id,
+        invitorFamilyName: currentFamily.familyName,
         inviteeRole: role,
         invitee: data.id,
+        inviteeName: `${data.firstName} ${data.lastName}`,
       };
 
       if (data) addInvitation(invitationDetails);
@@ -319,24 +349,26 @@ function UsersProvider({ children }) {
     }
   }
 
-  async function acceptInvite() {
+  async function acceptInvite(invite) {
     try {
+      const details = {
+        guardianId: invite.invitee,
+        familyId: invite.invitorFamily,
+        role: invite.inviteeRole,
+      };
+
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          guardianId: invitation.invitee.id,
-          familyId: invitation.invitorFamily.id,
-          role: invitation.role,
-        }),
+        body: JSON.stringify(details),
       };
 
       const res = await fetch("/api/families/members", options);
       const data = await res.json();
 
-      dispatch({ type: "CLOSE_INVITE" });
+      closeInvite(invite.id);
 
       fetchFamilyMembers(data.id);
     } catch (err) {

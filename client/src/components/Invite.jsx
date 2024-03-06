@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useUsers } from "../contexts/UsersContext";
 
 function roleStr(role) {
@@ -8,9 +9,16 @@ function roleStr(role) {
 
 const Invite = ({ invite }) => {
   const { currentUser, closeInvite, acceptInvite } = useUsers();
-  const { invitee, inviteeRole, invitor, invitorFamily, id } = invite();
+  const {
+    invitee,
+    inviteeName,
+    inviteeRole,
+    invitorName,
+    invitorFamilyName,
+    id,
+  } = invite;
 
-  const isInvitee = invitee.id === currentUser.id;
+  const isInvitee = invitee === currentUser.id;
 
   const closeClickHandler = () => closeInvite(id);
   const acceptClickHandler = () => acceptInvite(invite);
@@ -18,10 +26,10 @@ const Invite = ({ invite }) => {
   const closeButtonMessage = isInvitee ? "Decline invite" : "Cancel invite";
 
   const partialMessage = isInvitee
-    ? `You have received an invite from ${invitor.firstName} ${invitor.lastName}`
-    : `You sent an invite to ${invitee.firstName} ${invitee.lastName}`;
+    ? `You have received an invite from ${invitorName}`
+    : `You sent an invite to ${inviteeName}`;
 
-  const message = `${partialMessage} to join family ${invitorFamily.familyName} as ${roleStr(inviteeRole)}.`;
+  const message = `${partialMessage} to join family ${invitorFamilyName} as ${roleStr(inviteeRole)}.`;
 
   return (
     <div role="alert" className="alert">
