@@ -36,13 +36,13 @@ VALUES
     ('Sofie', 'Stephens', 'sofie@email.com', 'qwerty', '123456789',  '1988-01-20', '1', '1', '1', 'stephens-sofie', 20022, 20022),
     ('Claus', 'Weismann', 'claus@email.com', 'qwerty', '123456789', '1987-02-12', '0', '0', '0', 'weismann-claus', 20023, 20023),
     ('Gale', 'Vasquez', 'gale@email.com', 'qwerty', '123456789', '1990-01-23', '1', '2', '2', 'vasquez-gale', null, null),
-    ('Milan', 'Zukal', 'milan@email.com', 'qwerty', '123456789', '1988-04-29', '0', '0', '0', 'zukal-milan', null, null),
+    ('Milan', 'Zukal', 'milan@email.com', 'qwerty', '123456789', '1988-04-29', '0', '0', '0', 'zukal-milan', null, 20022),
     ('Sebastian', 'Kruse', 'seb@email.com', 'qwerty', '123456789', '1988-07-23', '0', '2', '2', 'kruse-seb', null, null),
     ('Tiiu', 'Tamm', 'tiiu@email.com', 'qwerty', '123456789', '1987-10-25', '1', '1', '1', 'tamm-tiiu', null, null),
     ('Sara', 'Fitzpatrick', 'sara@email.com', 'qwerty', '123456789', '2000-04-23', '1', '1', '1', 'fitz-sara', null, null),
     ('Julia', 'Stone', 'julia@email.com', 'qwerty', '123456789', '1998-06-09', '1', '1', '1', 'stone-julia', null, null),
     ('Ava', 'Pohl', 'ava@email.com', 'qwerty', '123456789', '1992-04-23', '1', '1', '1', 'pohl-ava', null, null),
-    ('Jack', 'Michaels', 'jack@email.com', 'qwerty', '123456789', '1939-04-23', '0', '0', '0', 'michaels-jack', null, null);
+    ('Jack', 'Michaels', 'jack@email.com', 'qwerty', '123456789', '1939-04-23', '0', '0', '0', 'michaels-jack', null, 20022);
 
 
 CREATE TABLE `families`(

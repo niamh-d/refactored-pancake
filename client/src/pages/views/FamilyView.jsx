@@ -26,7 +26,7 @@ const FamilyView = () => {
       </section>
     );
 
-  const { guardians } = currentFamily;
+  const { guardians, familyName } = currentFamily;
   const primaries = guardians.filter((guardian) => guardian.isPrimaryGuardian);
   const extendeds = guardians.filter(
     (guardian) => guardian.isExtendedFamilyGuardian
@@ -36,7 +36,7 @@ const FamilyView = () => {
   return (
     <section className="app-container">
       <div className="p-5 mt-10">
-        <h1>Family</h1>
+        <h1>Family {familyName}</h1>
         <div className="grid grid-cols-2 gap-y-10 mt-12">
           <div>
             <h2>Children</h2>
