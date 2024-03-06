@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var familiesRouter = require("./routes/families");
 var childrenRouter = require("./routes/children");
+var invitationsRouter = require("./routes/invitations");
 
 var app = express();
 
@@ -21,5 +22,6 @@ app.use("/api/", indexRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/families", familiesRouter);
 app.use("/api/children", childrenRouter);
+app.use("/api/invitations", invitationsRouter);
 
 module.exports = app;

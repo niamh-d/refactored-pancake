@@ -87,8 +87,7 @@ VALUES
     ('adult', 10014, '0', '1', '0', '0'),
     ('child', 30033, '0', '0', '0', '0'),
     ('child', 30034, '0', '0', '0', '0'),
-    ('adult', 10020, '0', '0', '1', '0'),
-    ('adult', 10013, '0', '0', '0', '1');
+    ('adult', 10020, '0', '0', '1', '0');
 
 CREATE TABLE `family_20023_members`(
     `grp` ENUM('adult', 'child') NOT NULL,
@@ -112,8 +111,12 @@ CREATE TABLE `invitations`(
     `invitor` MEDIUMINT NOT NULL,
     `invitorFamily` MEDIUMINT NOT NULL,
     `invitee` MEDIUMINT NOT NULL,
-    `inviteeRole` VARCHAR(40) NOT NULL
+    `inviteeRole` ENUM('primary', 'extended', 'third') NOT NULL
 )ENGINE=INNODB;
+
+INSERT INTO invitations(invitor, invitorFamily, invitee, inviteeRole)
+VALUES
+    (10011, 20022, 10013, "third");
 
 
 ALTER TABLE
