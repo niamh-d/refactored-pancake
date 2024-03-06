@@ -10,8 +10,8 @@ const UsersContext = createContext();
 const initialState = {
   currentUser: null,
   currentFamily: null,
-  currentChildren: [],
-  currentInvitations: [],
+  currentChildren: null,
+  currentInvitations: null,
   isNonAdmin: false,
 };
 
@@ -57,9 +57,9 @@ function UsersProvider({ children }) {
   // STATE RESET ON LOG OUT
 
   function stateReset() {
-    dispatch({ type: "SET_CURRENT_CHILDREN", payload: [] });
-    dispatch({ type: "SET_CURRENT_FAMILY", payload: [] });
-    dispatch({ type: "SET_INVITATIONS", payload: [] });
+    dispatch({ type: "SET_CURRENT_CHILDREN", payload: null });
+    dispatch({ type: "SET_CURRENT_FAMILY", payload: null });
+    dispatch({ type: "SET_INVITATIONS", payload: null });
     dispatch({ type: "TOGGLE_NON_ADMIN", payload: false });
   }
 
@@ -84,7 +84,7 @@ function UsersProvider({ children }) {
 
   useEffect(() => {
     if (!currentFamily) return;
-    if (currentChildren.length) return;
+    if (currentChildren) return;
 
     getChildren();
   }, [currentFamily]);
@@ -230,7 +230,6 @@ function UsersProvider({ children }) {
 
   async function getChildren() {
     try {
-      console.log(currentFamily.adminUser);
       const res = await fetch(
         `/api/children?familyAdminGuardian=${currentFamily.adminUser}`
       );

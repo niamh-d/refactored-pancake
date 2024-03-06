@@ -14,7 +14,7 @@ function AppLayout() {
     <>
       <main>
         <AppHeader />
-        {currentInvitations.length > 0 && <AnnouncementInvites />}
+        {currentInvitations && <AnnouncementInvites />}
         <InnerAppNav />
         <Outlet />
       </main>

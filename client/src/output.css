@@ -2090,6 +2090,14 @@ main {
   width: 1.5rem;
 }
 
+.w-28 {
+  width: 7rem;
+}
+
+.w-36 {
+  width: 9rem;
+}
+
 .max-w-xs {
   max-width: 20rem;
 }

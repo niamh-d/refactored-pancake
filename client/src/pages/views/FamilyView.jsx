@@ -9,9 +9,9 @@ function filterChildrenByAge(children) {
 }
 
 const FamilyView = () => {
-  const { currentChildren, currentFamily } = useUsers();
+  const { currentChildren, currentFamily, currentUser } = useUsers();
 
-  if (!currentFamily)
+  if (!currentUser.family)
     return (
       <section className="app-container">
         <div className="p-5 mt-10">

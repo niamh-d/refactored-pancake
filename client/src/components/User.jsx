@@ -31,7 +31,7 @@ function User() {
             {`${firstName} ${lastName}`}
           </span>
 
-          {currentUser.family && (
+          {currentFamily && (
             <div className="flex gap-2 font-semibold">
               <Tooltip title={`Family ${currentFamily.familyName}`}>
                 <HomeIcon />

@@ -68,7 +68,7 @@ const ProfileEdit = () => {
                   defaultValue={fnInputValue}
                   id="first-name"
                   ref={firstNameInputRef}
-                  className="input input-bordered"
+                  className="input input-bordered w-36"
                 />
               </div>
 
@@ -81,7 +81,7 @@ const ProfileEdit = () => {
                   onChange={(date) => setDate(date)}
                   selected={date}
                   dateFormat="dd/MM/yyyy"
-                  className="input input-bordered"
+                  className="input input-bordered w-36"
                 />
               </div>
               <div>
@@ -112,7 +112,7 @@ const ProfileEdit = () => {
                   id="last-name"
                   defaultValue={lnInputValue}
                   ref={lastNameInputRef}
-                  className="input input-bordered"
+                  className="input input-bordered w-36"
                 />
               </div>
               <div>
