@@ -3,6 +3,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer, useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { useAuth } from "./AuthContext";
 
 const UsersContext = createContext();
@@ -42,6 +44,7 @@ function reducer(state, action) {
 
 function UsersProvider({ children }) {
   const { loggedInUser } = useAuth();
+  const navigate = useNavigate();
 
   const [
     {
@@ -345,6 +348,8 @@ function UsersProvider({ children }) {
         },
         body: JSON.stringify(details),
       };
+
+      navigate("/app/profile", { replace: true });
 
       const res = await fetch("/api/families/members", options);
       const data = await res.json();
