@@ -105,6 +105,7 @@ CREATE TABLE `family_20023_members`(
 INSERT INTO family_20023_members(grp, userId, isAdminUser, isPrimaryGuardian)
 VALUES
     ('adult', 10012, '1', '1'),
+    ('adult', 10017, '0', '1'),
     ('child', 30035, '0', '0'),
     ('child', 30036, '0', '0'),
     ('child', 30037, '0', '0');
