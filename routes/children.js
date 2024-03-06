@@ -5,9 +5,16 @@ const db = require("../model/helper");
 router.post("/", async function (req, res, next) {
   try {
     const body = req.body;
-    const { firstName, gender, dob, primaryFamily, familyAdminGuardian } = body;
-    await db(`INSERT INTO children(firstName, gender, dob, primaryFamily, familyAdminGuardian)
-    VALUES('${firstName}', '${gender}', '${dob}', '${primaryFamily}', '${familyAdminGuardian}');`);
+    const {
+      firstName,
+      gender,
+      dob,
+      pronouns,
+      primaryFamily,
+      familyAdminGuardian,
+    } = body;
+    await db(`INSERT INTO children(firstName, gender, pronouns, dob, primaryFamily, familyAdminGuardian)
+    VALUES('${firstName}', '${gender}', '${pronouns}', '${dob}', '${primaryFamily}', '${familyAdminGuardian}');`);
 
     const childRes = await db(
       `SELECT id from children ORDER BY id DESC LIMIT 1;`

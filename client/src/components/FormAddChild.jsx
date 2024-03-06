@@ -9,7 +9,8 @@ const FormAddChild = ({ handler }) => {
   const { addChild } = useUsers();
 
   const firstNameInputRef = useRef(null);
-  const genderSelectRef = useRef("1");
+  const genderSelectRef = useRef("0");
+  const pronounsSelectRef = useRef("0");
 
   const starterDate = new Date("2015-01-01");
 
@@ -24,6 +25,7 @@ const FormAddChild = ({ handler }) => {
       firstName: firstNameInputRef.current.value,
       gender: genderSelectRef.current.value,
       dob: date.toISOString().substring(0, 10),
+      pronouns: pronounsSelectRef.current.value,
     };
 
     addChild(newChildDetails);
@@ -64,6 +66,22 @@ const FormAddChild = ({ handler }) => {
               <option value="0">Male</option>
               <option value="1">Female</option>
               <option value="2">Non-binary</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="pronouns" className="label">
+              Pronouns
+            </label>
+
+            <select
+              className="select select-bordered max-w-xs text-lg"
+              type="text"
+              id="gender"
+              ref={pronounsSelectRef}
+            >
+              <option value="0">He/him</option>
+              <option value="1">She/her</option>
+              <option value="2">They/them</option>
             </select>
           </div>
           <div>

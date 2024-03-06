@@ -67,17 +67,21 @@ const AdminView = () => {
                 )}
               </div>
             )}
-            {!addChildFormIsOpen && !inviteGuardianFormIsOpen && (
-              <button
-                className="btn  btn-secondary mt-8 text-xl"
-                onClick={() => setAddChildFormIsOpen(true)}
-              >
-                <PersonAddAlt1Icon />
-                Add child
-              </button>
-            )}
+            {adminFamily &&
+              !addChildFormIsOpen &&
+              !inviteGuardianFormIsOpen && (
+                <button
+                  className="btn  btn-secondary mt-8 text-xl"
+                  onClick={() => setAddChildFormIsOpen(true)}
+                >
+                  <PersonAddAlt1Icon />
+                  Add child
+                </button>
+              )}
 
-            {!adminFamily && addFamilyFormIsOpen && <FormAddFamily />}
+            {!adminFamily && addFamilyFormIsOpen && (
+              <FormAddFamily handler={setAddFamilyFormIsOpen} />
+            )}
             {adminFamily && addChildFormIsOpen && (
               <FormAddChild handler={setAddChildFormIsOpen} />
             )}

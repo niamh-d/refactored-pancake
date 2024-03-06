@@ -81,13 +81,22 @@ const FormInviteGuardian = ({ handler }) => {
             />
             {!emailsAreMatching && <p className="mt-5">Emails must match</p>}
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary w-44 mt-3"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              className="btn btn-primary w-44 mt-3"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              className="btn btn-ghost w-33 mt-3"
+              onClick={() => handler(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </form>
     </div>
