@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+
+import { NavLink } from "react-router-dom";
+
 import SchoolIcon from "@mui/icons-material/School";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import HomeIcon from "@mui/icons-material/Home";
@@ -8,9 +11,13 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonIcon from "@mui/icons-material/Person";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 
-import { NavLink } from "react-router-dom";
+import { useUsers } from "../contexts/UsersContext";
 
 const AppIconsNavList = () => {
+  const { currentUser } = useUsers();
+
+  const { adminFamily, family } = useUsers();
+
   return (
     <ul className="flex gap-20 justify-around text-4xl icons-nav">
       <li className="flex align-middle">
@@ -20,14 +27,15 @@ const AppIconsNavList = () => {
           </Tooltip>
         </NavLink>
       </li>
-      <li className="flex align-middle">
-        <NavLink to="admin">
-          <Tooltip title="Admin Panel">
-            <HomeIcon fontSize="inherit" />
-          </Tooltip>
-        </NavLink>
-      </li>
-
+      {family && !adminFamily && (
+        <li className="flex align-middle">
+          <NavLink to="admin">
+            <Tooltip title="Admin Panel">
+              <HomeIcon fontSize="inherit" />
+            </Tooltip>
+          </NavLink>
+        </li>
+      )}
       <li className="flex align-middle">
         <NavLink to="family">
           <Tooltip title="Family">
