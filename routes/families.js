@@ -2,6 +2,18 @@ var express = require("express");
 var router = express.Router();
 const db = require("../model/helper");
 
+router.get("/", async function (req, res, next) {
+  try {
+    const id = req.query.id;
+
+    const results = await db(`SELECT * FROM families WHERE id = ${id};`);
+
+    res.send(results.data);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 router.post("/", async function (req, res, next) {
   try {
     const body = req.body;
@@ -14,20 +26,6 @@ router.post("/", async function (req, res, next) {
     );
 
     res.send(results.data[0]);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
-
-router.get("/", async function (req, res, next) {
-  try {
-    const adminUser = req.query.adminUser;
-
-    const results = await db(
-      `SELECT * FROM families WHERE adminUser = ${adminUser};`
-    );
-
-    res.send(results.data);
   } catch (err) {
     res.status(500).send(err.message);
   }

@@ -12,6 +12,7 @@ const initialState = {
   currentFamily: null,
   currentChildren: [],
   currentInvitations: [],
+  isNonAdmin: false,
 };
 
 function reducer(state, action) {
@@ -25,6 +26,8 @@ function reducer(state, action) {
         ...state,
         currentFamily: { ...state.currentFamily, members: action.payload },
       };
+    case "TOGGLE_NON_ADMIN":
+      return { ...state, isNonAdmin: action.payload };
     case "SET_CURRENT_CHILDREN":
       return { ...state, currentChildren: action.payload };
     case "SET_INVITATIONS":
@@ -41,7 +44,13 @@ function UsersProvider({ children }) {
   const { loggedInUser } = useAuth();
 
   const [
-    { currentUser, currentFamily, currentChildren, currentInvitations },
+    {
+      currentUser,
+      currentFamily,
+      currentChildren,
+      currentInvitations,
+      isNonAdmin,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -86,6 +95,7 @@ function UsersProvider({ children }) {
 
     if (!currentUser && currentFamily) {
       dispatch({ type: "SET_CURRENT_FAMILY", payload: null });
+      dispatch({ type: "TOGGLE_NON_ADMIN", payload: false });
       return;
     }
 
@@ -166,11 +176,15 @@ function UsersProvider({ children }) {
 
   async function getFamily() {
     try {
-      const res = await fetch(`/api/families?adminUser=${currentUser.id}`);
+      const res = await fetch(`/api/families?id=${currentUser.family}`);
       const data = await res.json();
 
       const family = data[0];
       if (!family) return;
+
+      if (currentUser.family && !currentUser.adminFamily) {
+        dispatch({ type: "TOGGLE_NON_ADMIN", payload: true });
+      }
 
       dispatch({ type: "SET_CURRENT_FAMILY", payload: family });
 
@@ -386,6 +400,7 @@ function UsersProvider({ children }) {
         currentFamily,
         currentChildren,
         currentInvitations,
+        isNonAdmin,
       }}
     >
       {children}

@@ -14,9 +14,7 @@ import Diversity1Icon from "@mui/icons-material/Diversity1";
 import { useUsers } from "../contexts/UsersContext";
 
 const AppIconsNavList = () => {
-  const { currentUser } = useUsers();
-
-  const { adminFamily, family } = useUsers();
+  const { isNonAdmin } = useUsers();
 
   return (
     <ul className="flex gap-20 justify-around text-4xl icons-nav">
@@ -27,7 +25,7 @@ const AppIconsNavList = () => {
           </Tooltip>
         </NavLink>
       </li>
-      {family && !adminFamily && (
+      {!isNonAdmin && (
         <li className="flex align-middle">
           <NavLink to="admin">
             <Tooltip title="Admin Panel">
