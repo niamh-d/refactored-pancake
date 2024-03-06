@@ -13,15 +13,21 @@ const FamilyView = () => {
 
   if (!currentFamily)
     return (
-      <p>
-        You are currently not a member of a family. Set up a family from the
-        Admin Panel or accept an invitation to join a family.
-      </p>
+      <section className="app-container">
+        <div className="p-5 mt-10">
+          <h1>Family 404</h1>
+          <p className="mt-5 text-xl">
+            Family not found. You are currently{" "}
+            <span className="font-semibold">not</span> a member of a family. Set
+            up a family from the Admin Panel or accept an invitation from
+            another user to join their family.
+          </p>
+        </div>
+      </section>
     );
 
   const { members } = currentFamily;
   const primaries = members.filter((guardian) => guardian.isPrimaryGuardian);
-  const familyAdmin = members.filter((guardian) => guardian.isAdminUser);
   const extendeds = members.filter(
     (guardian) => guardian.isExtendedFamilyGuardian
   );
