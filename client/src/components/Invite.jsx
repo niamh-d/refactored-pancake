@@ -1,32 +1,27 @@
-/* eslint-disable react/prop-types */
 import { useUsers } from "../contexts/UsersContext";
 
-const AnnouncementInvite = ({ invitation }) => {
+function roleStr(role) {
+  if (role === "primary") return "Primary Guardian";
+  if (role === "extended") return "Extended Family";
+  if (role === "third") return "Friend/Neighbor";
+}
+
+const Invite = ({ invite }) => {
   const { currentUser, closeInvite, acceptInvite } = useUsers();
+  const { invitee, inviteeRole, invitor, invitorFamily, id } = invite();
 
-  const { invitor, invitee, role, invitorFamily } = invitation;
+  const isInvitee = invitee.id === currentUser.id;
 
-  const userId = currentUser.id;
+  const closeClickHandler = () => closeInvite(id);
+  const acceptClickHandler = () => acceptInvite(invite);
 
-  const isInvitor = invitor.id === userId;
-  const isInvitee = invitee.id === userId;
-
-  const closeButtonMessage = isInvitor ? "Cancel invite" : "Decline invite";
-
-  const roleStr = (role) => {
-    if (role === "primary") return "Primary Guardian";
-    if (role === "extended") return "Extended Family";
-    if (role === "third") return "Friend/Neighbor";
-  };
+  const closeButtonMessage = isInvitee ? "Decline invite" : "Cancel invite";
 
   const partialMessage = isInvitee
     ? `You have received an invite from ${invitor.firstName} ${invitor.lastName}`
     : `You sent an invite to ${invitee.firstName} ${invitee.lastName}`;
 
-  const message = `${partialMessage} to join family ${invitorFamily.familyName} as ${roleStr(role)}.`;
-
-  const closeClickHandler = () => closeInvite();
-  const acceptClickHandler = () => acceptInvite();
+  const message = `${partialMessage} to join family ${invitorFamily.familyName} as ${roleStr(inviteeRole)}.`;
 
   return (
     <div role="alert" className="alert">
@@ -61,4 +56,4 @@ const AnnouncementInvite = ({ invitation }) => {
   );
 };
 
-export default AnnouncementInvite;
+export default Invite;

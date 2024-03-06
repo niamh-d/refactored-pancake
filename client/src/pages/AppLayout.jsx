@@ -3,18 +3,18 @@ import { Outlet } from "react-router-dom";
 import AppHeader from "../components/AppHeader";
 import InnerAppNav from "../components/InnerAppNav";
 import Footer from "../components/Footer";
-import AnnouncementInvite from "../components/AnnouncementInvite";
+import AnnouncementInvites from "../components/AnnouncementInvites";
 
 import { useUsers } from "../contexts/UsersContext";
 
 function AppLayout() {
-  const { invitation } = useUsers();
+  const { currentInvitations } = useUsers();
 
   return (
     <>
       <main>
         <AppHeader />
-        {invitation && <AnnouncementInvite invitation={invitation} />}
+        {currentInvitations.length > 0 && <AnnouncementInvites />}
         <InnerAppNav />
         <Outlet />
       </main>

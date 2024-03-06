@@ -11,7 +11,7 @@ const initialState = {
   currentUser: null,
   currentFamily: null,
   currentChildren: [],
-  invitation: null,
+  currentInvitations: [],
 };
 
 function reducer(state, action) {
@@ -27,17 +27,11 @@ function reducer(state, action) {
       };
     case "SET_CURRENT_CHILDREN":
       return { ...state, currentChildren: action.payload };
-    case "SET_INVITE":
+    case "SET_INVITATIONS":
       return {
         ...state,
-        invitation: {
-          ...action.payload,
-          invitor: state.currentUser,
-          invitorFamily: state.currentFamily,
-        },
+        invitations: action.payload,
       };
-    case "CLOSE_INVITE":
-      return { ...state, invitation: null };
     default:
       throw new Error("Unknown action type");
   }
@@ -47,13 +41,27 @@ function UsersProvider({ children }) {
   const { loggedInUser } = useAuth();
 
   const [
-    { currentUser, currentFamily, currentChildren, invitation },
+    { currentUser, currentFamily, currentChildren, currentInvitations },
     dispatch,
   ] = useReducer(reducer, initialState);
 
   useEffect(() => {
     dispatch({ type: "SET_CURRENT_USER", payload: loggedInUser });
   }, [loggedInUser]);
+
+  useEffect(() => {
+    async function getInvitations() {
+      const res = await fetch(
+        `/api/invitations?loggedInUser=${currentUser.id}`
+      );
+      const data = await res.json();
+      dispatch({ type: "SET_INVITATIONS", payload: data });
+    }
+
+    if (!currentUser) return;
+
+    getInvitations();
+  }, [currentUser]);
 
   useEffect(() => {
     async function insertIntoUserFamilyID() {
@@ -256,13 +264,38 @@ function UsersProvider({ children }) {
     }
   }
 
+  async function addInvitation(details) {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(details),
+      };
+
+      const res = await fetch("/api/invitations", options);
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async function inviteGuardian(guardian) {
     try {
       const { email, role } = guardian;
       const res = await fetch(`/api/users?email=${email}`);
       const data = await res.json();
 
-      dispatch({ type: "SET_INVITE", payload: { invitee: data, role } });
+      const invitationDetails = {
+        invitor: currentUser.id,
+        invitorFamily: currentUser.adminFamily,
+        inviteeRole: role,
+        invitee: data.id,
+      };
+
+      if (data) addInvitation(invitationDetails);
     } catch (err) {
       console.error(err);
     }
@@ -311,7 +344,7 @@ function UsersProvider({ children }) {
         currentUser,
         currentFamily,
         currentChildren,
-        invitation,
+        currentInvitations,
       }}
     >
       {children}
