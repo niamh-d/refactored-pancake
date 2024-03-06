@@ -89,7 +89,7 @@ const AdminView = () => {
           {adminFamily && currentChildren.length === 0 && (
             <p className="text-lg">You haven&apos;t added any children yet.</p>
           )}
-          {currentChildren.length > 0 && (
+          {adminFamily && currentChildren.length > 0 && (
             <div>
               <h3>Children:</h3>
               <ul className="flex flex-col gap-5 mt-5">
@@ -99,7 +99,7 @@ const AdminView = () => {
               </ul>
             </div>
           )}
-          {currentFamily.members && (
+          {adminFamily && currentFamily.members && (
             <div>
               <h3>Other Guardians:</h3>
               <ul className="flex flex-col gap-5 mt-5">
