@@ -15,6 +15,7 @@ const initialState = {
   currentChildren: null,
   currentInvitations: null,
   isNonAdmin: false,
+  currentDoctors: null,
 };
 
 function reducer(state, action) {
@@ -32,6 +33,8 @@ function reducer(state, action) {
       return { ...state, isNonAdmin: action.payload };
     case "SET_CURRENT_CHILDREN":
       return { ...state, currentChildren: action.payload };
+    case "SET_CURRENT_DOCTORS":
+      return { ...state, currentDoctors: action.payload };
     case "SET_INVITATIONS":
       return {
         ...state,
@@ -50,6 +53,7 @@ function UsersProvider({ children }) {
     {
       currentUser,
       currentFamily,
+      currentDoctors,
       currentChildren,
       currentInvitations,
       isNonAdmin,
@@ -62,6 +66,7 @@ function UsersProvider({ children }) {
   function stateReset() {
     dispatch({ type: "SET_CURRENT_CHILDREN", payload: null });
     dispatch({ type: "SET_CURRENT_FAMILY", payload: null });
+    dispatch({ type: "SET_CURRENT_DOCTORS", payload: null });
     dispatch({ type: "SET_INVITATIONS", payload: null });
     dispatch({ type: "TOGGLE_NON_ADMIN", payload: false });
   }
@@ -83,6 +88,7 @@ function UsersProvider({ children }) {
 
     getInvitations();
     getFamily();
+    getDoctors();
   }, [currentUser]);
 
   useEffect(() => {
@@ -286,6 +292,19 @@ function UsersProvider({ children }) {
     }
   }
 
+  // DOCTOR FETCHES
+
+  async function getDoctors() {
+    try {
+      const res = await fetch(`/api/health?familyId=${currentUser.family}`);
+      const data = await res.json();
+
+      dispatch({ type: "SET_CURRENT_DOCTORS", payload: data });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   // INVITATIONS FETCHES
 
   async function getInvitations() {
@@ -396,6 +415,8 @@ function UsersProvider({ children }) {
         updateUserInformation,
         checkForExistingUser,
         removeGuardian,
+        getDoctors,
+        currentDoctors,
         currentUser,
         currentFamily,
         currentChildren,

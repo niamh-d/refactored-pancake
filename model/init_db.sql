@@ -126,6 +126,24 @@ VALUES
     (10011, "Sofie Stephens", 20022, "Stephens", 10013, "Gale Vasquez", "third");
 
 
+CREATE TABLE `familyDoctors`(
+    `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `firstName` VARCHAR(40) NOT NULL,
+    `lastName` VARCHAR(40) NOT NULL,
+    `clinicName` VARCHAR(40) NOT NULL,
+    `clinicPhoneNo` VARCHAR(30) NOT NULL,
+    `streetAddress` VARCHAR(40) NOT NULL,
+    `city` VARCHAR(40) NOT NULL,
+    `websiteURL` VARCHAR(40) NULL,
+    `family` MEDIUMINT NOT NULL
+);
+
+INSERT INTO familyDoctors(firstName, lastName, clinicName, clinicPhoneNo, streetAddress, city, websiteURL, family)
+VALUES
+    ('Indrek', 'Oibupuu', 'Confido', '1330', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
+    ('Ingrid', 'Kapp', 'Ülemiste Perekliinik', '1330', 'Valukoja 7', 'Tallinn', 'https://perekliinik.ee/', 20022);
+
+
 ALTER TABLE
     `families` ADD CONSTRAINT `families_adminuser_foreign` FOREIGN KEY(`adminUser`) REFERENCES `users`(`id`);
 ALTER TABLE
@@ -140,3 +158,5 @@ ALTER TABLE
     `invitations` ADD CONSTRAINT `invitations_invitee_foreign` FOREIGN KEY(`invitee`) REFERENCES `users`(`id`);
 ALTER TABLE
     `invitations` ADD CONSTRAINT `invitations_invitorfamily_foreign` FOREIGN KEY(`invitorFamily`) REFERENCES `families`(`id`);
+ALTER TABLE
+    `familyDoctors` ADD CONSTRAINT `familydoctors_family_foreign` FOREIGN KEY(`family`) REFERENCES `families`(`id`);
