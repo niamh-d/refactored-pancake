@@ -119,7 +119,7 @@ CREATE TABLE `invitations`(
     `invitee` MEDIUMINT NOT NULL,
     `inviteeName` VARCHAR(40) NOT NULL,
     `inviteeRole` ENUM('primary', 'extended', 'third') NOT NULL
-)ENGINE=INNODB;
+)ENGINE=INNODB AUTO_INCREMENT = 40044;
 
 INSERT INTO invitations(invitor, invitorName, invitorFamily, invitorFamilyName, invitee, inviteeName, inviteeRole)
 VALUES
@@ -130,18 +130,21 @@ CREATE TABLE `familyDoctors`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `firstName` VARCHAR(40) NOT NULL,
     `lastName` VARCHAR(40) NOT NULL,
+    `languages` VARCHAR(40) NOT NULL,
+    `doctorType` VARCHAR(40) NOT NULL,
     `clinicName` VARCHAR(40) NOT NULL,
     `clinicPhoneNo` VARCHAR(30) NOT NULL,
     `streetAddress` VARCHAR(40) NOT NULL,
     `city` VARCHAR(40) NOT NULL,
     `websiteURL` VARCHAR(40) NULL,
     `family` MEDIUMINT NOT NULL
-);
+)ENGINE=INNODB AUTO_INCREMENT = 50055;
 
-INSERT INTO familyDoctors(firstName, lastName, clinicName, clinicPhoneNo, streetAddress, city, websiteURL, family)
+INSERT INTO familyDoctors(firstName, lastName, languages, doctorType, clinicName, clinicPhoneNo, streetAddress, city, websiteURL, family)
 VALUES
-    ('Indrek', 'Oibupuu', 'Confido', '1330', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
-    ('Ingrid', 'Kapp', 'Ülemiste Perekliinik', '1330', 'Valukoja 7', 'Tallinn', 'https://perekliinik.ee/', 20022);
+    ('Indrek', 'Oibupuu', 'EE,RU,GB', 'Family doctor', 'Confido', '1330', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
+    ('Helen', 'Ilves', 'EE,GB,DE', 'Pyschologist', 'Confido', '1330', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
+    ('Ingrid', 'Kapp', 'EE,GB,SE,FI', 'Family doctor', 'Ülemiste Perekliinik', '1330', 'Valukoja 7', 'Tallinn', 'https://perekliinik.ee/', 20022);
 
 
 ALTER TABLE
