@@ -2,6 +2,9 @@
 import CakeIcon from "@mui/icons-material/Cake";
 import StarIcon from "@mui/icons-material/Star";
 import Tooltip from "@mui/material/Tooltip";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+
+import { useUsers } from "../contexts/UsersContext";
 
 const BASE_SOURCE = "../../imgs/users/";
 
@@ -31,11 +34,21 @@ function dateCleaner(date) {
   return d.toDateString().slice(4);
 }
 
-const AdminPersonRow = ({ person }) => {
-  const { gender, firstName, lastName, dob, photoSource, pronouns } = person;
+const AdminPersonRow = ({ person, showRemove }) => {
+  const { removeGuardian } = useUsers();
+
+  const { gender, firstName, lastName, dob, photoSource, pronouns, id } =
+    person;
+
+  const removeHandler = () => removeGuardian(person.id);
 
   return (
     <li className="flex gap-5 text-xl items-center">
+      {showRemove && (
+        <Tooltip title="Remove guardian from family">
+          <PersonRemoveIcon onClick={removeHandler} />
+        </Tooltip>
+      )}
       {photoSource && (
         <img
           alt="user image"

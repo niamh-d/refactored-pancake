@@ -2082,20 +2082,16 @@ main {
   width: 75%;
 }
 
+.w-36 {
+  width: 9rem;
+}
+
 .w-44 {
   width: 11rem;
 }
 
 .w-6 {
   width: 1.5rem;
-}
-
-.w-28 {
-  width: 7rem;
-}
-
-.w-36 {
-  width: 9rem;
 }
 
 .max-w-xs {
