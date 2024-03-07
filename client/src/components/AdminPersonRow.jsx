@@ -40,13 +40,16 @@ const AdminPersonRow = ({ person, showRemove }) => {
   const { gender, firstName, lastName, dob, photoSource, pronouns, id } =
     person;
 
-  const removeHandler = () => removeGuardian(person.id);
+  const removeHandler = () => removeGuardian(id);
 
   return (
     <li className="flex gap-5 text-xl items-center">
       {showRemove && (
-        <Tooltip title="Remove guardian from family">
-          <PersonRemoveIcon onClick={removeHandler} />
+        <Tooltip title={`Remove ${firstName} from family`}>
+          <PersonRemoveIcon
+            onClick={removeHandler}
+            className="cursor-pointer"
+          />
         </Tooltip>
       )}
       {photoSource && (

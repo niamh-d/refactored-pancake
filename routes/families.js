@@ -82,6 +82,22 @@ router.post("/members", async function (req, res, next) {
   }
 });
 
+router.delete("/members", async function (req, res, next) {
+  try {
+    const { guardianId, familyId } = req.body;
+
+    const tableName = `family_${familyId}_members`;
+
+    await db(`DELETE FROM ${tableName} WHERE userId = ${guardianId};`);
+
+    await db(`UPDATE users SET family = NULL WHERE id = '${guardianId}';`);
+
+    res.send({ message: "Guardian deleted successfully!" });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;
 
 //OLD ENDPOINT NOT USING JOIN

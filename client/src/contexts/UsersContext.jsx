@@ -198,6 +198,24 @@ function UsersProvider({ children }) {
 
   // FAMILY MEMBERS
 
+  async function removeGuardian(guardianId) {
+    try {
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ guardianId, familyId: currentUser.adminFamily }),
+      };
+
+      await fetch("/api/families/members", options);
+
+      fetchGuardians(currentUser.adminFamily);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async function fetchGuardians(id) {
     try {
       const res = await fetch(`/api/families/members?familyId=${id}`);
@@ -377,6 +395,7 @@ function UsersProvider({ children }) {
         acceptInvite,
         updateUserInformation,
         checkForExistingUser,
+        removeGuardian,
         currentUser,
         currentFamily,
         currentChildren,
