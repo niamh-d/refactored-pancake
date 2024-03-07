@@ -200,8 +200,8 @@ function UsersProvider({ children }) {
 
       // ** insert family ID into user row for admin users upon creation of family  **
       updateUserInformation({
-        adminFamily: currentFamily.id,
-        family: currentFamily.id,
+        adminFamily: id,
+        family: id,
       });
     } catch (err) {
       console.error(err);
