@@ -10,9 +10,6 @@ router.put("/:id", async function (req, res, next) {
       firstName,
       lastName,
       dob,
-      email,
-      password,
-      phoneNumber,
       gender,
       sex,
       pronouns,
@@ -20,7 +17,7 @@ router.put("/:id", async function (req, res, next) {
       family,
     } = details;
     await db(
-      `UPDATE users SET firstName = '${firstName}', lastName = '${lastName}', dob = '${dob}', sex = '${sex}', gender = '${gender}', pronouns = '${pronouns}', family = '${family}'  WHERE id = '${id}'`
+      `UPDATE users SET firstName = '${firstName}', lastName = '${lastName}', dob = '${dob}', sex = '${sex}', gender = '${gender}', pronouns = '${pronouns}', family = '${family}' WHERE id = '${id}'`
     );
     if (adminFamily)
       await db(
@@ -88,8 +85,8 @@ router.post("/", async function (req, res, next) {
       sex,
       pronouns,
     } = user;
-    await db(`INSERT INTO users(firstName, lastName, email, password, phoneNumber, dob, sex, gender, pronouns)
-    VALUES('${firstName}','${lastName}','${email}','${password}','${phoneNumber}', '${dob}','${sex}', '${gender}', '${pronouns}');`);
+    await db(`INSERT INTO users(firstName, lastName, email, password, phoneNumber, dob, sex, gender, pronouns, photoSource)
+    VALUES('${firstName}','${lastName}','${email}','${password}','${phoneNumber}', '${dob}','${sex}', '${gender}', '${pronouns}', 'fox-fox');`);
 
     const results = await db("SELECT * FROM users ORDER BY id DESC LIMIT 1;");
     res.send(results.data[0]);
