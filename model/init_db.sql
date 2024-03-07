@@ -48,7 +48,7 @@ VALUES
 
 CREATE TABLE `families`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `familyName` VARCHAR(30) NOT NULL,
+    `familyName` VARCHAR(40) NOT NULL,
     `adminUser` MEDIUMINT NOT NULL
 )ENGINE=INNODB AUTO_INCREMENT = 20022;
 
@@ -60,6 +60,7 @@ VALUES
 CREATE TABLE `children`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `firstName` VARCHAR(40) NOT NULL,
+    `sex` ENUM('0', '1', '2') NOT NULL DEFAULT '0',
     `gender` ENUM('0', '1', '2') NOT NULL DEFAULT '0',
     `pronouns` ENUM('0', '1', '2') NOT NULL DEFAULT '0',
     `dob` CHAR(10) NOT NULL,
