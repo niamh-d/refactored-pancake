@@ -144,7 +144,37 @@ INSERT INTO familyDoctors(firstName, lastName, languages, doctorType, clinicName
 VALUES
     ('Indrek', 'Oibupuu', 'EE,RU,GB', 'Family doctor', 'Confido', '1330', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
     ('Helen', 'Ilves', 'EE,GB,DE', 'Pyschologist', 'Confido', '1330', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
-    ('Ingrid', 'Kapp', 'EE,GB,SE,FI', 'Family doctor', 'Ülemiste Perekliinik', '1330', 'Valukoja 7', 'Tallinn', 'https://perekliinik.ee/', 20022);
+    ('Ingrid', 'Kapp', 'EE,GB,SE,FI', 'Family doctor', 'Ülemiste Perekliinik', '6665534', 'Valukoja 7', 'Tallinn', 'https://perekliinik.ee/', 20022);
+
+CREATE TABLE `schools`(
+    `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `schoolName` VARCHAR(40) NOT NULL,
+    `schoolPhoneNo` VARCHAR(30) NOT NULL,
+    `streetAddress` VARCHAR(40) NOT NULL,
+    `city` VARCHAR(40) NOT NULL,
+    `websiteURL` VARCHAR(40) NULL,
+    `family` MEDIUMINT NOT NULL
+)ENGINE=INNODB AUTO_INCREMENT = 60066;
+
+INSERT INTO schools(schoolName, schoolPhoneNo, streetAddress, city, websiteURL, family)
+VALUES
+    ('Tallinna Inglise Kolledž', '6461306', 'Estonia pst 10', 'Tallinn', 'https://tik.edu.ee/', 20022),
+    ('Tallinna Reaalkool', '6992026', 'Estonia pst 6', 'Tallinn', 'https://real.edu.ee/', 20022);
+
+CREATE TABLE `teachers`(
+    `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `firstName` VARCHAR(40) NOT NULL,
+    `lastName` VARCHAR(40) NOT NULL,
+    `mobileNo` BIGINT NOT NULL,
+    `schoolId` MEDIUMINT NOT NULL,
+    `family` MEDIUMINT NOT NULL
+)ENGINE=INNODB AUTO_INCREMENT = 70077;
+
+INSERT INTO teachers(firstName, lastName, mobileNo, schoolId, family)
+VALUES
+    ('Virve', 'Luik', '53300066', 60066, 20022),
+    ('Piret', 'Lumi', '53500088', 60066, 20022),
+    ('Andres', 'Kirsipuu', '53500088', 60067, 20022);
 
 
 ALTER TABLE
@@ -163,3 +193,5 @@ ALTER TABLE
     `invitations` ADD CONSTRAINT `invitations_invitorfamily_foreign` FOREIGN KEY(`invitorFamily`) REFERENCES `families`(`id`);
 ALTER TABLE
     `familyDoctors` ADD CONSTRAINT `familydoctors_family_foreign` FOREIGN KEY(`family`) REFERENCES `families`(`id`);
+ALTER TABLE
+    `teachers` ADD CONSTRAINT `teachers_family_foreign` FOREIGN KEY(`family`) REFERENCES `families`(`id`);
