@@ -10,6 +10,7 @@ var familiesRouter = require("./routes/families");
 var childrenRouter = require("./routes/children");
 var invitationsRouter = require("./routes/invitations");
 var healthRouter = require("./routes/health");
+var educationRouter = require("./routes/education");
 
 var app = express();
 
@@ -25,5 +26,6 @@ app.use("/api/families", familiesRouter);
 app.use("/api/children", childrenRouter);
 app.use("/api/invitations", invitationsRouter);
 app.use("/api/health", healthRouter);
+app.use("/api/education", educationRouter);
 
 module.exports = app;
