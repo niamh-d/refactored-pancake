@@ -182,7 +182,7 @@ CREATE TABLE `teachers`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `firstName` VARCHAR(40) NOT NULL,
     `lastName` VARCHAR(40) NOT NULL,
-    `mobileNo` BIGINT NOT NULL,
+    `mobileNo` VARCHAR(30) NOT NULL,
     `email` VARCHAR(40) NOT NULL,
     `schoolId` MEDIUMINT NOT NULL,
     `familyId` MEDIUMINT NOT NULL

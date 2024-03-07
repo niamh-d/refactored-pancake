@@ -365,7 +365,7 @@ function UsersProvider({ children }) {
         inviteeName: `${data.firstName} ${data.lastName}`,
       };
 
-      if (data) addInvitation(invitationDetails);
+      if (!data.family) addInvitation(invitationDetails);
     } catch (err) {
       console.error(err);
     }
