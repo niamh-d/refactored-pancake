@@ -45,6 +45,7 @@ const DoctorCard = ({ doctor }) => {
     streetAddress,
     clinicPhoneNo,
     websiteURL,
+    doctorType,
   } = doctor;
 
   const languagesArr = renderLanguageFlags(languages);
@@ -58,6 +59,9 @@ const DoctorCard = ({ doctor }) => {
               {lastName}
             </span>
             <span className="text-2xl tracking-wider">, {firstName}</span>
+          </li>
+          <li className="flex gap-3 justify-self-center mt-1 font-light text-lg tracking-wider">
+            {doctorType}
           </li>
           <li className="flex gap-3 justify-self-center mt-3">
             <Tooltip title="Languages" placement="left">

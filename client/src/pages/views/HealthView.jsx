@@ -12,6 +12,8 @@ const HealthView = () => {
   const [showDeatilsIsOpen, setShowDeatilsIsOpen] = useState(false);
   const [doctorDetails, setDoctorDetails] = useState(null);
 
+  const doctorTypes = [...new Set(currentDoctors.map((doc) => doc.doctorType))];
+
   useEffect(() => {
     getDoctors();
   }, []);
@@ -34,12 +36,20 @@ const HealthView = () => {
         <div className="grid grid-cols-2 gap-5">
           {!currentDoctors && null}
           <div className="mt-10 p-5">
-            <h2>Doctors</h2>
-            <ul className="mt-5 flex flex-col gap-5 p-5">
-              {currentDoctors.map((doctor) => (
-                <Doctor key={doctor.id} doctor={doctor} handler={showDetails} />
-              ))}
-            </ul>
+            <h2 className="mb-5">Healthcare professionals</h2>
+
+            {doctorTypes.map((type) => (
+              <div className="mt-3">
+                <h3>{type}</h3>
+                <ul className="mt-2 flex flex-col gap-5 p-5">
+                  {currentDoctors
+                    .filter((doc) => doc.doctorType === type)
+                    .map((doc) => (
+                      <Doctor key={doc.id} doctor={doc} handler={showDetails} />
+                    ))}
+                </ul>
+              </div>
+            ))}
           </div>
           {showDeatilsIsOpen && doctorDetails && (
             <DoctorCard doctor={doctorDetails} />

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import InfoIcon from "@mui/icons-material/Info";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -11,9 +12,9 @@ const Doctor = ({ doctor, handler }) => {
     <li className="flex gap-3 items-center">
       <span className="font-semibold uppercase tracking-wider">{lastName}</span>
       <span> {firstName}</span>
-      <button className="btn btn-info btn-sm" onClick={clickHandler}>
+      <button className="btn btn-accent btn-sm" onClick={clickHandler}>
         <Tooltip title="Open details">
-          <InfoIcon />
+          <InfoIcon style={{ fill: "white" }} />
         </Tooltip>
         {clinicName}
       </button>
