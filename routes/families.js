@@ -37,7 +37,7 @@ router.get("/members", async function (req, res, next) {
     const tableName = `family_${id}_members`;
 
     results = await db(
-      `SELECT id, firstName, lastName, email, dob, gender, pronouns, photoSource, adminFamily, isAdminUser, isPrimaryGuardian, isExtendedFamilyGuardian, isThirdPartyGuardian  FROM users INNER JOIN ${tableName} ON users.id = ${tableName}.userId;`
+      `SELECT id, firstName, lastName, email, dob, gender, pronouns, photoSource, adminFamily, isAdminUser, isPrimaryGuardian, isExtendedFamilyGuardian, isThirdPartyGuardian FROM users INNER JOIN ${tableName} ON users.id = ${tableName}.userId;`
     );
 
     res.send(results.data);
