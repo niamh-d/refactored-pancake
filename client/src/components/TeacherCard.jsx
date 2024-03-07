@@ -8,7 +8,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
-const TeacherCard = ({ teacher }) => {
+const TeacherCard = ({ teacher, handler }) => {
   const {
     firstName,
     lastName,
@@ -22,8 +22,13 @@ const TeacherCard = ({ teacher }) => {
     mobileNo,
   } = teacher;
 
+  const clickHandler = () => handler();
+
   return (
-    <div className="mt-10 p-5 rounded-lg ml-auto mr-auto w-96 shadow-lg">
+    <div
+      className="mt-10 p-5 rounded-lg ml-auto mr-auto w-96 shadow-lg"
+      onClick={clickHandler}
+    >
       <div className="mt-5 p-5">
         <ul className="flex flex-col text-xl gap-3">
           <li className="pt-3 pb-3">

@@ -36,7 +36,7 @@ function renderLanguageFlags(languages) {
   return languages.split(",").map((lang) => convertToEmoji(lang));
 }
 
-const DoctorCard = ({ doctor }) => {
+const DoctorCard = ({ doctor, handler }) => {
   const {
     firstName,
     lastName,
@@ -52,8 +52,13 @@ const DoctorCard = ({ doctor }) => {
 
   const languagesArr = renderLanguageFlags(languages);
 
+  const clickHandler = () => handler();
+
   return (
-    <div className="mt-10 p-5 rounded-lg ml-auto mr-auto w-96 shadow-lg">
+    <div
+      className="mt-10 p-5 rounded-lg ml-auto mr-auto w-96 shadow-lg"
+      onClick={clickHandler}
+    >
       <div className="mt-5 p-5">
         <ul className="flex flex-col text-xl gap-3">
           <li className="pt-3 pb-3">

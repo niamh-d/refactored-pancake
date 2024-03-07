@@ -46,7 +46,7 @@ const SchoolView = () => {
             </ul>
           </div>
           {showDetailsIsOpen && teacherDetails && (
-            <TeacherCard teacher={teacherDetails} />
+            <TeacherCard teacher={teacherDetails} handler={showDetails} />
           )}
         </div>
       </div>

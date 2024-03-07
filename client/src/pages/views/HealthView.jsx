@@ -56,7 +56,7 @@ const HealthView = () => {
             ))}
           </div>
           {showDetailsIsOpen && doctorDetails && (
-            <DoctorCard doctor={doctorDetails} />
+            <DoctorCard doctor={doctorDetails} handler={showDetails} />
           )}
         </div>
       </div>

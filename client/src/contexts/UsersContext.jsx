@@ -78,7 +78,7 @@ function UsersProvider({ children }) {
 
   // USE EFFECTS
 
-  // ** SYNC LOGGED IN USER FROM AUTH CONTEXT WITH CURRENT USER IN THIS CONTEXT **
+  // SYNC CURRENT USER IN THIS CONTEXT with LOGGED IN USER COMING FROM AUTH CONTEXT
 
   useEffect(() => {
     dispatch({ type: "SET_CURRENT_USER", payload: loggedInUser });
