@@ -16,6 +16,7 @@ const initialState = {
   currentInvitations: null,
   isNonAdmin: false,
   currentDoctors: null,
+  currentTeachers: null,
 };
 
 function reducer(state, action) {
@@ -35,6 +36,8 @@ function reducer(state, action) {
       return { ...state, currentChildren: action.payload };
     case "SET_CURRENT_DOCTORS":
       return { ...state, currentDoctors: action.payload };
+    case "SET_CURRENT_TEACHERS":
+      return { ...state, currentTeachers: action.payload };
     case "SET_INVITATIONS":
       return {
         ...state,
@@ -54,6 +57,7 @@ function UsersProvider({ children }) {
       currentUser,
       currentFamily,
       currentDoctors,
+      currentTeachers,
       currentChildren,
       currentInvitations,
       isNonAdmin,
@@ -67,6 +71,7 @@ function UsersProvider({ children }) {
     dispatch({ type: "SET_CURRENT_CHILDREN", payload: null });
     dispatch({ type: "SET_CURRENT_FAMILY", payload: null });
     dispatch({ type: "SET_CURRENT_DOCTORS", payload: null });
+    dispatch({ type: "SET_CURRENT_TEACHERS", payload: null });
     dispatch({ type: "SET_INVITATIONS", payload: null });
     dispatch({ type: "TOGGLE_NON_ADMIN", payload: false });
   }
@@ -89,6 +94,7 @@ function UsersProvider({ children }) {
     getInvitations();
     getFamily();
     getDoctors();
+    getTeachers();
   }, [currentUser]);
 
   useEffect(() => {
@@ -305,6 +311,19 @@ function UsersProvider({ children }) {
     }
   }
 
+  // TEACHER FETCHES
+
+  async function getTeachers() {
+    try {
+      const res = await fetch(`/api/education?familyId=${currentUser.family}`);
+      const data = await res.json();
+
+      dispatch({ type: "SET_CURRENT_TEACHERS", payload: data });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   // INVITATIONS FETCHES
 
   async function getInvitations() {
@@ -416,7 +435,9 @@ function UsersProvider({ children }) {
         checkForExistingUser,
         removeGuardian,
         getDoctors,
+        getTeachers,
         currentDoctors,
+        currentTeachers,
         currentUser,
         currentFamily,
         currentChildren,

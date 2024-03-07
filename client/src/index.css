@@ -37,6 +37,7 @@ label {
 @layer components {
   .app-container {
     @apply ml-20 mt-5;
+    min-height: 60vh;
   }
 
   .innner-app__nav .active {

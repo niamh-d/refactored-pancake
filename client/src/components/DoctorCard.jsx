@@ -5,6 +5,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import ChatIcon from "@mui/icons-material/Chat";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 function renderLanguageFlags(languages) {
   // const renderEmoji = (lang) => {
@@ -46,6 +47,7 @@ const DoctorCard = ({ doctor }) => {
     clinicPhoneNo,
     websiteURL,
     doctorType,
+    clinicEmail,
   } = doctor;
 
   const languagesArr = renderLanguageFlags(languages);
@@ -101,6 +103,12 @@ const DoctorCard = ({ doctor }) => {
               <LocalPhoneIcon />
             </Tooltip>
             <a href={`tel:${clinicPhoneNo}`}>{clinicPhoneNo}</a>
+          </li>
+          <li className="flex gap-3 justify-self-center">
+            <Tooltip title="Email" placement="left">
+              <AlternateEmailIcon />
+            </Tooltip>
+            <a href={`mailto:${clinicEmail}`}>{clinicEmail}</a>
           </li>
         </ul>
       </div>
