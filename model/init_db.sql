@@ -149,6 +149,7 @@ VALUES
 CREATE TABLE `schools`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `schoolName` VARCHAR(40) NOT NULL,
+    `schoolEmail` VARCHAR(40) NOT NULL,
     `schoolPhoneNo` VARCHAR(30) NOT NULL,
     `streetAddress` VARCHAR(40) NOT NULL,
     `city` VARCHAR(40) NOT NULL,
@@ -156,25 +157,26 @@ CREATE TABLE `schools`(
     `family` MEDIUMINT NOT NULL
 )ENGINE=INNODB AUTO_INCREMENT = 60066;
 
-INSERT INTO schools(schoolName, schoolPhoneNo, streetAddress, city, websiteURL, family)
+INSERT INTO schools(schoolName, schoolEmail, schoolPhoneNo, streetAddress, city, websiteURL, family)
 VALUES
-    ('Tallinna Inglise Kolledž', '6461306', 'Estonia pst 10', 'Tallinn', 'https://tik.edu.ee/', 20022),
-    ('Tallinna Reaalkool', '6992026', 'Estonia pst 6', 'Tallinn', 'https://real.edu.ee/', 20022);
+    ('Tallinna Inglise Kolledž', 'tik@tik.edu.ee', '6461306', 'Estonia pst 10', 'Tallinn', 'https://tik.edu.ee/', 20022),
+    ('Tallinna Reaalkool', 'real@real.edu.ee', '6992026', 'Estonia pst 6', 'Tallinn', 'https://real.edu.ee/', 20022);
 
 CREATE TABLE `teachers`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `firstName` VARCHAR(40) NOT NULL,
     `lastName` VARCHAR(40) NOT NULL,
     `mobileNo` BIGINT NOT NULL,
+    `email` VARCHAR(40) NOT NULL,
     `schoolId` MEDIUMINT NOT NULL,
     `family` MEDIUMINT NOT NULL
 )ENGINE=INNODB AUTO_INCREMENT = 70077;
 
-INSERT INTO teachers(firstName, lastName, mobileNo, schoolId, family)
+INSERT INTO teachers(firstName, lastName, mobileNo, email, schoolId, family)
 VALUES
-    ('Virve', 'Luik', '53300066', 60066, 20022),
-    ('Piret', 'Lumi', '53500088', 60066, 20022),
-    ('Andres', 'Kirsipuu', '53500088', 60067, 20022);
+    ('Virve', 'Luik', '53300066', 'luik.v@tik.ee', 60066, 20022),
+    ('Piret', 'Lumi', '53500088', 'lumi.p@tik.ee', 60066, 20022),
+    ('Andres', 'Kirsipuu', '53500088', 'kirsipuu.a@real.edu.ee', 60067, 20022);
 
 
 ALTER TABLE
