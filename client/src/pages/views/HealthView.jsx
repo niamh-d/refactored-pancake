@@ -9,7 +9,7 @@ import DoctorCard from "../../components/DoctorCard";
 const HealthView = () => {
   const { currentDoctors, getDoctors } = useUsers();
 
-  const [showDeatilsIsOpen, setShowDeatilsIsOpen] = useState(false);
+  const [showDetailsIsOpen, setShowDetailsIsOpen] = useState(false);
   const [doctorDetails, setDoctorDetails] = useState(null);
 
   const doctorTypes = [...new Set(currentDoctors.map((doc) => doc.doctorType))];
@@ -22,9 +22,9 @@ const HealthView = () => {
     if (id) {
       const doc = currentDoctors.filter((doc) => doc.id === id)[0];
       setDoctorDetails(doc);
-      setShowDeatilsIsOpen(true);
+      setShowDetailsIsOpen(true);
     } else {
-      setShowDeatilsIsOpen(false);
+      setShowDetailsIsOpen(false);
       setDoctorDetails(null);
     }
   };
@@ -55,7 +55,7 @@ const HealthView = () => {
               </div>
             ))}
           </div>
-          {showDeatilsIsOpen && doctorDetails && (
+          {showDetailsIsOpen && doctorDetails && (
             <DoctorCard doctor={doctorDetails} />
           )}
         </div>
