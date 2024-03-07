@@ -2,10 +2,11 @@ SET foreign_key_checks = 0;
 DROP TABLE if exists users;
 DROP TABLE if exists families;
 DROP TABLE if exists children;
+DROP TABLE if exists invitations;
 DROP TABLE if exists schools;
 DROP TABLE if exists teachers;
-DROP TABLE if exists familyDoctors;
-DROP TABLE if exists invitations;
+DROP TABLE if exists family_doctors;
+DROP TABLE if exists clinics;
 DROP TABLE if exists family_20022_members;
 DROP TABLE if exists family_20023_members;
 DROP TABLE if exists family_20024_members;
@@ -126,25 +127,40 @@ VALUES
     (10011, "Sofie Stephens", 20022, "Stephens", 10013, "Gale Vasquez", "third");
 
 
-CREATE TABLE `familyDoctors`(
+CREATE TABLE `clinics`(
+    `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `clinicName` VARCHAR(40) NOT NULL,
+    `clinicEmail` VARCHAR(40) NOT NULL,
+    `clinicPhoneNo` VARCHAR(30) NOT NULL,
+    `streetAddress` VARCHAR(40) NOT NULL,
+    `city` VARCHAR(40) NOT NULL,
+    `websiteURL` VARCHAR(40) NULL,
+    `familyId` MEDIUMINT NOT NULL
+)ENGINE=INNODB AUTO_INCREMENT = 50055;
+
+INSERT INTO clinics(clinicName, clinicEmail, clinicPhoneNo, streetAddress, city, websiteURL, familyId)
+VALUES
+    ('Ülemiste Perekliinik', 'tere@perekliinik.ee', '6665500', 'Valukoja 7', 'Tallinn', 'https://perekliinik.ee', 20022),
+    ('Confido', 'info@confido.ee', '6664422', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
+    ('Tallinna Lastehaigla', 'info@lastehaigla.ee', '6774455', 'Tervise 28', 'Tallinn', 'https://www.lastehaigla.ee', 20022);
+
+
+CREATE TABLE `family_doctors`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `firstName` VARCHAR(40) NOT NULL,
     `lastName` VARCHAR(40) NOT NULL,
     `languages` VARCHAR(40) NOT NULL,
     `doctorType` VARCHAR(40) NOT NULL,
-    `clinicName` VARCHAR(40) NOT NULL,
-    `clinicPhoneNo` VARCHAR(30) NOT NULL,
-    `streetAddress` VARCHAR(40) NOT NULL,
-    `city` VARCHAR(40) NOT NULL,
-    `websiteURL` VARCHAR(40) NULL,
-    `family` MEDIUMINT NOT NULL
-)ENGINE=INNODB AUTO_INCREMENT = 50055;
+    `clinicId` MEDIUMINT NOT NULL,
+    `familyId` MEDIUMINT NOT NULL
+)ENGINE=INNODB AUTO_INCREMENT = 60066;
 
-INSERT INTO familyDoctors(firstName, lastName, languages, doctorType, clinicName, clinicPhoneNo, streetAddress, city, websiteURL, family)
+INSERT INTO family_doctors(firstName, lastName, languages, doctorType, clinicId, familyId)
 VALUES
-    ('Indrek', 'Oibupuu', 'EE,RU,GB', 'Family doctor', 'Confido', '1330', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
-    ('Helen', 'Ilves', 'EE,GB,DE', 'Pyschologist', 'Confido', '1330', 'Veerenni 51', 'Tallinn', 'https://www.confido.ee', 20022),
-    ('Ingrid', 'Kapp', 'EE,GB,SE,FI', 'Family doctor', 'Ülemiste Perekliinik', '6665534', 'Valukoja 7', 'Tallinn', 'https://perekliinik.ee/', 20022);
+    ('Indrek', 'Oibupuu', 'EE,RU,GB', 'Family doctor', 50055, 20022),
+    ('Helen', 'Ilves', 'EE,GB,DE', 'Pyschologist', 50055, 20022),
+    ('Ingrid', 'Kapp', 'EE,GB,SE,FI', 'Family doctor', 50056, 20022),
+    ('Kristjan', 'Kukk', 'EE,GB', 'Paediatrician', 50057, 20022);
 
 CREATE TABLE `schools`(
     `id` MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -154,10 +170,10 @@ CREATE TABLE `schools`(
     `streetAddress` VARCHAR(40) NOT NULL,
     `city` VARCHAR(40) NOT NULL,
     `websiteURL` VARCHAR(40) NULL,
-    `family` MEDIUMINT NOT NULL
-)ENGINE=INNODB AUTO_INCREMENT = 60066;
+    `familyId` MEDIUMINT NOT NULL
+)ENGINE=INNODB AUTO_INCREMENT = 70077;
 
-INSERT INTO schools(schoolName, schoolEmail, schoolPhoneNo, streetAddress, city, websiteURL, family)
+INSERT INTO schools(schoolName, schoolEmail, schoolPhoneNo, streetAddress, city, websiteURL, familyId)
 VALUES
     ('Tallinna Inglise Kolledž', 'tik@tik.edu.ee', '6461306', 'Estonia pst 10', 'Tallinn', 'https://tik.edu.ee/', 20022),
     ('Tallinna Reaalkool', 'real@real.edu.ee', '6992026', 'Estonia pst 6', 'Tallinn', 'https://real.edu.ee/', 20022);
@@ -169,14 +185,14 @@ CREATE TABLE `teachers`(
     `mobileNo` BIGINT NOT NULL,
     `email` VARCHAR(40) NOT NULL,
     `schoolId` MEDIUMINT NOT NULL,
-    `family` MEDIUMINT NOT NULL
-)ENGINE=INNODB AUTO_INCREMENT = 70077;
+    `familyId` MEDIUMINT NOT NULL
+)ENGINE=INNODB AUTO_INCREMENT = 80088;
 
-INSERT INTO teachers(firstName, lastName, mobileNo, email, schoolId, family)
+INSERT INTO teachers(firstName, lastName, mobileNo, email, schoolId, familyId)
 VALUES
-    ('Virve', 'Luik', '53300066', 'luik.v@tik.ee', 60066, 20022),
-    ('Piret', 'Lumi', '53500088', 'lumi.p@tik.ee', 60066, 20022),
-    ('Andres', 'Kirsipuu', '53500088', 'kirsipuu.a@real.edu.ee', 60067, 20022);
+    ('Virve', 'Luik', '53300066', 'luik.v@tik.edu.ee', 70077, 20022),
+    ('Piret', 'Lumi', '53500088', 'lumi.p@tik.edu.ee', 70077, 20022),
+    ('Andres', 'Kirsipuu', '53500088', 'kirsipuu.a@real.edu.ee', 70078, 20022);
 
 
 ALTER TABLE
@@ -194,6 +210,12 @@ ALTER TABLE
 ALTER TABLE
     `invitations` ADD CONSTRAINT `invitations_invitorfamily_foreign` FOREIGN KEY(`invitorFamily`) REFERENCES `families`(`id`);
 ALTER TABLE
-    `familyDoctors` ADD CONSTRAINT `familydoctors_family_foreign` FOREIGN KEY(`family`) REFERENCES `families`(`id`);
+    `family_doctors` ADD CONSTRAINT `family_doctors_familyid_foreign` FOREIGN KEY(`familyId`) REFERENCES `families`(`id`);
 ALTER TABLE
-    `teachers` ADD CONSTRAINT `teachers_family_foreign` FOREIGN KEY(`family`) REFERENCES `families`(`id`);
+    `family_doctors` ADD CONSTRAINT `family_doctors_clinicid_foreign` FOREIGN KEY(`clinicId`) REFERENCES `clinics`(`id`);
+ALTER TABLE
+    `teachers` ADD CONSTRAINT `teachers_familyid_foreign` FOREIGN KEY(`familyId`) REFERENCES `families`(`id`);
+ALTER TABLE
+    `teachers` ADD CONSTRAINT `teachers_schoolid_foreign` FOREIGN KEY(`schoolId`) REFERENCES `schools`(`id`);
+ALTER TABLE
+    `schools` ADD CONSTRAINT `schools_familyid_foreign` FOREIGN KEY(`familyId`) REFERENCES `families`(`id`);
