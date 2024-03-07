@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { useUsers } from "../../contexts/UsersContext";
 
-import Doctor from "../../components/Doctor";
+import ProfessionalRow from "../../components/ProfessionalRow";
 import DoctorCard from "../../components/DoctorCard";
 
 const HealthView = () => {
@@ -45,7 +45,11 @@ const HealthView = () => {
                   {currentDoctors
                     .filter((doc) => doc.doctorType === type)
                     .map((doc) => (
-                      <Doctor key={doc.id} doctor={doc} handler={showDetails} />
+                      <ProfessionalRow
+                        key={doc.id}
+                        professional={doc}
+                        handler={showDetails}
+                      />
                     ))}
                 </ul>
               </div>
