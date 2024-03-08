@@ -159,7 +159,7 @@ CREATE TABLE `family_doctors`(
 INSERT INTO family_doctors(firstName, lastName, languages, doctorType, clinicId, familyId)
 VALUES
     ('Indrek', 'Uibopuu', 'EE,RU,GB', 'Family doctor', 50055, 20022),
-    ('Helen', 'Ilves', 'EE,GB,DE', 'Pyschologist', 50055, 20022),
+    ('Helen', 'Ilves', 'EE,GB,DE', 'Psychologist', 50056, 20022),
     ('Ingrid', 'Kapp', 'EE,GB,SE,FI', 'Family doctor', 50056, 20022),
     ('Kristjan', 'Kukk', 'EE,GB', 'Paediatrician', 50057, 20022);
 
