@@ -144,6 +144,56 @@ Invite banner notification as seen from the invitee's side
 
 7 endpoints – /users, /families, families/members, /children, /invitations, /health, /education
 
+#### /users
+
+GET – Returns one user object, OR an array containing all users
+POST – Creates a new user and returns the new user (object)
+PUT – Updates user details and returns an array with one user (object)
+
+#### /users/signup
+
+GET – Returns one user (object)
+
+#### /users/login
+
+GET – Returns one user (object)
+
+#### /families
+
+GET – Returns an empty array or an array containing one family (object)
+
+POST – Creates a new family and returns the new family (object)
+
+#### /families/members
+
+POST – Creates a new family members table and inserts a new row with the admin user into this table and returns a string, OR inserts a new guardian into the table and returns an integer.
+
+GET – Performs a join and returns an array of guardians
+
+DELETE - Deletes a guardian and returns a string
+
+#### /children
+
+POST – Creates a new child and returns an array containing one child; inserts child into the family members table and returns an array of children
+
+GET – Returns an array of children
+
+#### /education
+
+GET – Performs a join and returns an array containing teachers
+
+#### /health
+
+GET – Performs a join and returns an array containing doctors
+
+#### /invitations
+
+GET – returns array of invitations
+
+POST – creates a new invitation and returns a string
+
+DELETE – deletes an invitation and returns an array of invitations
+
 ## Conceptualising
 
 ![User flow](./imgs/design/userflow.jpg)
